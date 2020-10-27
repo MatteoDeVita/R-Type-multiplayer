@@ -2,7 +2,7 @@
 
 * R-type is a multiplayer video game with space shuttles.
 
-* Our project uses Conan in order to be OS independant :
+* Our project uses [Conan](https://conan.io/) in order to be OS independant :
     1. First, create a build folder in the root directory and change your current directory:
         ```
         $ mkdir build && cd build
