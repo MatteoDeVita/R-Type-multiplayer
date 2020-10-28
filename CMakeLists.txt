@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.5)
 project("r-type_server" LANGUAGES CXX)
 project("r-type_client" LANGUAGES CXX)
 
-add_definitions("-fPIC" "-lpthread" "-g" -"g3" "-Wall" "-Wextra")
+add_definitions("-fPIC" "-g" -"g3" "-Wall" "-Wextra" "-lboost_system" "-lboost_thread" "-lpthread")
 
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup()

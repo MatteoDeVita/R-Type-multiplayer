@@ -1,11 +1,16 @@
 /*
 ** EPITECH PROJECT, 2020
-** B-CPP-501-LYN-5-1-rtype-lorris.hamdaoui
+** testasioudp [WSL: Ubuntu-20.04]
 ** File description:
-** main
+** Main
 */
+
+#include "Network.hpp"
 
 int main()
 {
+    boost::asio::io_context io_context;
+    udp_server server(io_context);
+    io_context.run();
     return 0;
 }
