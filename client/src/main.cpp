@@ -34,12 +34,15 @@ int main(int argc, char* argv[])
         boost::asio::steady_timer timer1_(io, boost::asio::chrono::seconds(1));
         timer1_.wait();
         socket.send_to(boost::asio::buffer(message), receiver_endpoint);//envoie d'une var sendbuf au endpoint
+
+        std::cout<< "data sended to : "<< receiver_endpoint.address() << std::endl;
         //reception
         boost::array<char, 128> recv_buf;
         udp::endpoint sender_endpoint; //on devient un Endpoint a notre tour
         size_t len = socket.receive_from(boost::asio::buffer(recv_buf), sender_endpoint);
         //affichage des donnes recus
-        std::cout<< recv_buf.data() << std::endl;
+
+        std::cout<< "data received : "<< recv_buf.data() << std::endl;
 
     }
     return 0;

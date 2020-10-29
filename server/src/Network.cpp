@@ -28,5 +28,5 @@ void udp_server::process(const boost::system::error_code& error, std::size_t /*b
 }
 
 void udp_server::handle_send(boost::shared_ptr<std::string> /*message*/, const boost::system::error_code& /*error*/, std::size_t /*bytes_transferred*/){
-    std::cout << "datas sended to" << this->remote_endpoint_.address() << std::endl;
+    std::cout << "datas sended to " << this->remote_endpoint_.address() << std::endl;
 }
