@@ -1,0 +1,34 @@
+R-type UDP protocol v1.0
+
+____// client => server //____
+
+  --| in menu |--
+
+_Lobby list
+=> LOBBY    <LIST>
+<= LOBBY    [LOBBY ID] [NB OF PLAYER]
+
+_Enter lobby
+=> LOBBY    <SELECT> [LOBBY ID] [PLAYER ID] [PLAYER NAME]
+<= LOBBY    [STATUS CODE]
+
+  --| in game |--
+
+_Player shot
+=> PLAYER    [ID] <FIRE> [WEAPON TYPE]
+
+_Player move
+=> PLAYER    [ID] [DIRECTION]
+
+
+
+____// server => client //____
+
+Name           Value
+
+PLAYER         [ID] [pos x | pos y] [LIFE]
+ENEMY          [ID] [pos x | pos y] [ENEMY_TYPE] [LIFE]
+OBS            [ID] [pos x | pos y] [OBS_TYPE] [LIFE] 
+PLAYER_BULLET  [ID] [pos x | pos y] [BULLET_TYPE]
+ENEMY_BULLET   [ID] [pos x | pos y] [BULLET_TYPE]
+EXPLOSION      [ID] [pos x [ pos y] [EXPLOSION_TYPE]
