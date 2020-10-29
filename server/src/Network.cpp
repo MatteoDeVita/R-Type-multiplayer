@@ -23,7 +23,7 @@ udp_server::udp_server(boost::asio::io_context& io_context) : socket_(io_context
         boost::shared_ptr<std::string> message(new std::string("suuuce"));
         std::cout << this->recv_buffer_.data() << std::endl;
         this->socket_.async_send_to(boost::asio::buffer(*message), this->remote_endpoint_,boost::bind(&udp_server::handle_send, this, message, boost::asio::placeholders::error, boost::asio::placeholders::bytes_transferred));
-
+        std::cout << this->remote_endpoint_.address();
         start_receive();
   }
 
