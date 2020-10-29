@@ -5,6 +5,8 @@ project("r-type_client" LANGUAGES CXX)
 
 add_definitions("-fPIC" "-g" -"g3" "-Wall" "-Wextra" "-lboost_system" "-lboost_thread" "-lpthread")
 
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
+
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup()
 
