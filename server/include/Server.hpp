@@ -6,6 +6,9 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/asio.hpp>
 
+#include "GameContainer.hpp"
+
+
 using boost::asio::ip::udp;
 class udp_server
 {
@@ -19,4 +22,5 @@ class udp_server
         udp::socket socket_;
         udp::endpoint remote_endpoint_;
         boost::array<char, 128> recv_buffer_;
+        std::vector<GameContainer> _gameContainers;
 };
