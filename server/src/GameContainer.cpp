@@ -7,8 +7,17 @@
 
 #include "GameContainer.hpp"
 
+void GameContainer::push_newclient(boost::asio::ip::udp::endpoint endpointer)
+{
+    ClientServerSide newest;
+
+    newest._endpoint = endpointer;
+    this->_clients.push_back(newest);
+}
+
 GameContainer::GameContainer()
 {
+
 }
 
 GameContainer::~GameContainer()

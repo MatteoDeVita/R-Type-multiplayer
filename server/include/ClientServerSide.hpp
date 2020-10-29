@@ -16,8 +16,9 @@ class ClientServerSide {
     public:
         ClientServerSide();
         ~ClientServerSide();
+        boost::asio::ip::udp::endpoint _endpoint;
 
     protected:
     private:
-        boost::asio::ip::udp::endpoint _endpoint;
+        
 };

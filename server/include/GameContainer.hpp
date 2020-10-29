@@ -13,8 +13,9 @@ class GameContainer {
     public:
         GameContainer();
         ~GameContainer();
-
+        void push_newclient(boost::asio::ip::udp::endpoint);
+        std::vector<ClientServerSide> _clients;
+        std::string message;//debug
     protected:
     private:
-        std::vector<ClientServerSide> _clients;
 };
