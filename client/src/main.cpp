@@ -39,7 +39,7 @@ int main(int argc, char* argv[])
         udp::endpoint sender_endpoint; //on devient un Endpoint a notre tour
         size_t len = socket.receive_from(boost::asio::buffer(recv_buf), sender_endpoint);
         //affichage des donnes recus
-        std::cout << std::string(recv_buf.begin(), recv_buf.begin()+ len) << std::endl;
+        std::cout<< recv_buf.data() << std::endl;
 
     }
     return 0;
