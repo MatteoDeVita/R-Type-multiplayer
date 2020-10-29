@@ -18,16 +18,69 @@ package Server {
     }
 }
 
-package GameEngine {
-    GameEngine --o Client
-    GameEngine --o Server
-    class GameEngine
-}
-
-package Client {
+namespace Client {
     class Client {
 
     }
+}
+
+
+
+namespace GameEngine {
+
+    IGameEngine --o GameEngine
+    interface IGameEngine {
+        
+    }
+
+    GameEngine --o Client
+    GameEngine --o Server
+    class GameEngine {
+
+    }
+    
+    class Sprite {
+        - sf::Texture *_texture
+        + Sprite(const std::string filePath, std::vector<Rectangle> _rectanglePositionsOnImage)
+    }
+
+    Object --o GameEngine.Sprite
+    class Object {
+        - Sprite *_sprite
+        - geometry::Vector *_pos
+
+        + Object(const std::string unique_name, const Sprite &sprite)
+        + void setPosition(const geometry::Vector &position)
+    }
+    
+    namespace geometry {
+        Vector --o Rectangle
+        class Vector {
+            - float _x
+            - float _y
+
+            + Vector(const float &x, const float &y)
+            + Vector &get()
+            + void setX(const float &x)
+            + void setY(const float &y)
+            + void set(const float &x, const float &y)
+        }
+
+        Rectangle --o GameEngine.Sprite
+        class Rectangle {
+            - Vector *_origin
+            - Vector *_size
+
+            + Rectangle(const Vector &origin, const Vector _size)
+            + Rectangle(const float &left, const float &top, const float &width, const float &height)
+            + void set(const Rectangle &rectangle)
+            + void setOrigin(const Vector &origin)
+            + void setSize(const Vector &size)
+            + void setByPoints(const float &left, const float &top, const float &width, const float &height)
+        }
+    }
+
+    
 }
 
 @enduml
