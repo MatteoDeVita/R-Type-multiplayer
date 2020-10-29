@@ -78,7 +78,7 @@ namespace gameEngine_ns {
             + void set(const float &x, const float &y)
         }
 
-        Rectangle --o GameEngine.Object.Sprite
+        Rectangle --o gameEngine_ns.object_ns.Sprite
         class Rectangle {
             - Vector *_origin
             - Vector *_size
@@ -94,7 +94,7 @@ namespace gameEngine_ns {
 
     namespace window_ns {
 
-        Window --o gameEngine_ns.geometry_ns.vector
+        Window --o gameEngine_ns.geometry_ns.Vector
         Window --o gameEngine_ns.object_ns.Object
         class Window {
             - sf::Window *_window
