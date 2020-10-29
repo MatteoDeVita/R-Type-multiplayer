@@ -5,7 +5,7 @@
 ** Main
 */
 
-#include "Network.hpp"
+#include "Server.hpp"
 
 int main()
 {

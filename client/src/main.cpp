@@ -29,8 +29,7 @@ int main(int argc, char* argv[])
     udp::socket socket(io); //creation d'un socket UDP
     socket.open(udp::v4()); // ouverture du socket
     std::string message = argv[2];
-    while (1)
-    {
+    while (1) {
         boost::asio::steady_timer timer1_(io, boost::asio::chrono::seconds(1));
         timer1_.wait();
         socket.send_to(boost::asio::buffer(message), receiver_endpoint);//envoie d'une var sendbuf au endpoint
@@ -43,7 +42,6 @@ int main(int argc, char* argv[])
         //affichage des donnes recus
 
         std::cout<< "data received : "<< recv_buf.data() << std::endl;
-
     }
     return 0;
 }
