@@ -9,8 +9,8 @@
 
 int main()
 {
-    boost::asio::io_context io_context;
-    udp_server server(io_context);
-    io_context.run();
+    boost::asio::io_context io;
+    udp_server server(io);
+    io.run();
     return 0;
 }

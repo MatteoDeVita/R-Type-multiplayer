@@ -10,10 +10,10 @@ using boost::asio::ip::udp;
 class udp_server
 {
     public:
-        udp_server(boost::asio::io_context& io_context);
+        udp_server(boost::asio::io_context& io);
     private:
         void start_receive();
-        void handle_receive(const boost::system::error_code& error, std::size_t /*bytes_transferred*/);
+        void process(const boost::system::error_code& error, std::size_t /*bytes_transferred*/);
         void handle_send(boost::shared_ptr<std::string> /*message*/, const boost::system::error_code& /*error*/, std::size_t /*bytes_transferred*/);
         udp::socket socket_;
         udp::endpoint remote_endpoint_;
