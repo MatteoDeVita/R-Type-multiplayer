@@ -21,7 +21,7 @@ bool udp_server::get_user_is_know()
 {
     for (unsigned int i = 0; i < this->_gameContainers.size(); i++) {
         for (unsigned int y = 0; this->_gameContainers.at(i)._clients.size(); y++) {
-            if(this->remote_endpoint_.address() ==this->_gameContainers.at(i)._clients.at(y)._endpoint.address())
+            if(this->remote_endpoint_.address() == this->_gameContainers.at(i)._clients.at(y)._endpoint.address())
                 return true;
         }
     }
@@ -35,7 +35,7 @@ void udp_server::game_container_load_balancer()
         if (this->NbofClientassign % 1 == 0) {
             GameContainer newest;
             newest.push_newclient(this->remote_endpoint_);
-            newest.message = this->recv_buffer_.data();//debug
+            newest.message = this->NbofClientassign;//debug
             this->_gameContainers.push_back(newest);
         }
         else {
