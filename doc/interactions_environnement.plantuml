@@ -1,5 +1,5 @@
 @startuml
-title interraction avec l'environnement
+title interaction avec l'environnement
 actor player1 order 10
 participant client order 20
 participant server order 30
