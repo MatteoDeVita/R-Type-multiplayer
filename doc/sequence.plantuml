@@ -26,35 +26,47 @@ namespace Client {
 
 
 
-namespace GameEngine {
-
-    IGameEngine --o GameEngine
-    interface IGameEngine {
-        
-    }
+namespace gameEngine_ns {
 
     GameEngine --o Client
     GameEngine --o Server
     class GameEngine {
-
+        
     }
     
-    class Sprite {
-        - sf::Texture *_texture
-        + Sprite(const std::string filePath, std::vector<Rectangle> _rectanglePositionsOnImage)
+
+    namespace object_ns {
+        enum options {
+            MOVE,
+            SHOOT,
+            EXPLODE,
+        }
+
+        class Sprite {
+            - sf::Texture *_texture
+            + Sprite(const std::string filePath, std::vector<Rectangle> _rectanglePositionsOnImage)
+        }
+        
+        Object -down-o Sprite
+        Object -down-o options
+        class Object {
+            - Sprite *_sprite
+            - geometry::Vector *_pos
+            - const ? Sprite *_explodingSprite
+            - Sprite *_shootingSprite
+            - uint32 _options
+
+            + Object(const std::string unique_name, const Sprite &sprite)
+            + void setPosition(const geometry::Vector &position)
+            + void addOption(cosnt options &option, const Sprite &sprite = nullptr)
+            + void executeOption(const actions &action)
+            + void executeOption(const actions &action, void (*callback)(Obejct *object))
+        }
     }
 
-    Object --o GameEngine.Sprite
-    class Object {
-        - Sprite *_sprite
-        - geometry::Vector *_pos
-
-        + Object(const std::string unique_name, const Sprite &sprite)
-        + void setPosition(const geometry::Vector &position)
-    }
-    
-    namespace geometry {
-        Vector --o Rectangle
+          
+    namespace geometry_ns {
+        Vector -right-o Rectangle
         class Vector {
             - float _x
             - float _y
@@ -66,7 +78,7 @@ namespace GameEngine {
             + void set(const float &x, const float &y)
         }
 
-        Rectangle --o GameEngine.Sprite
+        Rectangle --o GameEngine.Object.Sprite
         class Rectangle {
             - Vector *_origin
             - Vector *_size
@@ -80,7 +92,18 @@ namespace GameEngine {
         }
     }
 
-    
+    namespace window_ns {
+
+        Window --o gameEngine_ns.geometry_ns.vector
+        Window --o gameEngine_ns.object_ns.Object
+        class Window {
+            - sf::Window *_window
+
+            + Window(const geometry.ns::Vector &size)
+            + void addObject(const &object_ns::Object &object)
+            + void display()
+        }
+    }
 }
 
 @enduml
