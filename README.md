@@ -24,7 +24,7 @@
             ```
     3. After that, generate a Makefile using [CMake](https://cmake.org/) :
         ```
-        cmake .. -G “Unix Makefiles”
+        cmake .. -G "Unix Makefiles"
         ```
     4. Finally, compile the project :
         ```
