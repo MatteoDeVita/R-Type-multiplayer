@@ -1,3 +1,33 @@
 @startuml
-A -> B : Hello World
+
+
+package Server {
+
+    class ClientServerSide {
+        boost::asio::ip::udp _endpoint
+    }
+
+    GameContainer --o ClientServerSide
+    class GameContainer  {
+        - std::vector<ClientServerSide> _clients
+    }
+
+    Server --o GameContainer
+    class Server {
+        - std::vector<GameContainer> _gameContainers
+    }
+}
+
+package GameEngine {
+    GameEngine --o Client
+    GameEngine --o Server
+    class GameEngine
+}
+
+package Client {
+    class Client {
+
+    }
+}
+
 @enduml
