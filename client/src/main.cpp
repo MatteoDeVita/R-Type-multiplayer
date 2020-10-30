@@ -13,14 +13,13 @@
 using boost::asio::ip::udp;
 
 void StartMessage(int argc) {
-  if (argc != 3)
-    {
-      std::cerr << "Usage: client <host> <message>" << std::endl;
-      exit(84);
+    if (argc != 3) {
+        std::cerr << "Usage: client <host> <message>" << std::endl;
+        exit(84);
     }
 }
 
-void Receive(udp::socket *socket)
+void Receive(udp::socket *socket) //recoit et met a jour les datas du client -> A FAIRE : regler le tickRate 
 {
     boost::array<char, 128> recv_buf;
     while(1) {
@@ -30,19 +29,19 @@ void Receive(udp::socket *socket)
     }
 }
 
-void Send(boost::asio::io_context *io, std::string message, udp::endpoint *serverEndpoint, udp::socket *socket)
+void Send(boost::asio::io_context *io, std::string message, udp::endpoint *serverEndpoint, udp::socket *socket)//envoie les actions du client -> A FAIRE : regler le tickRate 
 {
-  while(1) {
-      boost::asio::steady_timer timer1_(*io, boost::asio::chrono::seconds(1));
-      timer1_.wait();
-      socket->send_to(boost::asio::buffer(message), *serverEndpoint);//envoie d'une var sendbuf au endpoint
-  }
+    while(1) {
+        boost::asio::steady_timer timer1_(*io, boost::asio::chrono::seconds(1));
+        timer1_.wait();
+        socket->send_to(boost::asio::buffer(message), *serverEndpoint);//envoie d'une var sendbuf au endpoint
+    }
 }
 
 int main(int argc, char* argv[])
 {
     StartMessage(argc);
-    
+
     boost::asio::io_context io;
     udp::resolver resolver(io);
     udp::endpoint serverEndpoint = *resolver.resolve(udp::v4(), argv[1], "3000").begin(); //recuperation du endpoint
