@@ -18,15 +18,111 @@ package Server {
     }
 }
 
-package GameEngine {
-    GameEngine --o Client
-    GameEngine --o Server
-    class GameEngine
-}
-
-package Client {
+namespace Client {
     class Client {
 
+    }
+}
+
+
+
+namespace gameEngine_ns {
+
+    namespace action_ns {        
+        class Action {
+            
+        }
+
+        gameEngine_ns.action_ns.ActionExplode -up-|> gameEngine_ns.action_ns.Action
+        class ActionExplode {
+            - Sprite *_sprite
+            
+            + void Explode()
+            
+        }
+
+        gameEngine_ns.action_ns.ActionShoot -up-|> gameEngine_ns.action_ns.Action
+        class ActionShoot {
+            - Shoot _*sprite
+
+            + void Shoot()
+        }
+    }
+
+    namespace event_ns {
+
+    }
+
+    namespace audio_ns {
+
+    }
+
+    namespace object_ns {
+
+        gameEngine_ns.object_ns.Sprite o-- gameEngine_ns.action_ns.ActionExplode
+        gameEngine_ns.object_ns.Sprite o-- gameEngine_ns.action_ns.ActionShoot
+        class Sprite {
+            - sf::Texture *_texture
+            + Sprite(const std::string filePath, std::vector<Rectangle> _rectanglePositionsOnImage)
+
+        }
+        
+        gameEngine_ns.object_ns.Object -down-o gameEngine_ns.object_ns.Sprite
+        gameEngine_ns.object_ns.Sprite o-- gameEngine_ns.action_ns.Action
+        class Object {
+            # Sprite *_sprite
+            # geometry::Vector *_pos
+            # const ? Sprite *_explodingSprite
+            # Sprite *_shootingSprite
+            # uint32 _options
+
+            + Object(const std::string unique_name, const Sprite &sprite)
+            + void setPosition(const geometry::Vector &position)
+            + void addOption(const options &option, const Sprite &sprite = nullptr)
+            + void executeOption(const actions &action)
+            + void executeOption(const actions &action, void (*callback)(Obejct *object))
+            + void move(const geometry_ns::Vector &vector)
+            + void setPosition(const geometry_ns::Vector &vector)
+        }
+    }
+          
+    namespace geometry_ns {
+        gameEngine_ns.geometry_ns.Vector -left-o Rectangle
+        class Vector {
+            - float _x
+            - float _y
+
+            + Vector(const float &x, const float &y)
+            + Vector &get()
+            + void setX(const float &x)
+            + void setY(const float &y)
+            + void set(const float &x, const float &y)
+        }
+
+        gameEngine_ns.geometry_ns.Rectangle --o gameEngine_ns.object_ns.Sprite
+        class Rectangle {
+            - Vector *_origin
+            - Vector *_size
+
+            + Rectangle(const Vector &origin, const Vector _size)
+            + Rectangle(const float &left, const float &top, const float &width, const float &height)
+            + void set(const Rectangle &rectangle)
+            + void setOrigin(const Vector &origin)
+            + void setSize(const Vector &size)
+            + void setByPoints(const float &left, const float &top, const float &width, const float &height)
+        }
+    }
+
+    namespace window_ns {
+        gameEngine_ns.window_ns.Window --o gameEngine_ns.geometry_ns.Vector
+        gameEngine_ns.window_ns.Window --o gameEngine_ns.object_ns.Object
+        class Window {
+            - sf::Window *_window
+
+            + Window(const geometry.ns::Vector &size)
+            + void addObject(const &object_ns::Object &object)
+            + void display()
+        }
     }
 }
 
