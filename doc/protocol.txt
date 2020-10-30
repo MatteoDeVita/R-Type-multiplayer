@@ -4,13 +4,8 @@ ____// client => server //____
 
   --| in menu |--
 
-_Lobby list
-=> LOBBY    <LIST>
-<= LOBBY    [LOBBY ID] [NB OF PLAYER]
-
-_Enter lobby
-=> LOBBY    <SELECT> [LOBBY ID] [PLAYER ID] [PLAYER NAME]
-<= LOBBY    [STATUS CODE]
+_Informations du client
+=> CLIENT [IP] [PORT]
 
   --| in game |--
 
