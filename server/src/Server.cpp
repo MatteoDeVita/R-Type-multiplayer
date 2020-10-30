@@ -35,7 +35,7 @@ void udp_server::game_container_load_balancer()
         if (this->NbofClientassign % 1 == 0) {
             GameContainer newest;
             newest.push_newclient(this->remote_endpoint_);
-            newest.message = this->recv_buffer_.data();//debug
+            newest.message = this->NbofClientassign;//debug
             this->_gameContainers.push_back(newest);
         }
         else {
