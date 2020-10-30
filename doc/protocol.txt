@@ -9,8 +9,11 @@ _Informations du client
 
   --| in game |--
 
-_Player shot
-=> PLAYER    [ID] <FIRE> [WEAPON TYPE]
+_Player basic shoot
+=> PLAYER    [ID] <BASICFIRE>
+
+_Player Mega shoot
+=> PLAYER    [ID] <MEGAFIRE>
 
 _Player move
 => PLAYER    [ID] [DIRECTION]
