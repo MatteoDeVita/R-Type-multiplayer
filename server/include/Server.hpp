@@ -4,26 +4,26 @@
 #include <boost/array.hpp>
 #include <boost/bind.hpp>
 #include <boost/shared_ptr.hpp>
+#include <boost/thread/thread.hpp>
 #include <boost/asio.hpp>
 
 #include "GameContainer.hpp"
 
-
 using boost::asio::ip::udp;
-class udp_server
+
+class UDP_Server
 {
     public:
-        udp_server(boost::asio::io_context& io);
-        bool get_user_is_know();
+        UDP_Server(boost::asio::io_context *io);
+        ~UDP_Server();
+        void send(boost::asio::io_context *io);
+        void receive(boost::asio::io_context *io);
+        std::string get_user_is_know(udp::endpoint remote_endpoint);
     private:
-        void start_receive();
-        void process(const boost::system::error_code& error, std::size_t /*bytes_transferred*/);
-        void handle_send(boost::shared_ptr<std::string> /*message*/, const boost::system::error_code& /*error*/, std::size_t /*bytes_transferred*/);
-        udp::socket socket_;
-        void send_data_game_to_clients();
-        udp::endpoint remote_endpoint_;
-        boost::array<char, 128> recv_buffer_;
+        bool get_user_is_know();
+        boost::asio::io_context _io;
+        boost::array<char, 128> _recv_buffer;
         std::vector<GameContainer> _gameContainers;
         int NbofClientassign;
-        void game_container_load_balancer();
+
 };

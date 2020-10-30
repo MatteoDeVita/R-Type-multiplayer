@@ -10,7 +10,6 @@
 int main()
 {
     boost::asio::io_context io;
-    udp_server server(io);
-    io.run();
+    UDP_Server serv(&io);
     return 0;
 }
