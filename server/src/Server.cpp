@@ -21,7 +21,7 @@ bool udp_server::get_user_is_know()
 {
     for (unsigned int i = 0; i < this->_gameContainers.size(); i++) {
         for (unsigned int y = 0; this->_gameContainers.at(i)._clients.size(); y++) {
-            if(this->remote_endpoint_.address() ==this->_gameContainers.at(i)._clients.at(y)._endpoint.address())
+            if(this->remote_endpoint_.address() == this->_gameContainers.at(i)._clients.at(y)._endpoint.address())
                 return true;
         }
     }
@@ -57,13 +57,14 @@ void udp_server::start_receive()
 
 void udp_server::process(const boost::system::error_code& error, std::size_t /*bytes_transferred*/)
 {
-    this->game_container_load_balancer();
+  //  this->game_container_load_balancer();
     std::cout << this->remote_endpoint_.address() << std::endl;
     //traitement des infos recus et envoies des infos aux bons clients
     boost::shared_ptr<std::string> message(new std::string("suuuce"));
     std::cout << "datas received : "<< this->recv_buffer_.data() << std::endl;
-    this->send_data_game_to_clients();
-    //socket_.async_send_to(boost::asio::buffer(*message), remote_endpoint_, boost::bind(&udp_server::handle_send, this, message,boost::asio::placeholders::error, boost::asio::placeholders::bytes_transferred));
+    //this->send_data_game_to_clients();//peut etre bloquant BUG
+    std::cout << "test" << std::endl;
+    socket_.async_send_to(boost::asio::buffer(*message), remote_endpoint_, boost::bind(&udp_server::handle_send, this, message,boost::asio::placeholders::error, boost::asio::placeholders::bytes_transferred));
     start_receive();
 }
 

@@ -13,7 +13,6 @@ using boost::asio::ip::udp;
 class udp_server
 {
     public:
-      //  std::vector<Parts>
         udp_server(boost::asio::io_context& io);
         bool get_user_is_know();
     private:
@@ -27,5 +26,4 @@ class udp_server
         std::vector<GameContainer> _gameContainers;
         int NbofClientassign;
         void game_container_load_balancer();
-
 };

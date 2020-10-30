@@ -8,40 +8,36 @@
 #include <iostream>
 #include <boost/array.hpp>
 #include <boost/asio.hpp>
+#include "Network.hpp"
+#include <thread>
 
 using boost::asio::ip::udp;
 
+void StartMessage(int argc) {
+  if (argc != 3)
+    {
+      std::cerr << "Usage: client <host> <message>" << std::endl;
+      exit(84);
+    }
+}
 
 int main(int argc, char* argv[])
 {
-    if (argc != 3)
-    {
-      std::cerr << "Usage: client <host> <message>" << std::endl;
-      return 1;
-    }
-
-    boost::asio::io_context io; //creation objet boost asio
-
-    udp::resolver resolver(io);//creation d'un object resolver pour trouver le endpoint(le host distant)
-    udp::endpoint receiver_endpoint = *resolver.resolve(udp::v4(), argv[1], "3000").begin(); //recuperation du endpoint
-
-
-    udp::socket socket(io); //creation d'un socket UDP
+    StartMessage(argc);
+    Network *network;
+    udp::resolver resolver(network->io);//creation d'un object resolver pour trouver le endpoint(le host distant)
+    network->serverEndpoint = *resolver.resolve(udp::v4(), argv[1], "3000").begin(); //recuperation du endpoint
+    udp::socket socket(network->io); //creation d'un socket UDP
     socket.open(udp::v4()); // ouverture du socket
-    std::string message = argv[2];
-    while (1) {
-        boost::asio::steady_timer timer1_(io, boost::asio::chrono::seconds(1));
-        timer1_.wait();
-        socket.send_to(boost::asio::buffer(message), receiver_endpoint);//envoie d'une var sendbuf au endpoint
 
-        std::cout<< "data sended to : "<< receiver_endpoint.address() << std::endl;
-        //reception
-        boost::array<char, 128> recv_buf;
-        udp::endpoint sender_endpoint; //on devient un Endpoint a notre tour
-        size_t len = socket.receive_from(boost::asio::buffer(recv_buf), sender_endpoint);
-        //affichage des donnes recus
+    std::string message = argv[2];//message
 
-        std::cout<< "data received : "<< recv_buf.data() << std::endl;
-    }
+    network->_thread = new std::thread(&Network::send, network, message, &socket); //thread send
+    network->_thread->detach();
+
+    network->_thread = new std::thread(&Network::receive, network, &socket); //thread receive
+    network->_thread->detach();
+
+    while (1) { }
     return 0;
 }
