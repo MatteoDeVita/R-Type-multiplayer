@@ -20,3 +20,11 @@ add_executable("r-type_client" ${ClientSourceFiles})
 
 target_include_directories("r-type_server" PUBLIC "${PROJECT_SOURCE_DIR}/server/include")
 target_include_directories("r-type_client" PUBLIC "${PROJECT_SOURCE_DIR}/client/include")
+
+
+find_package(Boost COMPONENTS thread REQUIRED)
+
+target_link_libraries(
+    ${PROJECT_NAME}
+    Boost::thread
+  )

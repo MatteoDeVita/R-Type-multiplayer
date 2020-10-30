@@ -8,9 +8,8 @@
 #include <iostream>
 #include <boost/array.hpp>
 #include <boost/asio.hpp>
-#include "Network.hpp"
-#include <thread>
-
+#include <boost/thread/thread.hpp>
+//#include "Network.hpp"
 using boost::asio::ip::udp;
 
 void StartMessage(int argc) {
@@ -21,23 +20,47 @@ void StartMessage(int argc) {
     }
 }
 
+void Receive(udp::socket *socket)
+{
+    boost::array<char, 128> recv_buf;
+    while(1) {
+        udp::endpoint client_endpoint;
+        size_t len = socket->receive_from(boost::asio::buffer(recv_buf), client_endpoint);
+        std::cout << "Data received : " << recv_buf.data() << std::endl;
+    }
+}
+
+void Send(boost::asio::io_context *io, std::string message, udp::endpoint *serverEndpoint, udp::socket *socket)
+{
+  while(1) {
+      boost::asio::steady_timer timer1_(*io, boost::asio::chrono::seconds(1));
+      timer1_.wait();
+      socket->send_to(boost::asio::buffer(message), *serverEndpoint);//envoie d'une var sendbuf au endpoint
+  }
+}
+
 int main(int argc, char* argv[])
 {
     StartMessage(argc);
-    Network *network;
-    udp::resolver resolver(network->io);//creation d'un object resolver pour trouver le endpoint(le host distant)
-    network->serverEndpoint = *resolver.resolve(udp::v4(), argv[1], "3000").begin(); //recuperation du endpoint
-    udp::socket socket(network->io); //creation d'un socket UDP
+    
+    boost::asio::io_context io;
+    udp::resolver resolver(io);
+    udp::endpoint serverEndpoint = *resolver.resolve(udp::v4(), argv[1], "3000").begin(); //recuperation du endpoint
+    udp::socket socket(io); //creation d'un socket UDP
     socket.open(udp::v4()); // ouverture du socket
 
     std::string message = argv[2];//message
 
-    network->_thread = new std::thread(&Network::send, network, message, &socket); //thread send
-    network->_thread->detach();
+    boost::thread t1(Send, &io, message, &serverEndpoint, &socket);
+    boost::thread t2(Receive, &socket);
+    t1.detach();
+    t2.detach();
 
-    network->_thread = new std::thread(&Network::receive, network, &socket); //thread receive
-    network->_thread->detach();
+    while (1) { //Gameloop
+    
+    }
 
-    while (1) { }
+    t1.join();
+    t2.join();
     return 0;
 }

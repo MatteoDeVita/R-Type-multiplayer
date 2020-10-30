@@ -6,7 +6,7 @@
 */
 
 #include "Server.hpp"
-
+/*
 void udp_server::send_data_game_to_clients()
 {
     for (unsigned int i = 0; i < this->_gameContainers.size(); i++) {
@@ -30,7 +30,6 @@ bool udp_server::get_user_is_know()
 
 void udp_server::game_container_load_balancer()
 {
-    /*rajouter la vcerification de si le client existe ou non ( le prochain if/else sera fais si il n'existe pas)*/
     if (get_user_is_know() == false) {
         if (this->NbofClientassign % 1 == 0) {
             GameContainer newest;
@@ -43,7 +42,9 @@ void udp_server::game_container_load_balancer()
         }
         this->NbofClientassign++;
     }
-}
+}*/
+
+
 
 udp_server::udp_server(boost::asio::io_context& io) : socket_(io, udp::endpoint(udp::v4(), 3000))
 {
