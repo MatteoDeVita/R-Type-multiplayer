@@ -15,10 +15,10 @@ using boost::asio::ip::udp;
 class UDP_Server
 {
     public:
-        UDP_Server();
+        UDP_Server(boost::asio::io_context &io);
         ~UDP_Server();
-        //void send(boost::asio::io_context *io);
-      //  void receive(boost::asio::io_context *io);
+        void do_send(std::size_t length); //boost::asio::io_context *io, UDP_Server *the_serv,udp::socket *socket
+        void do_receive();
         std::string get_user_is_know(udp::endpoint remote_endpoint);
         bool get_user_is_know();
         boost::asio::io_context _io;
@@ -26,6 +26,8 @@ class UDP_Server
         std::vector<GameContainer> _gameContainers;
         int NbofClientassign;
     private:
-
-
+        udp::socket _socket;
+        udp::endpoint _client_endpoint;
+        enum { max_length = 1024 };
+        char _data[max_length];
 };
