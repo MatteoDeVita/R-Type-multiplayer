@@ -23,3 +23,8 @@ GameContainer::GameContainer()
 GameContainer::~GameContainer()
 {
 }
+
+void GameContainer::update_struct()
+{
+    this->data_struct.c += 1;
+}

@@ -22,6 +22,7 @@ class GameContainer {
             template<typename Ar> void serialize(Ar& ar, unsigned) { ar & a & b & c; }
         } sample;
         sample data_struct;
+        void update_struct();
     protected:
     private:
 };

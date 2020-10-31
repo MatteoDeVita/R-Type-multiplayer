@@ -56,8 +56,8 @@ void Send(boost::asio::io_context *io, std::string message, udp::endpoint *serve
         timer1_.wait();
 
         sample Networkstruct;
-        Networkstruct.a = 'q';
-        Networkstruct.b = 'q';
+        Networkstruct.a = 'f';
+        Networkstruct.b = 'a';
         Networkstruct.c = 1;
 
         std::ostringstream archive_stream;

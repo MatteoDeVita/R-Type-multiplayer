@@ -27,6 +27,7 @@ void UDP_Server::do_send(std::size_t length)
             // std::cout << this->_gameContainers.at(i)._clients.at(y)._endpoint.address() << std::endl;
             if(this->_client_endpoint.address() == this->_gameContainers.at(i)._clients.at(y)._endpoint.address()) {
                 std::string message = std::to_string(this->_gameContainers.at(i)._clients.at(y).ton_num);//test = std::to_string(this->_gameContainers.at(i)._clients.at(y).ton_num); // std::styring
+                this->_gameContainers.at(i).update_struct();
                 archive << this->_gameContainers.at(i).data_struct;
                 
             }
