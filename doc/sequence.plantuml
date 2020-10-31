@@ -1,10 +1,9 @@
 @startuml
 
-
 package Server {
 
     class ClientServerSide {
-        boost::asio::ip::udp _endpoint
+       - boost::asio::ip::udp _endpoint
     }
 
     GameContainer --o ClientServerSide
@@ -19,75 +18,116 @@ package Server {
 }
 
 namespace Client {
+
     class Client {
 
     }
+
 }
 
 
 
 namespace gameEngine_ns {
 
-    namespace action_ns {        
+    namespace action_ns {
+
+        interface IAction {
+            - object_ns::Object *_object
+
+            # IAction()
+            # const void enable() = 0
+            # const void disable() = 0
+        }
+
+        gameEngine_ns.action_ns.Action -up-|> gameEngine_ns.action_ns.IAction
         class Action {
-            
+            # Action()
+            # void setSprite(const Sprite *sprite)
         }
 
-        gameEngine_ns.action_ns.ActionExplode -up-|> gameEngine_ns.action_ns.Action
-        class ActionExplode {
-            - Sprite *_sprite
+        Explode -up-|> gameEngine_ns.action_ns.Action
+        class Explode {
             
-            + void Explode()
-            
+            + void enable()
+            + void disable()
+
         }
 
-        gameEngine_ns.action_ns.ActionShoot -up-|> gameEngine_ns.action_ns.Action
-        class ActionShoot {
-            - Shoot _*sprite
+        Shoot -up-|> gameEngine_ns.action_ns.Action
+        class Shoot {
+            + void enable()
+            + void disable()
+        }
 
-            + void Shoot()
+        Moove -up-|> gameEngine_ns.action_ns.Action
+        class Moove {
+            + void enable(const geometry_ns::Vector &vector)
+            + void disable()
         }
     }
-
+    
     namespace event_ns {
+        class Event {
+            - sf::Event _event
 
+            + Event(window_ns *window)
+            + void pollEvent()
+        }
     }
 
     namespace audio_ns {
 
+        Audio -down-|> gameEngine_ns.audio_ns.Music
+        Audio -down-|> gameEngine_ns.audio_ns.FX
+        class Audio {
+            # sf::SoundBuffer _buffer
+
+            - Audio()
+            # void play() const = 0
+        }
+
+
+        class FX {
+            - sf::Sound _sound
+            
+            + FX()
+            + void play() const
+        }
+
+        class Music {
+            - sf::Music _music
+            
+            + Music()
+            + void play() const
+        }
     }
 
     namespace object_ns {
 
-        gameEngine_ns.object_ns.Sprite o-- gameEngine_ns.action_ns.ActionExplode
-        gameEngine_ns.object_ns.Sprite o-- gameEngine_ns.action_ns.ActionShoot
         class Sprite {
             - sf::Texture *_texture
             + Sprite(const std::string filePath, std::vector<Rectangle> _rectanglePositionsOnImage)
 
         }
-        
-        gameEngine_ns.object_ns.Object -down-o gameEngine_ns.object_ns.Sprite
-        gameEngine_ns.object_ns.Sprite o-- gameEngine_ns.action_ns.Action
+
+        gameEngine_ns.object_ns.Object o-- gameEngine_ns.action_ns.IAction
+        gameEngine_ns.object_ns.Object o-- gameEngine_ns.action_ns.Moove
+        gameEngine_ns.object_ns.Object o-- gameEngine_ns.action_ns.Explode
+        gameEngine_ns.object_ns.Object o-- gameEngine_ns.action_ns.Shoot
+        gameEngine_ns.object_ns.Object o-down- gameEngine_ns.object_ns.Sprite
         class Object {
             # Sprite *_sprite
             # geometry::Vector *_pos
-            # const ? Sprite *_explodingSprite
-            # Sprite *_shootingSprite
-            # uint32 _options
 
-            + Object(const std::string unique_name, const Sprite &sprite)
-            + void setPosition(const geometry::Vector &position)
-            + void addOption(const options &option, const Sprite &sprite = nullptr)
-            + void executeOption(const actions &action)
-            + void executeOption(const actions &action, void (*callback)(Obejct *object))
-            + void move(const geometry_ns::Vector &vector)
-            + void setPosition(const geometry_ns::Vector &vector)
+            + std::map<const std::string, actions_ns::Action> actions
+            + Object(const std::string unique_name, const Sprite &sprite, const gometry_ns::Vector &position)            
+            + void addAction(const std::string &name, action_ns::Action *_action)
         }
     }
           
     namespace geometry_ns {
         gameEngine_ns.geometry_ns.Vector -left-o Rectangle
+        gameEngine_ns.geometry_ns.Vector --o gameEngine_ns.action_ns.Moove
         class Vector {
             - float _x
             - float _y
@@ -116,6 +156,7 @@ namespace gameEngine_ns {
     namespace window_ns {
         gameEngine_ns.window_ns.Window --o gameEngine_ns.geometry_ns.Vector
         gameEngine_ns.window_ns.Window --o gameEngine_ns.object_ns.Object
+        gameEngine_ns.event_ns.Event --o gameEngine_ns.window_ns.Window
         class Window {
             - sf::Window *_window
 
