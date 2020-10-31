@@ -9,6 +9,7 @@
 
 UDP_Server::UDP_Server(boost::asio::io_context &io) : _socket(io, udp::endpoint(udp::v4(), 3000))
 {
+    std::cout << BOLDMAGENTA << "[SERVER IS RUNNING]" << RESET << std::endl;//DEBUG
     this->NbofClientassign = 0;
     do_receive();
 }
@@ -32,12 +33,11 @@ void UDP_Server::do_send()
         }
     }
 
-
     this->_socket.async_send_to(
     boost::asio::buffer(archive_stream.str()), _client_endpoint,
     [this](boost::system::error_code /*ec*/, std::size_t /*bytes_sent*/)
     {
-        std::cout << YELLOW << "[DATA SENDED]" << RESET << " -> DEST=" << _client_endpoint << std::endl;//DEBUG
+        std::cout << BOLDYELLOW << "[DATA SENDED]" << RESET << " -> DEST=" << _client_endpoint << std::endl;//DEBUG
         do_receive();
     });
 }
@@ -66,7 +66,7 @@ void UDP_Server::set_user_info(udp::endpoint client_endpoint, std::string seriel
                 archive >> this->_gameContainers.at(i).data_struct;
 
 
-                std::cout << GREEN << "[DATA RECEIVED AND UPDATED]" << RESET << " -> USER=" << this->_gameContainers.at(i)._clients.at(y).ton_num << " CONTAINER=" << this->_gameContainers.at(i)._clients.at(y).ton_num / 4  << " FROM=" << client_endpoint << std::endl;//DEBUG
+                std::cout << BOLDGREEN << "[DATA RECEIVED AND UPDATED]" << RESET << " -> USER=" << this->_gameContainers.at(i)._clients.at(y).ton_num << " CONTAINER=" << this->_gameContainers.at(i)._clients.at(y).ton_num / 4  << " FROM=" << client_endpoint << std::endl;//DEBUG
 
 
              //   std::cout << this->_gameContainers.at(i).data_struct.a << std::endl;//test
@@ -80,15 +80,15 @@ void UDP_Server::set_user_info(udp::endpoint client_endpoint, std::string seriel
     new_client._endpoint = client_endpoint;
     new_client.ton_num = this->NbofClientassign;
     if (this->NbofClientassign % 4 == 0) {
-           std::cout << RED << "[NEW CONTAINER]" << RESET << " -> "<< "ID="<<NbofClientassign / 4 << std::endl;//DEBUG
-           std::cout << BLUE << "[USER ADDED]" << RESET << " -> USER=" << this->NbofClientassign << " CONTAINER=" << NbofClientassign / 4 << " FROM=" << client_endpoint << std::endl;//DEBUG
+           std::cout << BOLDRED << "[NEW CONTAINER]" << RESET << " -> "<< "ID="<<NbofClientassign / 4 << std::endl;//DEBUG
+           std::cout << BOLDBLUE << "[USER ADDED]" << RESET << " -> USER=" << this->NbofClientassign << " CONTAINER=" << NbofClientassign / 4 << " FROM=" << client_endpoint << std::endl;//DEBUG
            GameContainer newest;
            newest._clients.push_back(new_client);
            archive >> newest.data_struct;
            this->_gameContainers.push_back(newest);
        }
        else {
-           std::cout << BLUE << "[USER ADDED]" << RESET << " -> USER=" << this->NbofClientassign << " CONTAINER=" << NbofClientassign / 4 << " FROM=" << client_endpoint << std::endl;//DEBUG
+           std::cout << BOLDBLUE << "[USER ADDED]" << RESET << " -> USER=" << this->NbofClientassign << " CONTAINER=" << NbofClientassign / 4 << " FROM=" << client_endpoint << std::endl;//DEBUG
            archive >> this->_gameContainers.at(_gameContainers.size() - 1).data_struct;
            this->_gameContainers.at(_gameContainers.size() - 1)._clients.push_back(new_client);
        }

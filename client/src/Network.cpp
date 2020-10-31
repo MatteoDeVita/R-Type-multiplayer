@@ -1,38 +1,67 @@
-// /*
-// ** EPITECH PROJECT, 2020
-// ** B-CPP-501-LYN-5-1-rtype-lorris.hamdaoui [WSL: Ubuntu-20.04]
-// ** File description:
-// ** Thread
-// */
+/*
+** EPITECH PROJECT, 2020
+** B-CPP-501-LYN-5-1-rtype-lorris.hamdaoui [WSL: Ubuntu-20.04]
+** File description:
+** Network
+*/
 
-// #include "Network.hpp"
+#include "Network.hpp"
 
-// using boost::asio::ip::udp;
+void Threaded_Send(Network *ClassAccess)//envoie les actions du client -> A FAIRE : regler le tickRate 
+{
+    while(1) {
+        boost::asio::steady_timer timer1_(ClassAccess->_io, boost::asio::chrono::seconds(1));
+        timer1_.wait();
 
-// Network::Network()
-// {
-   
-// }
+        ClassAccess->NetStruct.a = "lorris est gay";
+        ClassAccess->NetStruct.b = 'a';
+        ClassAccess->NetStruct.c += 1;
 
-// Network::~Network()
-// {
-//     delete this->thread_send;
-//     delete this->thread_receive;
-// }
+        std::ostringstream archive_stream;
+        boost::archive::text_oarchive archive(archive_stream);  
+        archive << ClassAccess->NetStruct;
 
-// void Network::send(std::string message, udp::socket *socket)
-// {
-//     while(1) {
-//         boost::asio::steady_timer timer1_(this->io, boost::asio::chrono::seconds(1));
-//         timer1_.wait();
-//         socket->send_to(boost::asio::buffer(message), this->serverEndpoint);//envoie d'une var sendbuf au endpoint
-//     }
-// }
+        ClassAccess->_socket.send_to(boost::asio::buffer(archive_stream.str()),ClassAccess->_server_endpoint);//envoie de la struct au serv
+    }
+}
 
-// void Network::receive(udp::socket *socket) {
-//     while(1) {
-//         udp::endpoint client_endpoint;
-//         size_t len = socket->receive_from(boost::asio::buffer(this->recv_buf), client_endpoint);
-//         std::cout << "Data received : " << this->recv_buf.data() << std::endl;
-//     }
-// }
+void Threaded_Receive(Network *ClassAccess) //recoit et met a jour les datas du client
+{
+    std::string str;
+    str.resize(1024);
+
+    while(1) {
+        udp::endpoint client_endpoint;
+        size_t len = ClassAccess->_socket.receive_from(boost::asio::buffer(str), client_endpoint);
+
+        std::istringstream archive_stream(str);
+        boost::archive::text_iarchive archive(archive_stream);
+        archive >> ClassAccess->NetStruct;
+
+        std::cout << "contenu de a : " << ClassAccess->NetStruct.a  << std::endl;//test
+        std::cout << "contenu de b : " << ClassAccess->NetStruct.b << std::endl;//test
+        std::cout << "contenu de c : " << ClassAccess->NetStruct.c  << std::endl;//test
+    }
+}
+
+Network::Network(int argc, char **argv) : _io(), _resolver(_io),_socket(_io)
+{
+    this->NetStruct.c = 0; //exemples
+    if (argc != 2) {
+        std::cerr << "Usage: client <host>" << std::endl;
+        exit(84);
+    }
+    this->_server_endpoint = *_resolver.resolve(udp::v4(), argv[2], "3000").begin(); //recuperation du endpoint
+    this->_socket.open(udp::v4()); // ouverture du socket
+
+    boost::thread t1(Threaded_Send, this);
+    boost::thread t2(Threaded_Receive, this);
+    t1.detach();
+    t2.detach();
+    t1.join();
+    t2.join();
+}
+
+Network::~Network()
+{
+}
