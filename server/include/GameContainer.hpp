@@ -15,6 +15,12 @@ class GameContainer {
         ~GameContainer();
         void push_newclient(boost::asio::ip::udp::endpoint);
         std::vector<ClientServerSide> _clients;
+        typedef struct sample_t {
+            char a;
+            char b;
+            int c;
+            template<typename Ar> void serialize(Ar& ar, unsigned) { ar & a & b & c; }
+        } sample;
     protected:
     private:
 };

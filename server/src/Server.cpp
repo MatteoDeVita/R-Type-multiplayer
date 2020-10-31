@@ -30,12 +30,21 @@ void UDP_Server::do_send(std::size_t length)
             }
         }
     }
-        this->_socket.async_send_to(
-        boost::asio::buffer(_data, max_length), _client_endpoint,
-        [this](boost::system::error_code /*ec*/, std::size_t /*bytes_sent*/)
-        {
-          do_receive();
-        });
+    GameContainer::sample testStruct;
+    testStruct.a = 'x';
+    testStruct.b = 'e';
+    testStruct.c = 3;
+
+    std::ostringstream archive_stream;
+    boost::archive::text_oarchive archive(archive_stream);  
+    archive << testStruct;
+
+    this->_socket.async_send_to(
+    boost::asio::buffer(archive_stream.str()), _client_endpoint,
+    [this](boost::system::error_code /*ec*/, std::size_t /*bytes_sent*/)
+    {
+      do_receive();
+    });
 }
 
 void UDP_Server::do_receive()
