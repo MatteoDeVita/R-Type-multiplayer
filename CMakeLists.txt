@@ -14,6 +14,7 @@ include_directories(${CMAKE_INCLUDE_PATH})
 
 file(GLOB ServerSourceFiles src/server/src/*.cpp)
 file(GLOB ClientSourceFiles src/client/src/*.cpp)
+file(GLOB GameEnigneSourceFiles src/gameEngine/*/src/*.cpp)
 
 add_executable("r-type_server" ${ServerSourceFiles})
 add_executable("r-type_client" ${ClientSourceFiles})
@@ -21,7 +22,7 @@ add_executable("r-type_client" ${ClientSourceFiles})
 target_link_libraries("r-type_server" Boost::thread Boost::serialization)
 target_link_libraries("r-type_client" Boost::thread Boost::serialization)
 
-target_include_directories("r-type_server" PUBLIC "${PROJECT_SOURCE_DIR}/src//server/include")
-target_include_directories("r-type_client" PUBLIC "${PROJECT_SOURCE_DIR}/src//client/include")
+target_include_directories("r-type_server" PUBLIC "${PROJECT_SOURCE_DIR}/src/server/include" "${PROJECT_SOURCE_DIR}/src/gameEngine/*/include/*.hpp")
+target_include_directories("r-type_client" PUBLIC "${PROJECT_SOURCE_DIR}/src/client/include" "${PROJECT_SOURCE_DIR}/src/gameEngine/*/include/*.hpp")
 
 find_package(Boost 1.71.0 COMPONENTS thread system filesystem serialization REQUIRED)
