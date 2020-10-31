@@ -1,0 +1,14 @@
+@startuml
+title interaction avec l'environnement
+actor player1 order 10
+participant client order 20
+participant server order 30
+database scene order 40
+
+player1 -> client ++ : déplacement à droite
+client -> server ++ : joueur se déplace à droite
+server -> scene ++ : mise à jour de l'environnement
+scene -> server -- : environnement mis à jour
+server -> client : envoie de l'environnement
+client -> player1 : affichage du joueur à droite
+@enduml
