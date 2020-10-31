@@ -7,48 +7,48 @@
 
 #include "Server.hpp"
 
-void receive(UDP_Server *the_serv, udp::socket *socket)
+void Sender(boost::asio::io_context *io, UDP_Server *the_serv)
 {
-    /*udp::resolver resolver(*io);
-    udp::socket socket(*io, udp::endpoint(udp::v4(), 3000));*/
-
-    udp::endpoint client_endpoint;
-    while(1) {
-        size_t len = socket->receive_from(boost::asio::buffer(the_serv->_recv_buffer), client_endpoint);
-        std::cout << the_serv->get_user_is_know(client_endpoint) << std::endl;
-    }
-}
-
-void Sender(boost::asio::io_context *io, UDP_Server *the_serv, udp::socket *socket)
-{
-    //udp::socket socket(*io, udp::endpoint(udp::v4(), 3000));
-    
-    while(1) {
+    udp::socket socket(*io, udp::endpoint(udp::v4(), 3000));
+    boost::system::error_code ignored_error;
+    /*while(1) {
        for (unsigned int i = 0; i < the_serv->_gameContainers.size(); i++) {
            for (unsigned int y = 0; the_serv->_gameContainers.at(i)._clients.size(); y++) {
                boost::asio::steady_timer timer1_(*io, boost::asio::chrono::seconds(1));
                timer1_.wait();
                std::string message = std::to_string(the_serv->_gameContainers.at(i)._clients.at(y).ton_num);
                std::cout << the_serv->_gameContainers.at(i)._clients.at(y)._endpoint.address() << std::endl;
-               socket->send_to(boost::asio::buffer(message), the_serv->_gameContainers.at(i)._clients.at(y)._endpoint);
+               socket.send_to(boost::asio::buffer(message), the_serv->_gameContainers.at(i)._clients.at(y)._endpoint, 0, ignored_error);
            }
        }
+    }*/
+}
+
+void receive(UDP_Server *the_serv, boost::asio::io_context *io)
+{
+    /*udp::resolver resolver(*io);*/
+    udp::socket socket(*io, udp::endpoint(udp::v4(), 3000));
+
+    udp::endpoint client_endpoint;
+    boost::system::error_code error;
+    while(1) {
+        size_t len = socket.receive_from(boost::asio::buffer(the_serv->_recv_buffer), client_endpoint, 0, error);
+        std::cout << the_serv->get_user_is_know(client_endpoint) << std::endl;
     }
 }
 
-UDP_Server::UDP_Server(boost::asio::io_context *io)
+UDP_Server::UDP_Server()
 {
     this->NbofClientassign = 0;
-    udp::resolver resolver(*io);
-    udp::socket socket(*io, udp::endpoint(udp::v4(), 3000));
-    //socket.open(udp::v4()); // ouverture du socket
+    boost::asio::io_context io;
+    //udp::socket socket(io, udp::endpoint(udp::v4(), 3000));
     
-    boost::thread t1(receive, this, &socket);
-    //boost::thread t2(Sender, io, this, socket );
+    boost::thread t1(receive, this, &io);
+    boost::thread t2(Sender, &io, this);
     t1.detach();
-   // t2.detach();
+    t2.detach();
     t1.join();
-   // t2.join();
+    t2.join();
     std::cout << "[SERVER IS READY]" << std::endl;
 
 }

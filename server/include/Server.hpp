@@ -5,6 +5,7 @@
 #include <boost/asio.hpp>
 #include <boost/bind.hpp>
 #include <boost/shared_ptr.hpp>
+#include <boost/make_shared.hpp>
 #include <boost/thread/thread.hpp>
 
 #include "GameContainer.hpp"
@@ -14,7 +15,7 @@ using boost::asio::ip::udp;
 class UDP_Server
 {
     public:
-        UDP_Server(boost::asio::io_context *io);
+        UDP_Server();
         ~UDP_Server();
         //void send(boost::asio::io_context *io);
       //  void receive(boost::asio::io_context *io);
