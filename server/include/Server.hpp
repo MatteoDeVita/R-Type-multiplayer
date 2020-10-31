@@ -9,7 +9,7 @@
 #include <boost/thread/thread.hpp>
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/archive/text_oarchive.hpp>
-
+#include "Debug_color.hpp"
 #include "GameContainer.hpp"
 
 using boost::asio::ip::udp;
@@ -19,9 +19,9 @@ class UDP_Server
     public:
         UDP_Server(boost::asio::io_context &io);
         ~UDP_Server();
-        void do_send(std::size_t length); //boost::asio::io_context *io, UDP_Server *the_serv,udp::socket *socket
+        void do_send();
         void do_receive();
-        std::string set_user_info(udp::endpoint remote_endpoint, std::string serielise_string);
+        void set_user_info(udp::endpoint remote_endpoint, std::string serielise_string);
         bool get_user_is_know();
         boost::asio::io_context _io;
         boost::array<char, 128> _recv_buffer;
