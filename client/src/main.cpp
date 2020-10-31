@@ -16,15 +16,15 @@
 using boost::asio::ip::udp;
 
 typedef struct sample_t {
-    char a;
+    std::string a;
     char b;
     int c;
     template<typename Ar> void serialize(Ar& ar, unsigned) { ar & a & b & c; }
 } sample;
-
+sample Networkstruct;
 void StartMessage(int argc) {
-    if (argc != 3) {
-        std::cerr << "Usage: client <host> <message>" << std::endl;
+    if (argc != 2) {
+        std::cerr << "Usage: client <host>" << std::endl;
         exit(84);
     }
 }
@@ -49,16 +49,16 @@ void Receive(udp::socket *socket) //recoit et met a jour les datas du client -> 
     }
 }
 
-void Send(boost::asio::io_context *io, std::string message, udp::endpoint *serverEndpoint, udp::socket *socket)//envoie les actions du client -> A FAIRE : regler le tickRate 
+void Send(boost::asio::io_context *io, udp::endpoint *serverEndpoint, udp::socket *socket)//envoie les actions du client -> A FAIRE : regler le tickRate 
 {
     while(1) {
         boost::asio::steady_timer timer1_(*io, boost::asio::chrono::seconds(1));
         timer1_.wait();
 
-        sample Networkstruct;
-        Networkstruct.a = 'f';
+        
+        Networkstruct.a = "lorris est gay";
         Networkstruct.b = 'a';
-        Networkstruct.c = 1;
+        Networkstruct.c += 1;
 
         std::ostringstream archive_stream;
         boost::archive::text_oarchive archive(archive_stream);  
@@ -71,14 +71,14 @@ void Send(boost::asio::io_context *io, std::string message, udp::endpoint *serve
 int main(int argc, char* argv[])
 {
     StartMessage(argc);
+    Networkstruct.c = 0;
     boost::asio::io_context io;
     udp::resolver resolver(io);
     udp::endpoint serverEndpoint = *resolver.resolve(udp::v4(), argv[1], "3000").begin(); //recuperation du endpoint
     udp::socket socket(io); //creation d'un socket UDP
     socket.open(udp::v4()); // ouverture du socket
 
-    std::string message = argv[2];//message
-    boost::thread t1(Send, &io, message, &serverEndpoint, &socket);
+    boost::thread t1(Send, &io, &serverEndpoint, &socket);
     boost::thread t2(Receive, &socket);
     t1.detach();
     t2.detach();

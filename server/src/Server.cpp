@@ -80,8 +80,8 @@ void UDP_Server::set_user_info(udp::endpoint client_endpoint, std::string seriel
     new_client._endpoint = client_endpoint;
     new_client.ton_num = this->NbofClientassign;
     if (this->NbofClientassign % 4 == 0) {
-           std::cout << "[NEW CONTAINER] -> " << NbofClientassign / 4 << std::endl;//DEBUG
-           std::cout << BLUE << "[USER ADDED]" << RESET<< " -> USER=" << this->NbofClientassign << " CONTAINER=" << NbofClientassign / 4 << " FROM=" << client_endpoint << std::endl;//DEBUG
+           std::cout << RED << "[NEW CONTAINER]" << RESET << " -> "<< "ID="<<NbofClientassign / 4 << std::endl;//DEBUG
+           std::cout << BLUE << "[USER ADDED]" << RESET << " -> USER=" << this->NbofClientassign << " CONTAINER=" << NbofClientassign / 4 << " FROM=" << client_endpoint << std::endl;//DEBUG
            GameContainer newest;
            newest._clients.push_back(new_client);
            archive >> newest.data_struct;
