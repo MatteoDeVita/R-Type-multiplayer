@@ -19,24 +19,20 @@ UDP_Server::~UDP_Server()
 
 void UDP_Server::do_send(std::size_t length)
 {
+    std::ostringstream archive_stream;
+    boost::archive::text_oarchive archive(archive_stream);  
+    
     for (unsigned int i = 0; i < this->_gameContainers.size(); i++) {
         for (unsigned int y = 0; y <  this->_gameContainers.at(i)._clients.size(); y++) {
             // std::cout << this->_gameContainers.at(i)._clients.at(y)._endpoint.address() << std::endl;
             if(this->_client_endpoint.address() == this->_gameContainers.at(i)._clients.at(y)._endpoint.address()) {
-                std::string message = std::to_string(this->_gameContainers.at(i)._clients.at(y).ton_num);;//test = std::to_string(this->_gameContainers.at(i)._clients.at(y).ton_num); // std::styring
-                strcpy(_data, message.c_str());
+                std::string message = std::to_string(this->_gameContainers.at(i)._clients.at(y).ton_num);//test = std::to_string(this->_gameContainers.at(i)._clients.at(y).ton_num); // std::styring
+                archive << this->_gameContainers.at(i).data_struct;
                 
             }
         }
     }
-    GameContainer::sample testStruct;
-    testStruct.a = 'x';
-    testStruct.b = 'e';
-    testStruct.c = 3;
 
-    std::ostringstream archive_stream;
-    boost::archive::text_oarchive archive(archive_stream);  
-    archive << testStruct;
 
     this->_socket.async_send_to(
     boost::asio::buffer(archive_stream.str()), _client_endpoint,
