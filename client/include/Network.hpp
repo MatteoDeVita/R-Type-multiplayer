@@ -34,6 +34,7 @@ class Network {
         sample NetStruct;
         boost::asio::io_context _io;
         udp::socket _socket;
+        int ms_speed;
         udp::resolver _resolver;
         udp::endpoint _server_endpoint;
     protected:

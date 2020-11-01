@@ -7,7 +7,7 @@
 
 #include "Server.hpp"
 
-UDP_Server::UDP_Server(boost::asio::io_context &io) : _socket(io, udp::endpoint(udp::v4(), 3000))
+UDP_Server::UDP_Server() : _socket(_io, udp::endpoint(udp::v4(), 3000))
 {
     std::cout << BOLDMAGENTA << "[SERVER IS RUNNING]" << RESET << std::endl;//DEBUG
     this->NbofClientassign = 0;
@@ -28,7 +28,6 @@ void UDP_Server::do_send()
             if(this->_client_endpoint.address() == this->_gameContainers.at(i)._clients.at(y)._endpoint.address()) {
                 this->_gameContainers.at(i).update_struct();//test
                 archive << this->_gameContainers.at(i).data_struct;
-                
             }
         }
     }
@@ -65,9 +64,7 @@ void UDP_Server::set_user_info(udp::endpoint client_endpoint, std::string seriel
                 this->_gameContainers.at(i)._clients.at(y)._endpoint = client_endpoint;
                 archive >> this->_gameContainers.at(i).data_struct;
 
-
                 std::cout << BOLDGREEN << "[DATA RECEIVED AND UPDATED]" << RESET << " -> USER=" << this->_gameContainers.at(i)._clients.at(y).ton_num << " CONTAINER=" << this->_gameContainers.at(i)._clients.at(y).ton_num / 4  << " FROM=" << client_endpoint << std::endl;//DEBUG
-
 
              //   std::cout << this->_gameContainers.at(i).data_struct.a << std::endl;//test
              //   std::cout << this->_gameContainers.at(i).data_struct.b << std::endl;//test
