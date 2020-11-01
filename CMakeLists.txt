@@ -12,8 +12,8 @@ conan_basic_setup()
 
 include_directories(${CMAKE_INCLUDE_PATH})
 
-file(GLOB ServerSourceFiles server/src/*.cpp)
-file(GLOB ClientSourceFiles client/src/*.cpp)
+file(GLOB ServerSourceFiles src/server/src/*.cpp)
+file(GLOB ClientSourceFiles src/client/src/*.cpp)
 
 add_executable("r-type_server" ${ServerSourceFiles})
 add_executable("r-type_client" ${ClientSourceFiles})
@@ -21,7 +21,7 @@ add_executable("r-type_client" ${ClientSourceFiles})
 target_link_libraries("r-type_server" Boost::thread Boost::serialization)
 target_link_libraries("r-type_client" Boost::thread Boost::serialization)
 
-target_include_directories("r-type_server" PUBLIC "${PROJECT_SOURCE_DIR}/server/include")
-target_include_directories("r-type_client" PUBLIC "${PROJECT_SOURCE_DIR}/client/include")
+target_include_directories("r-type_server" PUBLIC "${PROJECT_SOURCE_DIR}/src//server/include")
+target_include_directories("r-type_client" PUBLIC "${PROJECT_SOURCE_DIR}/src//client/include")
 
 find_package(Boost 1.71.0 COMPONENTS thread system filesystem serialization REQUIRED)

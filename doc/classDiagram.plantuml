@@ -1,0 +1,170 @@
+@startuml R-Type Diagramm Class
+
+package Server {
+
+    class ClientServerSide {
+       - boost::asio::ip::udp _endpoint
+    }
+
+    GameContainer --o ClientServerSide
+    class GameContainer  {
+        - std::vector<ClientServerSide> _clients
+    }
+
+    Server --o GameContainer
+    class Server {
+        - std::vector<GameContainer> _gameContainers
+    }
+}
+
+namespace Client {
+
+    class Client {
+
+    }
+
+}
+
+
+
+namespace gameEngine_ns {
+
+    namespace action_ns {
+
+        interface IAction {
+            - object_ns::Object *_object
+
+            # IAction()
+            # const void enable() = 0
+            # const void disable() = 0
+        }
+
+        gameEngine_ns.action_ns.Action -up-|> gameEngine_ns.action_ns.IAction
+        class Action {
+            # Action()
+            # void setSprite(const Sprite *sprite)
+        }
+
+        Explode -up-|> gameEngine_ns.action_ns.Action
+        class Explode {
+            
+            + void enable()
+            + void disable()
+
+        }
+
+        Shoot -up-|> gameEngine_ns.action_ns.Action
+        class Shoot {
+            + void enable()
+            + void disable()
+        }
+
+        Moove -up-|> gameEngine_ns.action_ns.Action
+        class Moove {
+            + void enable(const geometry_ns::Vector &vector)
+            + void disable()
+        }
+    }
+    
+    namespace event_ns {
+        class Event {
+            - sf::Event _event
+
+            + Event(window_ns *window)
+            + void pollEvent()
+        }
+    }
+
+    namespace audio_ns {
+
+        Audio -down-|> gameEngine_ns.audio_ns.Music
+        Audio -down-|> gameEngine_ns.audio_ns.FX
+        class Audio {
+            # sf::SoundBuffer _buffer
+
+            - Audio()
+            # void play() const = 0
+        }
+
+
+        class FX {
+            - sf::Sound _sound
+            
+            + FX()
+            + void play() const
+        }
+
+        class Music {
+            - sf::Music _music
+            
+            + Music()
+            + void play() const
+        }
+    }
+
+    namespace object_ns {
+
+        class Sprite {
+            - sf::Texture *_texture
+            + Sprite(const std::string filePath, std::vector<Rectangle> _rectanglePositionsOnImage)
+
+        }
+
+        gameEngine_ns.object_ns.Object o-- gameEngine_ns.action_ns.IAction
+        gameEngine_ns.object_ns.Object o-- gameEngine_ns.action_ns.Moove
+        gameEngine_ns.object_ns.Object o-- gameEngine_ns.action_ns.Explode
+        gameEngine_ns.object_ns.Object o-- gameEngine_ns.action_ns.Shoot
+        gameEngine_ns.object_ns.Object o-down- gameEngine_ns.object_ns.Sprite
+        class Object {
+            # Sprite *_sprite
+            # geometry::Vector *_pos
+
+            + std::map<const std::string, actions_ns::Action> actions
+            + Object(const std::string unique_name, const Sprite &sprite, const gometry_ns::Vector &position)            
+            + void addAction(const std::string &name, action_ns::Action *_action)
+        }
+    }
+          
+    namespace geometry_ns {
+        gameEngine_ns.geometry_ns.Vector -left-o Rectangle
+        gameEngine_ns.geometry_ns.Vector --o gameEngine_ns.action_ns.Moove
+        class Vector {
+            - float _x
+            - float _y
+
+            + Vector(const float &x, const float &y)
+            + Vector &get()
+            + void setX(const float &x)
+            + void setY(const float &y)
+            + void set(const float &x, const float &y)
+        }
+
+        gameEngine_ns.geometry_ns.Rectangle --o gameEngine_ns.object_ns.Sprite
+        class Rectangle {
+            - Vector *_origin
+            - Vector *_size
+
+            + Rectangle(const Vector &origin, const Vector _size)
+            + Rectangle(const float &left, const float &top, const float &width, const float &height)
+            + void set(const Rectangle &rectangle)
+            + void setOrigin(const Vector &origin)
+            + void setSize(const Vector &size)
+            + void setByPoints(const float &left, const float &top, const float &width, const float &height)
+        }
+    }
+
+    namespace window_ns {
+        gameEngine_ns.window_ns.Window --o gameEngine_ns.geometry_ns.Vector
+        gameEngine_ns.window_ns.Window --o gameEngine_ns.object_ns.Object
+        gameEngine_ns.event_ns.Event --o gameEngine_ns.window_ns.Window
+        class Window {
+            - sf::Window *_window
+
+            + Window(const geometry.ns::Vector &size)
+            + void addObject(const &object_ns::Object &object)
+            + void display()
+        }
+    }
+}
+
+@enduml

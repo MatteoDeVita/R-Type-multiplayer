@@ -1,0 +1,17 @@
+@startuml
+title communication client serveur
+actor player2 order 30
+actor player1 order 10
+participant server order 20
+
+server -> server  ++ : préparation des threads
+server -> server : lancement des threads
+server -> server : affectation des ports
+server -> server -- : serveur pret
+player1 -> server ++ : envoie d'informations du client
+player2 -> server : envoie d'informations du client
+player1 -> server : déplacement haut
+server -> server : mise à jour du serveur
+server -> player1 : mise à jour du client
+server -> player2 : mise à jour du client
+@enduml
