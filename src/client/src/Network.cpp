@@ -19,7 +19,7 @@ void Threaded_Send(Network *ClassAccess)//envoie les actions du client -> A FAIR
         ClassAccess->EnvClientData.sprite_ids.at(0) = "Salut Mha-teho SAN";//test  
         archive << ClassAccess->EnvClientData;
         ClassAccess->_socket.send_to(boost::asio::buffer(archive_stream.str()),ClassAccess->_server_endpoint);//envoie de la struct au serv
-        std::cout << BOLDYELLOW << "[DATA SENDED]" << RESET << " -> DEST=" << ClassAccess->_server_endpoint << std::endl;//DEBUG
+        std::cout << BOLDYELLOW << "[DATA SENT]" << RESET << " -> DEST=" << ClassAccess->_server_endpoint << std::endl;//DEBUG
     }
 }
 

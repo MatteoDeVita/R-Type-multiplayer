@@ -37,7 +37,7 @@ void UDP_Server::do_send()
     boost::asio::buffer(archive_stream.str()), _client_endpoint,
     [this](boost::system::error_code /*ec*/, std::size_t /*bytes_sent*/)
     {
-        std::cout << BOLDYELLOW << "[DATA SENDED]" << RESET << " -> DEST=" << _client_endpoint << std::endl;//DEBUG
+        std::cout << BOLDYELLOW << "[DATA SENT]" << RESET << " -> DEST=" << _client_endpoint << std::endl;//DEBUG
         do_receive();
     });
 }
