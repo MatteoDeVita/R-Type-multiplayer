@@ -24,7 +24,8 @@ namespace gameEngine_ns {
                 Rectangle operator*(const Rectangle &rectangle) const;
                 Rectangle operator/(const Rectangle &rectangle) const;
                 bool operator==(const Rectangle &rectangle) const;
-                ~Rectangle();            
+                float area() const;
+                float perimeter() const;
         };
     }
 }

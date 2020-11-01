@@ -50,7 +50,12 @@ bool gameEngine_ns::geometry_ns::Rectangle::operator==(const Rectangle &rectangl
     return this->origin == rectangle.origin && this->size == rectangle.size;
 }
 
-gameEngine_ns::geometry_ns::Rectangle::~Rectangle()
+float gameEngine_ns::geometry_ns::Rectangle::area() const
 {
+    return this->size.x * this->size.y;
+}
 
+float gameEngine_ns::geometry_ns::Rectangle::perimeter() const
+{
+    return this->origin.x + this->origin.y + this->size.x + this->size.y;
 }
