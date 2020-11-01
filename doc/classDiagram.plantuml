@@ -133,10 +133,11 @@ namespace gameEngine_ns {
             - float _y
 
             + Vector(const float &x, const float &y)
-            + Vector &get()
+            + Vector &get() const
             + void setX(const float &x)
             + void setY(const float &y)
             + void set(const float &x, const float &y)
+            + void set(const Vector &vector)
         }
 
         gameEngine_ns.geometry_ns.Rectangle --o gameEngine_ns.object_ns.Sprite
