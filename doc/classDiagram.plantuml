@@ -147,8 +147,15 @@ namespace gameEngine_ns {
             + Vector size
 
             + Rectangle()
-            + Rectangle(const Vector &origin, const Vector &size)
-            + Rectangle(const float &left, const float &top, const float &width, const float &height)
+            + Rectangle(const Vector &origin = Vector(), const Vector &size = Vector());
+            + Rectangle(const float &left = 0, const float &top = 0, const float &width = 0, const float &height = 0);
+            + Rectangle operator+(const Rectangle &rectangle) const;
+            + Rectangle operator-(const Rectangle &rectangle) const;
+            + Rectangle operator*(const Rectangle &rectangle) const;
+            + Rectangle operator/(const Rectangle &rectangle) const;
+            + bool operator==(const Rectangle &rectangle) const;
+            + float area() const;
+            + float perimeter() const;
         }
     }
 
