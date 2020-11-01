@@ -13,12 +13,12 @@ namespace gameEngine_ns {
             public:
                 float x;
                 float y;
-                Vector(const float &x, const float &y);
-                Vector operator+(const Vector &vector);
-                Vector operator-(const Vector &vector);
-                Vector operator*(const Vector &vector);
-                Vector operator/(const Vector &vector);
-                bool operator==(const Vector &vector);
+                Vector(const float &x = 0, const float &y = 0);
+                Vector operator+(const Vector &vector) const;
+                Vector operator-(const Vector &vector) const;
+                Vector operator*(const Vector &vector) const;
+                Vector operator/(const Vector &vector) const;
+                bool operator==(const Vector &vector) const;
         };
     }
 }

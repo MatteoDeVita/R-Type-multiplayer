@@ -13,31 +13,30 @@ gameEngine_ns::geometry_ns::Vector::Vector(const float &x, const float &y)
     this->y = y;
 }
 
-gameEngine_ns::geometry_ns::Vector gameEngine_ns::geometry_ns::Vector::operator+(const Vector &vector)
+gameEngine_ns::geometry_ns::Vector gameEngine_ns::geometry_ns::Vector::operator+(const Vector &vector) const
 {
-    gameEngine_ns::geometry_ns::Vector newVector = gameEngine_ns::geometry_ns::Vector(this->x + vector.x, this->y + vector.y);
-    return newVector;
+    return Vector(this->x + vector.x, this->y + vector.y);
 }
 
-gameEngine_ns::geometry_ns::Vector gameEngine_ns::geometry_ns::Vector::operator-(const Vector &vector)
+gameEngine_ns::geometry_ns::Vector gameEngine_ns::geometry_ns::Vector::operator-(const Vector &vector) const
 {
-    gameEngine_ns::geometry_ns::Vector newVector = gameEngine_ns::geometry_ns::Vector(this->x - vector.x, this->y - vector.y);
-    return newVector;
+    return Vector(this->x - vector.x, this->y - vector.y);
+
 }
 
-gameEngine_ns::geometry_ns::Vector gameEngine_ns::geometry_ns::Vector::operator*(const Vector &vector)
+gameEngine_ns::geometry_ns::Vector gameEngine_ns::geometry_ns::Vector::operator*(const Vector &vector) const
 {
-    gameEngine_ns::geometry_ns::Vector newVector = gameEngine_ns::geometry_ns::Vector(this->x * vector.x, this->y * vector.y);
-    return newVector;
+    return Vector(this->x * vector.x, this->y * vector.y);
+
 }
 
-gameEngine_ns::geometry_ns::Vector gameEngine_ns::geometry_ns::Vector::operator/(const Vector &vector)
+gameEngine_ns::geometry_ns::Vector gameEngine_ns::geometry_ns::Vector::operator/(const Vector &vector) const
 {
-    gameEngine_ns::geometry_ns::Vector newVector = gameEngine_ns::geometry_ns::Vector(this->x / vector.x, this->y / vector.y);
-    return newVector;
+    return Vector(this->x / vector.x, this->y / vector.y);
+
 }
 
-bool gameEngine_ns::geometry_ns::Vector::operator==(const Vector &vector)
+bool gameEngine_ns::geometry_ns::Vector::operator==(const Vector &vector) const
 {
     return this->x == vector.x && this->y == vector.y;
 }

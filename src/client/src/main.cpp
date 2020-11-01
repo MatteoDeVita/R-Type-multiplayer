@@ -5,14 +5,17 @@
 ** Main
 */
 
+#include <iostream>
+
 #include "Network.hpp"
+#include "Vector.hpp"
 
 int main(int argc, char **argv)
 {
     Network net(argc, argv);
 
     while (1) { //Gameloop
-    
+        
     }
     return 0;
 }

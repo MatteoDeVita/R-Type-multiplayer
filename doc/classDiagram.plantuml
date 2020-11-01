@@ -132,25 +132,23 @@ namespace gameEngine_ns {
             + float x
             + float y
 
-            + Vector(const float &x, const float &y)
-            + Vector &operator+(const Vector &vector)
-            + Vector &operator-(const Vector &vector)
-            + Vector &operator*(const Vector &vector)
-            + Vector &operator/(const Vector &vector)
-            + bool operator==(const Vector &vector)            
+            + Vector()
+            + Vector(const float &x = 0, const float &y = 0)
+            + Vector &operator+(const Vector &vector) const
+            + Vector &operator-(const Vector &vector) const
+            + Vector &operator*(const Vector &vector) const
+            + Vector &operator/(const Vector &vector) const
+            + bool operator==(const Vector &vector) const          
         }
 
         gameEngine_ns.geometry_ns.Rectangle --o gameEngine_ns.object_ns.Sprite
         class Rectangle {
-            - Vector *_origin
-            - Vector *_size
+            + Vector origin
+            + Vector size
 
-            + Rectangle(const Vector &origin, const Vector _size)
+            + Rectangle()
+            + Rectangle(const Vector &origin, const Vector &size)
             + Rectangle(const float &left, const float &top, const float &width, const float &height)
-            + void set(const Rectangle &rectangle)
-            + void setOrigin(const Vector &origin)
-            + void setSize(const Vector &size)
-            + void setByPoints(const float &left, const float &top, const float &width, const float &height)
         }
     }
 
