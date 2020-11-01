@@ -129,14 +129,16 @@ namespace gameEngine_ns {
         gameEngine_ns.geometry_ns.Vector -left-o Rectangle
         gameEngine_ns.geometry_ns.Vector --o gameEngine_ns.action_ns.Moove
         class Vector {
-            - float _x
-            - float _y
+            + float x
+            + float y
 
             + Vector(const float &x, const float &y)
-            + Vector &get()
-            + void setX(const float &x)
-            + void setY(const float &y)
-            + void set(const float &x, const float &y)
+            + Vector &operator+(const Vector &vector1, const Vector &vector2)
+            + Vector &operator-(const Vector &vector1, const Vector &vector2)
+            + Vector &operator*(const Vector &vector1, const Vector &vector2)
+            + Vector &operator/(const Vector &vector1, const Vector &vector2)
+            + bool operator==(const Vector &vector1, const Vector &vector2)
+            
         }
 
         gameEngine_ns.geometry_ns.Rectangle --o gameEngine_ns.object_ns.Sprite
