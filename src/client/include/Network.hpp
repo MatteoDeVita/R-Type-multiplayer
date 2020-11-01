@@ -1,34 +1,42 @@
-// /*
-// ** EPITECH PROJECT, 2020
-// ** B-CPP-501-LYN-5-1-rtype-lorris.hamdaoui [WSL: Ubuntu-20.04]
-// ** File description:
-// ** Thread
-// */
+/*
+** EPITECH PROJECT, 2020
+** B-CPP-501-LYN-5-1-rtype-lorris.hamdaoui [WSL: Ubuntu-20.04]
+** File description:
+** Network
+*/
 
-// #pragma once
+#pragma once
 
-// #include <mutex>
-// #include <iostream>
-// #include <unistd.h>
-// #include <boost/array.hpp>
-// #include <boost/asio.hpp>
-// #include <thread> 
+#include <ctime>
+#include <iostream>
+#include <string>
+#include <boost/array.hpp>
+#include <boost/asio.hpp>
+#include <boost/bind.hpp>
+#include <boost/shared_ptr.hpp>
+#include <boost/make_shared.hpp>
+#include <boost/thread/thread.hpp>
+#include <boost/archive/text_iarchive.hpp>
+#include <boost/archive/text_oarchive.hpp>
 
-// using boost::asio::ip::udp;
+using boost::asio::ip::udp;
 
-// class Network {
-//     public:
-//         Network();
-//         ~Network();
-//         void receive(udp::socket *socket);
-//         void send(std::string message, udp::socket *socket);
-//         void create_thread_send(std::string message);
-//         std::thread *thread_receive;
-//         std::thread *thread_send;
-//       //  boost::asio::io_context io;
-//     //    udp::resolver resolver;
-//         boost::array<char, 128> recv_buf;
-//         udp::endpoint serverEndpoint;
-//     protected:
-//     private:
-// };
+class Network {
+    public:
+        Network(int argc, char **argv);
+        ~Network();
+        typedef struct sample_t {
+            std::string a;
+            char b;
+            int c;
+            template<typename Ar> void serialize(Ar& ar, unsigned) { ar & a & b & c; }
+        } sample;
+        sample NetStruct;
+        boost::asio::io_context _io;
+        udp::socket _socket;
+        int ms_speed;
+        udp::resolver _resolver;
+        udp::endpoint _server_endpoint;
+    protected:
+    private:
+};

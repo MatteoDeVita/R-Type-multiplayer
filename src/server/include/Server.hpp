@@ -17,16 +17,15 @@ using boost::asio::ip::udp;
 class UDP_Server
 {
     public:
-        UDP_Server(boost::asio::io_context &io);
+        UDP_Server();
         ~UDP_Server();
         void do_send();
         void do_receive();
         void set_user_info(udp::endpoint remote_endpoint, std::string serielise_string);
         bool get_user_is_know();
-        boost::asio::io_context _io;
-        boost::array<char, 128> _recv_buffer;
         std::vector<GameContainer> _gameContainers;
         int NbofClientassign;
+        boost::asio::io_context _io;
     private:
         udp::socket _socket;
         udp::endpoint _client_endpoint;

@@ -12,17 +12,14 @@
 #include <boost/thread/thread.hpp>
 #include "Server.hpp"
 
-int main(int argc, char* argv[])
+int main()
 {
-  try
-  {
-    boost::asio::io_context io;
-    UDP_Server s(io);
-    io.run();
-  }
-  catch (std::exception& e)
-  {
-    std::cerr << "Exception: " << e.what() << "\n";
-  }
-  return 0;
+    try {
+        UDP_Server s;
+        s._io.run();
+    }
+    catch (std::exception& e) {
+        std::cerr << "Exception: " << e.what() << "\n";
+    }
+    return 0;
 }
