@@ -9,16 +9,16 @@
 namespace gameEngine_ns {
     namespace geometry_ns {
         class Vector {
-            private:
-                float _x;
-                float _y;
+            
             public:
+                float x;
+                float y;
                 Vector(const float &x, const float &y);
-                Vector &get() const;
-                void setX(const float &x);
-                void setY(const float &y);
-                void set(const float &x, const float &y);
-                void set(const Vector &vector);
+                Vector operator+(const Vector &vector);
+                Vector operator-(const Vector &vector);
+                Vector operator*(const Vector &vector);
+                Vector operator/(const Vector &vector);
+                bool operator==(const Vector &vector);
         };
     }
 }

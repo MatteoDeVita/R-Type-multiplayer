@@ -9,33 +9,35 @@
 
 gameEngine_ns::geometry_ns::Vector::Vector(const float &x, const float &y)
 {
-    this->_x = x;
-    this->_y = y;
+    this->x = x;
+    this->y = y;
 }
 
-gameEngine_ns::geometry_ns::Vector &gameEngine_ns::geometry_ns::Vector::get() const
+gameEngine_ns::geometry_ns::Vector gameEngine_ns::geometry_ns::Vector::operator+(const Vector &vector)
 {
-    Vector vector = gameEngine_ns::geometry_ns::Vector(this->_x, this->_y);
-    return vector;
+    gameEngine_ns::geometry_ns::Vector newVector = gameEngine_ns::geometry_ns::Vector(this->x + vector.x, this->y + vector.y);
+    return newVector;
 }
 
-void gameEngine_ns::geometry_ns::Vector::setX(const float &x)
+gameEngine_ns::geometry_ns::Vector gameEngine_ns::geometry_ns::Vector::operator-(const Vector &vector)
 {
-    this->_x = x;
+    gameEngine_ns::geometry_ns::Vector newVector = gameEngine_ns::geometry_ns::Vector(this->x - vector.x, this->y - vector.y);
+    return newVector;
 }
 
-void gameEngine_ns::geometry_ns::Vector::setY(const float &y)
+gameEngine_ns::geometry_ns::Vector gameEngine_ns::geometry_ns::Vector::operator*(const Vector &vector)
 {
-    this->_y = y;
+    gameEngine_ns::geometry_ns::Vector newVector = gameEngine_ns::geometry_ns::Vector(this->x * vector.x, this->y * vector.y);
+    return newVector;
 }
 
-void gameEngine_ns::geometry_ns::Vector::set(const float &x, const float &y)
+gameEngine_ns::geometry_ns::Vector gameEngine_ns::geometry_ns::Vector::operator/(const Vector &vector)
 {
-    this->_x = x;
-    this->_y = y;
+    gameEngine_ns::geometry_ns::Vector newVector = gameEngine_ns::geometry_ns::Vector(this->x / vector.x, this->y / vector.y);
+    return newVector;
 }
 
-void gameEngine_ns::geometry_ns::Vector::set(const gameEngine_ns::geometry_ns::Vector &vector)
+bool gameEngine_ns::geometry_ns::Vector::operator==(const Vector &vector)
 {
-    
+    return this->x == vector.x && this->y == vector.y;
 }
