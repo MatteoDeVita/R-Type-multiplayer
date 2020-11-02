@@ -17,7 +17,6 @@ void GameContainer::push_newclient(boost::asio::ip::udp::endpoint endpointer)
 
 GameContainer::GameContainer()
 {
-
 }
 
 GameContainer::~GameContainer()
@@ -26,5 +25,7 @@ GameContainer::~GameContainer()
 
 void GameContainer::update_struct()
 {
-    this->data_struct.c += 1;
+    this->EnvServData.pos_x.at(0) += 1;
+    this->EnvServData.pos_y.at(0) += 1;
+    this->EnvServData.sprite_ids.at(0) = "SERV MESSAGE";
 }

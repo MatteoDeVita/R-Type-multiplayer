@@ -22,9 +22,6 @@ gameEngine_ns::GameEngine::~GameEngine()
 
 int gameEngine_ns::GameEngine::addTexture(const std::string &, const std::string &)
 {
-    sf::Texture *texture = new sf::Texture;
-
-
     // if (newTexture->loadFromFile(filePath) != true)
     //     return -1;
     // if (this->_textures.insert(std::make_pair(id, newTexture)).second == false) {

@@ -18,24 +18,19 @@
 #include <boost/thread/thread.hpp>
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/archive/text_oarchive.hpp>
+#include "environment.hpp"
 
 using boost::asio::ip::udp;
 
 class Network {
     public:
-        Network(int argc, char **argv);
+        Network(char **argv);
         ~Network();
-        typedef struct sample_t {
-            std::string a;
-            char b;
-            int c;
-            template<typename Ar> void serialize(Ar& ar, unsigned) { ar & a & b & c; }
-        } sample;
-        sample NetStruct;
-        boost::asio::io_context _io;
-        udp::socket _socket;
+        environment_t EnvClientData;
+        boost::asio::io_context *_io;
+        udp::socket *_socket;
         int ms_speed;
-        udp::resolver _resolver;
+        udp::resolver *_resolver;
         udp::endpoint _server_endpoint;
     protected:
     private:

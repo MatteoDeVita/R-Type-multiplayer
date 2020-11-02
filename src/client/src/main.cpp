@@ -12,7 +12,11 @@
 
 int main(int argc, char **argv)
 {
-    Network net(argc, argv);
+    if (argc != 3) {
+        std::cerr << "Usage: client <host> <UDP packets speed in MS>" << std::endl;
+        exit(84);
+    }
+    Network net(argv);
     
     gameEngine_ns::GameEngine gameEngine;
     while (true)

@@ -1,6 +1,8 @@
 *.o
 *.so
 *.a
+*.gc*
+unit_tests
 build
 r-type_client
 r-type_server
