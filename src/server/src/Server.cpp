@@ -10,6 +10,7 @@
 UDP_Server::UDP_Server() : _socket(_io, udp::endpoint(udp::v4(), 3000))
 {
     std::cout << BOLDMAGENTA << "[SERVER IS RUNNING]" << RESET << std::endl;//DEBUG
+
     this->NbofClientassign = 0;
     do_receive();
 }
@@ -27,7 +28,7 @@ void UDP_Server::do_send()
         for (unsigned int y = 0; y <  this->_gameContainers.at(i)._clients.size(); y++) {
             if(this->_client_endpoint.address() == this->_gameContainers.at(i)._clients.at(y)._endpoint.address()) {
                 this->_gameContainers.at(i).update_struct();//test
-                archive << this->_gameContainers.at(i).data_struct;
+                archive << this->_gameContainers.at(i).EnvServData;
             }
         }
     }
@@ -36,7 +37,7 @@ void UDP_Server::do_send()
     boost::asio::buffer(archive_stream.str()), _client_endpoint,
     [this](boost::system::error_code /*ec*/, std::size_t /*bytes_sent*/)
     {
-        std::cout << BOLDYELLOW << "[DATA SENDED]" << RESET << " -> DEST=" << _client_endpoint << std::endl;//DEBUG
+        std::cout << BOLDYELLOW << "[DATA SENT]" << RESET << " -> DEST=" << _client_endpoint << std::endl;//DEBUG
         do_receive();
     });
 }
@@ -62,13 +63,13 @@ void UDP_Server::set_user_info(udp::endpoint client_endpoint, std::string seriel
         for (unsigned int y = 0; y < this->_gameContainers.at(i)._clients.size(); y++) {
             if(client_endpoint.address() == this->_gameContainers.at(i)._clients.at(y)._endpoint.address()) {
                 this->_gameContainers.at(i)._clients.at(y)._endpoint = client_endpoint;
-                archive >> this->_gameContainers.at(i).data_struct;
+                archive >> this->_gameContainers.at(i).EnvServData;
 
                 std::cout << BOLDGREEN << "[DATA RECEIVED AND UPDATED]" << RESET << " -> USER=" << this->_gameContainers.at(i)._clients.at(y).ton_num << " CONTAINER=" << this->_gameContainers.at(i)._clients.at(y).ton_num / 4  << " FROM=" << client_endpoint << std::endl;//DEBUG
 
-             //   std::cout << this->_gameContainers.at(i).data_struct.a << std::endl;//test
-             //   std::cout << this->_gameContainers.at(i).data_struct.b << std::endl;//test
-             //   std::cout << this->_gameContainers.at(i).data_struct.c << std::endl;//test
+                std::cout << GREEN << "contenu de pos_y : " << this->_gameContainers.at(i).EnvServData.pos_y.at(0) << std::endl; //TEST
+                std::cout << "contenu de pos_x : " <<  this->_gameContainers.at(i).EnvServData.pos_x.at(0) << std::endl; //TEST
+                std::cout << "contenu de sprite_ids : " <<  this->_gameContainers.at(i).EnvServData.sprite_ids.at(0) << RESET <<std::endl; //TEST
                 return;
             }
         }
@@ -81,12 +82,12 @@ void UDP_Server::set_user_info(udp::endpoint client_endpoint, std::string seriel
            std::cout << BOLDBLUE << "[USER ADDED]" << RESET << " -> USER=" << this->NbofClientassign << " CONTAINER=" << NbofClientassign / 4 << " FROM=" << client_endpoint << std::endl;//DEBUG
            GameContainer newest;
            newest._clients.push_back(new_client);
-           archive >> newest.data_struct;
+           archive >> newest.EnvServData;
            this->_gameContainers.push_back(newest);
        }
        else {
            std::cout << BOLDBLUE << "[USER ADDED]" << RESET << " -> USER=" << this->NbofClientassign << " CONTAINER=" << NbofClientassign / 4 << " FROM=" << client_endpoint << std::endl;//DEBUG
-           archive >> this->_gameContainers.at(_gameContainers.size() - 1).data_struct;
+           archive >> this->_gameContainers.at(_gameContainers.size() - 1).EnvServData;
            this->_gameContainers.at(_gameContainers.size() - 1)._clients.push_back(new_client);
        }
        this->NbofClientassign++;
