@@ -8,14 +8,17 @@
 #include <iostream>
 
 #include "Network.hpp"
-#include "Vector.hpp"
+#include "GameEngine.hpp"
 
 int main(int argc, char **argv)
 {
     Network net(argc, argv);
-
-    while (1) { //Gameloop
+    
+    gameEngine_ns::GameEngine gameEngine;
+    while (true)
+    {
         
     }
+
     return 0;
 }
