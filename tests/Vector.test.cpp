@@ -9,7 +9,7 @@
 
 #include <criterion/criterion.h>
 
-Test(VectorTests, RectangleConstructor)
+Test(VectorTests, Constructor)
 {
     gameEngine_ns::geometry_ns::Vector vec(5, 2);
 
