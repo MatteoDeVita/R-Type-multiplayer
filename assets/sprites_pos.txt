@@ -1,0 +1,8 @@
+monster 1: 65 x 128 8 fois
+monster 2: 65 x 52 3 fois
+monstar 3: 33 x 33 3 fois
+monstar 4: 32 x 32 8 fois
+monstar 5: 33 x 28 6 fois
+monstar 6: 33 x 28 4 fois
+monstar 7: 64 x 64 5 fois
+monstar 8: 33 x 33 4 fois
