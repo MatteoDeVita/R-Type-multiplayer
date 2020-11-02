@@ -12,8 +12,7 @@
  * NE SURTOUT PAS METTRE DE MAIN : Criterion va automatiquement créer une fonction main
  * Pour voir toute les assert et leurs options : https://github.com/Snaipe/Criterion/blob/514b4d820e2f8fb4daa2b95b69c981853656cb73/include/criterion/assert.h
  * la compilation devra étre rajouté au cmake : g++ -o unit_tests test_send_command.cpp  --coverage -lcriterion
- * Avec la compilation sité au dessus pour tester vous pouvez utiliser : ""./unit_test" ou "gcovr" si vous l'avez installé
-*/
+ * Avec la compilation sité au dessus pour tester vous pouvez utiliser : "./unit_test"
 
 int a_simple_test_to_see_how_it_works(int i)
 {
