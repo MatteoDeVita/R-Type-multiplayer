@@ -30,7 +30,7 @@ SET(
     "${PROJECT_SOURCE_DIR}/src/gameEngine/object_ns/include"
     "${PROJECT_SOURCE_DIR}/src/client/include"
     "${PROJECT_SOURCE_DIR}/src/utils/error/include"
-    "${PROJECT_SOURCE_DIR}/models"
+    "${PROJECT_SOURCE_DIR}/src/utils/models"
 )
 
 include_directories(${CMAKE_INCLUDE_PATH})
