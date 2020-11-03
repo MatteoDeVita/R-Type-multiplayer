@@ -20,3 +20,8 @@ gameEngine_ns::object_ns::Sprite::~Sprite()
 {
     delete this->_sprite;
 }
+
+sf::Sprite *gameEngine_ns::object_ns::Sprite::getSFMLSprite() const
+{
+    return this->_sprite;
+}

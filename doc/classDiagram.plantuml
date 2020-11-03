@@ -33,7 +33,7 @@ namespace gameEngine_ns {
         - std::map<std::string, gameEngine_ns::Object_ns::Object *> _objects
         - std::map<const std::string, sf::Texture *> _textures;
         - const std::map<const std::string, gameEngine_ns::object_ns::Sprite *> _sprites;
-        - class gameEngine_ns::object_ns::Sprite;
+        - gameEngine_ns::window_ns::Window *_window
     
         + int addObject(const std::string &id, gameEngine_ns::object_ns::Object *object)
         + int addObject(const std::string &filePath, const std::string &id)
@@ -41,6 +41,7 @@ namespace gameEngine_ns {
         + int addSprite(const std::string &id, gameEngine_ns::object_ns::Sprite *sprite)
         + gameEngine_ns::object_ns::Sprite createSprite(const std::string &filePath, const std::vector<geometry_ns::Rectangle> &rectanglePositionsOnImage);
         + int loadFromConfigurationFile(const std::string &filePath)
+        + void createWindow(const gameEngine_ns::geometry_ns::Vector *vector)
     }
 
     namespace action_ns {
@@ -123,6 +124,7 @@ namespace gameEngine_ns {
             - sf::Sprite *_sprite            
 
             + Sprite(const std::string &textureId, const std::vector<geometry_ns::Rectangle> &rectanglePositionsOnImage);
+            + sf::Sprite *getSFMLSprite() const;
         }
 
         gameEngine_ns.object_ns.Object o-- gameEngine_ns.action_ns.IAction

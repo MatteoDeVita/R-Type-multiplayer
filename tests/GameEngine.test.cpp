@@ -10,6 +10,7 @@
 
 #include <criterion/criterion.h>
 #include <vector>
+#include <iostream>
 
 Test(GameEngineTests, addTexture)
 {
@@ -53,5 +54,24 @@ Test(GameEngineTests, createSprite)
 
 Test(GameEngineTests, addSprite)
 {
+    gameEngine_ns::GameEngine gameEngine;
 
+    cr_expect(
+        gameEngine.addTexture("../assets/monsters/monster1/assets/texture.gif", "id-monster-test-1") == 0,
+        "Sprite test create Texturetexture with an existing texture for addSprite test"
+    );
+    std::vector<gameEngine_ns::geometry_ns::Rectangle> rectanglePositionsOnImage;
+    gameEngine_ns::object_ns::Sprite *sprite = gameEngine.createSprite("id-monster-test-1", rectanglePositionsOnImage);
+    cr_expect(
+        sprite != nullptr,
+        "Sprite creation with existing texture ID for addSprite test"
+    );
+    cr_expect(
+        gameEngine.addSprite("sprite-test-1", sprite) == 0,
+        "Add basic existing sprite"
+    );
+    cr_expect(
+        gameEngine.addSprite("sprite-test-1", sprite) != 0,
+        "Add sprite with an existing id"
+    );
 }

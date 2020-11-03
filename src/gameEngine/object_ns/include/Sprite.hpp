@@ -22,6 +22,7 @@ namespace gameEngine_ns {
                 sf::Sprite *_sprite;
                 std::vector<geometry_ns::Rectangle> _rectanglePositionsOnImage;
             public:
+                sf::Sprite *getSFMLSprite() const;
                 Sprite(sf::Texture *texture, const std::vector<geometry_ns::Rectangle> &rectanglePositionsOnImage);
                 ~Sprite();
         };

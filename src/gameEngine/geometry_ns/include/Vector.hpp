@@ -5,6 +5,8 @@
 ** Vector
 */
 
+#pragma once
+
 namespace gameEngine_ns {
     namespace geometry_ns {
         class Vector {

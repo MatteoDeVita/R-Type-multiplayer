@@ -12,12 +12,15 @@
 
 gameEngine_ns::GameEngine::GameEngine()
 {
-
+    this->window = nullptr;
+    this->event = new gameEngine_ns::event_ns::Event(this->window);
 }
 
 gameEngine_ns::GameEngine::~GameEngine()
 {
-
+    if (this->window != nullptr)
+        delete this->window;
+    delete this->event;
 }
 
 int gameEngine_ns::GameEngine::addTexture(const std::string &filePath, const std::string &id)
@@ -36,7 +39,7 @@ int gameEngine_ns::GameEngine::addTexture(const std::string &filePath, const std
     return 0;
 }
 
-int gameEngine_ns::GameEngine::addSprite(const std::string &id, gameEngine_ns::object_ns::Sprite *sprite, const std::string &textureId)
+int gameEngine_ns::GameEngine::addSprite(const std::string &id, gameEngine_ns::object_ns::Sprite *sprite)
 {
     if (this->_sprites.insert(std::make_pair(id, sprite)).second == false) {
         std::cerr << "A sprite with id \"" << id << "\" already exists." << std::endl;
@@ -53,4 +56,10 @@ gameEngine_ns::object_ns::Sprite *gameEngine_ns::GameEngine::createSprite(const 
     }
     gameEngine_ns::object_ns::Sprite *sprite = new gameEngine_ns::object_ns::Sprite(this->_textures[textureId], rectanglePositionsOnImage);
     return sprite;
+}
+
+void gameEngine_ns::GameEngine::createWindow(const gameEngine_ns::geometry_ns::Vector &vector)
+{
+    this->window = new gameEngine_ns::window_ns::Window(vector);
+    this->event->setWindow(this->window);
 }

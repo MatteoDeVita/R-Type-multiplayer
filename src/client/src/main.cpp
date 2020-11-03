@@ -10,6 +10,7 @@
 #include "Network.hpp"
 #include "GameEngine.hpp"
 #include "Error.hpp"
+#include "Vector.hpp"
 
 int main(int argc, char **argv)
 {
@@ -21,30 +22,15 @@ int main(int argc, char **argv)
         Network net(argv);
         gameEngine_ns::GameEngine gameEngine;
 
-        gameEngine.addTexture("4", "4");
+        gameEngine.createWindow(gameEngine_ns::geometry_ns::Vector(1600, 900));
         
-        sf::RenderWindow window(sf::VideoMode(200, 200, 32), "SFML works!");
-        sf::CircleShape shape(100.f);
-        shape.setFillColor(sf::Color::Green);
-
-        while (window.isOpen())
-        {
-            sf::Event event;
-            while (window.pollEvent(event))
-            {
-                if (event.type == sf::Event::Closed)
-                    window.close();
-            }
-
-            window.clear();
-            window.draw(shape);
-            window.display();
+        while (gameEngine.window->isOpen()) {
+            gameEngine.event->handlePollEvent();
         }
         return 0;
     }
     catch (std::exception const &e) {
-        std::cerr << "ERROR: " << e.what() << std::endl;        
+        std::cerr << "ERROR: " << e.what() << std::endl; 
         return 84;
     }
-
 }

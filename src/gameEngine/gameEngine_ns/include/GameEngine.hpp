@@ -14,6 +14,9 @@
 
 #include "Object.hpp"
 #include "Sprite.hpp"
+#include "Window.hpp"
+#include "Vector.hpp"
+#include "Event.hpp"
 
 namespace gameEngine_ns {
     class GameEngine {
@@ -23,11 +26,14 @@ namespace gameEngine_ns {
         public:
             GameEngine();
             ~GameEngine();
+            gameEngine_ns::window_ns::Window *window;
+            gameEngine_ns::event_ns::Event *event;
             int addObject(gameEngine_ns::object_ns::Object *object, const std::string &id);
             int addObject(const std::string &filePath, const std::string &id);
             int addTexture(const std::string &filePath, const std::string &id);
-            int addSprite(const std::string &id, gameEngine_ns::object_ns::Sprite *sprite, const std::string &textureId);
+            int addSprite(const std::string &id, gameEngine_ns::object_ns::Sprite *sprite);
             int loadFromConfigurationFile(const std::string &filePath);
             gameEngine_ns::object_ns::Sprite *createSprite(const std::string &textureId, const std::vector<gameEngine_ns::geometry_ns::Rectangle> rectanglePositionsOnImage);
+            void createWindow(const gameEngine_ns::geometry_ns::Vector &vector);
     };
 }
