@@ -18,7 +18,11 @@ add_definitions(
     "-lboost_thread"
     "-lpthread"
 )
-
+set(CMAKE_THREAD_LIBS_INIT "-lpthread")
+set(CMAKE_HAVE_THREADS_LIBRARY 1)
+set(CMAKE_USE_WIN32_THREADS_INIT 0)
+set(CMAKE_USE_PTHREADS_INIT 1)
+set(THREADS_PREFER_PTHREAD_FLAG ON)
 SET(CMAKE_CXX_FLAGS 
     "${CMAKE_CXX_FLAGS} -pthread -fPIC -g -g3 -Wall -Wextra -lboost_date_time -lsfml-graphics -lsfml-window -lsfml-system -lboost_serialization -lboost_system -lboost_thread -lpthread"
 )
@@ -46,7 +50,7 @@ file(GLOB UtilsSourceFiles src/utils/*/*.cpp)
 add_executable("r-type_server" ${ServerSourceFiles} ${GameEnigneSourceFiles} ${UtilsSourceFiles})
 add_executable("r-type_client" ${ClientSourceFiles} ${GameEnigneSourceFiles} ${UtilsSourceFiles})
 
-find_package(Boost 1.71.0 COMPONENTS system serialization thread REQUIRED)
+find_package(Boost 1.69.0 COMPONENTS system serialization thread REQUIRED)
 if (Boost_FOUND)
     include_directories(${Boost_INCLUDE_DIRS})
     target_link_libraries("r-type_server" ${Boost_LIBRARIES})
