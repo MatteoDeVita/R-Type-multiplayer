@@ -17,8 +17,12 @@
 namespace gameEngine_ns {
     namespace object_ns {
         class Sprite {
-            public:               
-                Sprite(const std::string &textureId, const std::vector<geometry_ns::Rectangle> &rectanglePositionsOnImage);
+            private:
+                sf::Texture *_texture;
+                sf::Sprite *_sprite;
+                std::vector<geometry_ns::Rectangle> _rectanglePositionsOnImage;
+            public:
+                Sprite(sf::Texture *texture, const std::vector<geometry_ns::Rectangle> &rectanglePositionsOnImage);
                 ~Sprite();
         };
     }

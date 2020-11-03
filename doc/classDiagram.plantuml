@@ -120,6 +120,7 @@ namespace gameEngine_ns {
 
         class Sprite {
             - sf::Texture *_texture
+            - sf::Sprite *_sprite            
 
             + Sprite(const std::string &textureId, const std::vector<geometry_ns::Rectangle> &rectanglePositionsOnImage);
         }

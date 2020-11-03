@@ -5,8 +5,11 @@
 ** GameEngine.test
 */
 
-#include <criterion/criterion.h>
 #include "GameEngine.hpp"
+#include "Rectangle.hpp"
+
+#include <criterion/criterion.h>
+#include <vector>
 
 Test(GameEngineTests, addTexture)
 {
@@ -28,7 +31,24 @@ Test(GameEngineTests, addTexture)
 
 Test(GameEngineTests, createSprite)
 {
+    gameEngine_ns::GameEngine gameEngine;
 
+    cr_expect(
+        gameEngine.addTexture("../assets/monsters/monster1/assets/texture.gif", "id-monster-test-1") == 0,
+        "Sprite test create Texturetexture with an existing texture"
+    );
+    std::vector<gameEngine_ns::geometry_ns::Rectangle> rectanglePositionsOnImage;
+    gameEngine_ns::object_ns::Sprite *sprite = gameEngine.createSprite("id-monster-test-1", rectanglePositionsOnImage);
+
+    cr_expect(
+        sprite != nullptr,
+        "Sprite creation with existing texture ID"
+    );
+    sprite = gameEngine.createSprite("WRONG-ID", rectanglePositionsOnImage);
+    cr_expect(
+        sprite == nullptr,
+        "Sprite creation with wrong texture ID"
+    );
 }
 
 Test(GameEngineTests, addSprite)
