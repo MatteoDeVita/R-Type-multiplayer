@@ -29,6 +29,15 @@ namespace Client {
 
 namespace gameEngine_ns {
 
+    class GameEngine() {
+        - std::map<std::string, gameEngine_ns::Object_ns::Object *> _objects
+        - std::map<const std::string &, sf::Texture *> _textures;
+
+        + int addObject(std::string id, Object *object)
+        + int addObject(std::string filePath)
+        + int addTexture(const std::string filePath);
+    }
+
     namespace action_ns {
 
         interface IAction {
@@ -106,8 +115,8 @@ namespace gameEngine_ns {
 
         class Sprite {
             - sf::Texture *_texture
-            + Sprite(const std::string filePath, std::vector<Rectangle> _rectanglePositionsOnImage)
 
+             +Sprite(const std::string &filePath, std::vector<geometry_ns::Rectangle> rectanglePositionsOnImage);
         }
 
         gameEngine_ns.object_ns.Object o-- gameEngine_ns.action_ns.IAction
@@ -118,9 +127,9 @@ namespace gameEngine_ns {
         class Object {
             # Sprite *_sprite
             # geometry::Vector *_pos
+            # std::map<const std::string, actions_ns::Action> actions
 
-            + std::map<const std::string, actions_ns::Action> actions
-            + Object(const std::string unique_name, const Sprite &sprite, const gometry_ns::Vector &position)            
+            + Object(const std::string unique_name, const Sprite &sprite, const std::string textureId, const gometry_ns::Vector &position)
             + void addAction(const std::string &name, action_ns::Action *_action)
         }
     }
@@ -129,27 +138,33 @@ namespace gameEngine_ns {
         gameEngine_ns.geometry_ns.Vector -left-o Rectangle
         gameEngine_ns.geometry_ns.Vector --o gameEngine_ns.action_ns.Moove
         class Vector {
-            - float _x
-            - float _y
+            + float x
+            + float y
 
-            + Vector(const float &x, const float &y)
-            + Vector &get()
-            + void setX(const float &x)
-            + void setY(const float &y)
-            + void set(const float &x, const float &y)
+            + Vector()
+            + Vector(const float &x = 0, const float &y = 0)
+            + Vector &operator+(const Vector &vector) const
+            + Vector &operator-(const Vector &vector) const
+            + Vector &operator*(const Vector &vector) const
+            + Vector &operator/(const Vector &vector) const
+            + bool operator==(const Vector &vector) const          
         }
 
         gameEngine_ns.geometry_ns.Rectangle --o gameEngine_ns.object_ns.Sprite
         class Rectangle {
-            - Vector *_origin
-            - Vector *_size
+            + Vector origin
+            + Vector size
 
-            + Rectangle(const Vector &origin, const Vector _size)
-            + Rectangle(const float &left, const float &top, const float &width, const float &height)
-            + void set(const Rectangle &rectangle)
-            + void setOrigin(const Vector &origin)
-            + void setSize(const Vector &size)
-            + void setByPoints(const float &left, const float &top, const float &width, const float &height)
+            + Rectangle()
+            + Rectangle(const Vector &origin = Vector(), const Vector &size = Vector());
+            + Rectangle(const float &left = 0, const float &top = 0, const float &width = 0, const float &height = 0);
+            + Rectangle operator+(const Rectangle &rectangle) const;
+            + Rectangle operator-(const Rectangle &rectangle) const;
+            + Rectangle operator*(const Rectangle &rectangle) const;
+            + Rectangle operator/(const Rectangle &rectangle) const;
+            + bool operator==(const Rectangle &rectangle) const;
+            + float area() const;
+            + float perimeter() const;
         }
     }
 

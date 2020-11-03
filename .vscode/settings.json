@@ -65,6 +65,17 @@
         "variant": "cpp",
         "*.ipp": "cpp",
         "any": "cpp",
-        "source_location": "cpp"
-    }
+        "source_location": "cpp",
+        "csetjmp": "cpp",
+        "strstream": "cpp",
+        "forward_list": "cpp",
+        "unordered_set": "cpp",
+        "regex": "cpp",
+        "rope": "cpp",
+        "slist": "cpp",
+        "shared_mutex": "cpp",
+        "cfenv": "cpp",
+        "valarray": "cpp"
+    },
+    "cmake.configureOnOpen": false
 }

@@ -25,22 +25,21 @@ using boost::asio::ip::udp;
 class Network {
     public:
         /**
-         * @brief Construct a new Network object who call 2 thread -> one to send datas / one to receive datas
+         * @brief Construct a new Network object
          * 
-         * @param argc 
          * @param argv 
          */
-        Network(int argc, char **argv);
+        Network(char **argv);
         /**
          * @brief Destroy the Network object
          * 
          */
         ~Network();
         environment_t EnvClientData;
-        boost::asio::io_context _io;
-        udp::socket _socket;
+        boost::asio::io_context *_io;
+        udp::socket *_socket;
         int ms_speed;
-        udp::resolver _resolver;
+        udp::resolver *_resolver;
         udp::endpoint _server_endpoint;
     protected:
     private:

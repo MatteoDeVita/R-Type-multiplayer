@@ -5,7 +5,10 @@
 ** Main
 */
 
+#include <iostream>
+
 #include "Network.hpp"
+#include "GameEngine.hpp"
 
 int main(int argc, char **argv)
 {
@@ -13,10 +16,13 @@ int main(int argc, char **argv)
         std::cerr << "Usage: client <host> <UDP packets speed in MS>" << std::endl;
         exit(84);
     }
-    Network net(argc, argv);
-
-    while (1) { //Gameloop
+    Network net(argv);
     
+    gameEngine_ns::GameEngine gameEngine;
+    while (true)
+    {
+        
     }
+
     return 0;
 }
