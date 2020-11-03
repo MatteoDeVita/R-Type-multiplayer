@@ -8,6 +8,7 @@
 #include <iostream>
 
 #include "GameEngine.hpp"
+#include "Rectangle.hpp"
 
 gameEngine_ns::GameEngine::GameEngine()
 {
@@ -23,11 +24,32 @@ int gameEngine_ns::GameEngine::addTexture(const std::string &filePath, const std
 {
     sf::Texture *newTexture = new sf::Texture;
 
-    if (newTexture->loadFromFile(filePath) != true)
+    if (newTexture->loadFromFile(filePath) != true) {
+        std::cerr << "Can't load texture " << filePath << '.' << std::endl;
         return -1;
+    }
     if (this->_textures.insert(std::make_pair(id, newTexture)).second == false) {
-        std::cerr << "Texture with id \"" << id << "\" already exists.";
+        std::cerr << "A texture with id \"" << id << "\" already exists.";
         return -1;
     }
     return 0;
+}
+
+int gameEngine_ns::GameEngine::addSprite(const std::string &id, gameEngine_ns::object_ns::Sprite *sprite, const std::string &textureId)
+{
+    if (this->_sprites.insert(std::make_pair(id, sprite)).second == false) {
+        std::cerr << "A sprite with id \"" << id << "\" already exists.";
+        return -1;
+    }
+    return 0;
+}
+
+gameEngine_ns::object_ns::Sprite *gameEngine_ns::GameEngine::createSprite(const std::string &textureId, const std::vector<gameEngine_ns::geometry_ns::Rectangle> rectanglePositionsOnImage)
+{
+    if (this->_textures.count(textureId) == false) {
+        std::cerr << "The texture id \"" << textureId << "\" doesn't exists." << std::endl;
+        return nullptr;
+    }
+    gameEngine_ns::object_ns::Sprite *sprite = new gameEngine_ns::object_ns::Sprite(textureId, rectanglePositionsOnImage);
+    return sprite;
 }

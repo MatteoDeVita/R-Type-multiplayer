@@ -25,3 +25,13 @@ Test(GameEngineTests, addTexture)
         "ID that already exists"
     );
 }
+
+Test(GameEngineTests, createSprite)
+{
+
+}
+
+Test(GameEngineTests, addSprite)
+{
+
+}

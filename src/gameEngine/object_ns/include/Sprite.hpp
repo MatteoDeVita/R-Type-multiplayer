@@ -11,18 +11,15 @@
 #include <string>
 #include <SFML/Graphics.hpp>
 
-
 #include "Rectangle.hpp"
+#include "Sprite.hpp"
 
 namespace gameEngine_ns {
     namespace object_ns {
         class Sprite {
-            private:
-                
-            public:
-                Sprite(const std::string &filePath, std::vector<geometry_ns::Rectangle> rectanglePositionsOnImage);
-                ~Sprite();            
+            public:               
+                Sprite(const std::string &textureId, const std::vector<geometry_ns::Rectangle> &rectanglePositionsOnImage);
+                ~Sprite();
         };
     }
 }
-

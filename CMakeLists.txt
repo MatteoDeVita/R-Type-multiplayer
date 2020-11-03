@@ -22,6 +22,7 @@ add_definitions(
 SET(CMAKE_CXX_FLAGS 
     "${CMAKE_CXX_FLAGS} -pthread -fPIC -g -g3 -Wall -Wextra -lboost_date_time -lsfml-graphics -lsfml-window -lsfml-system -lboost_serialization -lboost_system -lboost_thread -lpthread"
 )
+
 SET(
     includes
     "${PROJECT_SOURCE_DIR}/src/server/include"
@@ -41,8 +42,7 @@ conan_basic_setup()
 file(GLOB ServerSourceFiles src/server/src/*.cpp)
 file(GLOB ClientSourceFiles src/client/src/*.cpp)
 file(GLOB GameEnigneSourceFiles src/gameEngine/*/src/*.cpp)
-file(GLOB UtilsSourceFiles src/utils/*/*.cpp)
-file(GLOB UnitTestsSourceFiles tests/*.cpp)
+file(GLOB UtilsSourceFiles src/utils/*/src/*.cpp)
 
 add_executable("r-type_server" ${ServerSourceFiles} ${GameEnigneSourceFiles} ${UtilsSourceFiles})
 add_executable("r-type_client" ${ClientSourceFiles} ${GameEnigneSourceFiles} ${UtilsSourceFiles})

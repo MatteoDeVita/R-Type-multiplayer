@@ -31,11 +31,16 @@ namespace gameEngine_ns {
 
     class GameEngine() {
         - std::map<std::string, gameEngine_ns::Object_ns::Object *> _objects
-        - std::map<const std::string &, sf::Texture *> _textures;
-
-        + int addObject(std::string id, Object *object)
-        + int addObject(std::string filePath)
-        + int addTexture(const std::string filePath);
+        - std::map<const std::string, sf::Texture *> _textures;
+        - const std::map<const std::string, gameEngine_ns::object_ns::Sprite *> _sprites;
+        - class gameEngine_ns::object_ns::Sprite;
+    
+        + int addObject(const std::string &id, gameEngine_ns::object_ns::Object *object)
+        + int addObject(const std::string &filePath, const std::string &id)
+        + int addTexture(const std::string &filePath, const std::string &id)
+        + int addSprite(const std::string &id, gameEngine_ns::object_ns::Sprite *sprite)
+        + gameEngine_ns::object_ns::Sprite createSprite(const std::string &filePath, const std::vector<geometry_ns::Rectangle> &rectanglePositionsOnImage);
+        + int loadFromConfigurationFile(const std::string &filePath)
     }
 
     namespace action_ns {
@@ -116,7 +121,7 @@ namespace gameEngine_ns {
         class Sprite {
             - sf::Texture *_texture
 
-             +Sprite(const std::string &filePath, std::vector<geometry_ns::Rectangle> rectanglePositionsOnImage);
+            + Sprite(const std::string &textureId, const std::vector<geometry_ns::Rectangle> &rectanglePositionsOnImage);
         }
 
         gameEngine_ns.object_ns.Object o-- gameEngine_ns.action_ns.IAction

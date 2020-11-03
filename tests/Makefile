@@ -36,7 +36,8 @@ CXXFLAGS        =		-I ../src/server/include \
 EXEC    =       unit_tests
 
 SRC     =       $(wildcard *.cpp) \
-				$(wildcard ../src/gameEngine/*/src/*.cpp)
+				$(wildcard ../src/gameEngine/*/src/*.cpp) \
+				$(wildcard ../src/utils/*/src/*.cpp)
 
 OBJ     =       $(SRC:.cpp=.o)				
 
@@ -68,7 +69,7 @@ tests_run: $(EXEC)
 	./${EXEC}
 
 clean:
-	@rm -rf $(OBJ) $(TEST_OBJ)
+	@rm -rf $(OBJ) $(TEST_OBJ) *.gcda *.gcno
 	@echo "$(BOLD)$(GREEN)\t-----WORKSPACE CLEANED-----$(END)"
 
 fclean: clean

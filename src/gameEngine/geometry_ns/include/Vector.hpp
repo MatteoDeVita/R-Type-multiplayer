@@ -5,11 +5,9 @@
 ** Vector
 */
 
-
 namespace gameEngine_ns {
     namespace geometry_ns {
         class Vector {
-            
             public:
                 float x;
                 float y;
