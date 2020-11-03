@@ -6,7 +6,6 @@
 */
 
 #include <iostream>
-#include <SFML/Graphics.hpp>
 
 #include "GameEngine.hpp"
 
@@ -20,13 +19,15 @@ gameEngine_ns::GameEngine::~GameEngine()
 
 }
 
-int gameEngine_ns::GameEngine::addTexture(const std::string &, const std::string &)
+int gameEngine_ns::GameEngine::addTexture(const std::string &filePath, const std::string &id)
 {
-    // if (newTexture->loadFromFile(filePath) != true)
-    //     return -1;
-    // if (this->_textures.insert(std::make_pair(id, newTexture)).second == false) {
-    //     std::cerr << "Texture with id \"" << id << "\" already exists.";
-    //     return -1;
-    // }
+    sf::Texture *newTexture = new sf::Texture;
+
+    if (newTexture->loadFromFile(filePath) != true)
+        return -1;
+    if (this->_textures.insert(std::make_pair(id, newTexture)).second == false) {
+        std::cerr << "Texture with id \"" << id << "\" already exists.";
+        return -1;
+    }
     return 0;
 }

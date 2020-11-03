@@ -46,6 +46,7 @@ file(GLOB ServerSourceFiles src/server/src/*.cpp)
 file(GLOB ClientSourceFiles src/client/src/*.cpp)
 file(GLOB GameEnigneSourceFiles src/gameEngine/*/src/*.cpp)
 file(GLOB UtilsSourceFiles src/utils/*/*.cpp)
+file(GLOB UnitTestsSourceFiles tests/*.cpp)
 
 add_executable("r-type_server" ${ServerSourceFiles} ${GameEnigneSourceFiles} ${UtilsSourceFiles})
 add_executable("r-type_client" ${ClientSourceFiles} ${GameEnigneSourceFiles} ${UtilsSourceFiles})
