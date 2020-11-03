@@ -24,7 +24,17 @@ using boost::asio::ip::udp;
 
 class Network {
     public:
+        /**
+         * @brief Construct a new Network object who call 2 thread -> one to send datas / one to receive datas
+         * 
+         * @param argc 
+         * @param argv 
+         */
         Network(int argc, char **argv);
+        /**
+         * @brief Destroy the Network object
+         * 
+         */
         ~Network();
         environment_t EnvClientData;
         boost::asio::io_context _io;
