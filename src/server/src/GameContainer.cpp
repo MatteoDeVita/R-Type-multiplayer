@@ -7,6 +7,7 @@
 
 #include <vector>
 #include <iostream>
+#include <sstream>
 
 #include "GameContainer.hpp"
 #include "Sprite.hpp"
@@ -56,14 +57,25 @@ GameContainer::~GameContainer()
 
 void GameContainer::update_struct()
 {
+    std::string data("");
+    std::ostringstream sstream;
     // this->EnvServData.pos_x.clear();
     // this->EnvServData.pos_y.clear();
     // this->EnvServData.sprite_ids.clear();    
     for (const std::pair<const std::string, gameEngine_ns::object_ns::Object *> &pair : this->_gameEngine.getObjects()) {
-        std::cout << "pos.x = " << pair.second->getPos().x << " pos.y = " << pair.second->getPos().y <<
-        " sprite ID = " << pair.first << std::endl;
-        this->EnvServData.pos_x.push_back(pair.second->getPos().x);
-        this->EnvServData.pos_x.push_back(pair.second->getPos().y);
-        this->EnvServData.sprite_ids.push_back(pair.first);        
+        //this->EnvServData.data
+        sstream << pair.second->getPos().x;
+        data += std::string(sstream.str()) + '|';
+        sstream.str("");
+        sstream << pair.second->getPos().y;
+        data += std::string(sstream.str()) + '|' + pair.first + '#';
+        sstream.str("");
+
+        // std::cout << "pos.x = " << pair.second->getPos().x << " pos.y = " << pair.second->getPos().y <<
+        // " sprite ID = " << pair.first << std::endl;
+        // this->EnvServData.pos_x.push_back(pair.second->getPos().x);
+        // this->EnvServData.pos_y.push_back(pair.second->getPos().y);
+        // this->EnvServData.sprite_ids.push_back(std::string(pair.first));
     }
+    std::cout << "DATA = " <<data << std::endl;;
 }
