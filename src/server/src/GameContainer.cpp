@@ -62,9 +62,4 @@ void GameContainer::update_struct()
         this->EnvServData.pos_x.push_back(pair.second->getPos().y);
         this->EnvServData.sprite_ids.push_back(pair.first);        
     }
-    for (int i = 0; i < this->EnvServData.pos_x.size(); i++) {
-        // std::cout << "i = " << i <<  " pos.x = " << this->EnvServData.pos_x.at(i) <<
-        // " pos.y = " << this->EnvServData.pos_y.at(i) << " sprite id = " << this->EnvServData.sprite_ids.at(i);
-    }
-
 }

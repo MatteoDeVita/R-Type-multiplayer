@@ -30,13 +30,17 @@ void Threaded_Receive(Network *ClassAccess) //recoit et met a jour les datas du 
     while(1) {
         udp::endpoint client_endpoint;
         // size_t len = 
+
         ClassAccess->_socket->receive_from(boost::asio::buffer(str), client_endpoint);
 
         std::istringstream archive_stream(str);
         boost::archive::text_iarchive archive(archive_stream);
         archive >> ClassAccess->EnvClientData;
+
+
         std::cout << BOLDGREEN << "[DATA RECEIVED AND UPDATED]" << RESET <<  " -> FROM=" << ClassAccess->_server_endpoint << std::endl;//DEBUG
 
+        std::cout << ClassAccess->EnvClientData.sprite_ids.size() << std::endl;
         std::cout << GREEN << "contenu de pos_y : " << ClassAccess->EnvClientData.pos_y.at(0) << std::endl; //TEST
         std::cout << "contenu de pos_x : " << ClassAccess->EnvClientData.pos_x.at(0) << std::endl; //TEST
         std::cout << "contenu de sprite_ids : " << ClassAccess->EnvClientData.sprite_ids.at(0) << RESET <<std::endl; //TEST
