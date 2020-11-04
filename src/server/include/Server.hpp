@@ -29,6 +29,6 @@ class UDP_Server
     private:
         udp::socket _socket;
         udp::endpoint _client_endpoint;
-        enum { max_length = 1024 };
+        enum { max_length = 4096 };
         char _data[max_length];
 };

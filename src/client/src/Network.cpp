@@ -25,7 +25,7 @@ void Threaded_Send(Network *ClassAccess)//envoie les actions du client -> A FAIR
 void Threaded_Receive(Network *ClassAccess) //recoit et met a jour les datas du client
 {
     std::string str;
-    str.resize(1024);
+   // str.resize(1024);
 
     while(1) {
         udp::endpoint client_endpoint;
