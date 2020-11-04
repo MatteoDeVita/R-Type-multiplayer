@@ -38,12 +38,11 @@ sf::Sprite *gameEngine_ns::object_ns::Sprite::getSFMLSprite() const
 
 void gameEngine_ns::object_ns::Sprite::update()
 {
-    if (_delayMs <= 0)
+    if (this->_delayMs <= 0)
         return;
     if (this->_clock->getElapsedTime().asMilliseconds() < this->_delayMs)
         return;
     this->_sprite->setTextureRect((this->_textureRectIt++)->toSfIntRect());
-    sf::IntRect rec = this->_sprite->getTextureRect();    
     if (this->_textureRectIt == this->_rectanglePositionsOnImage.end())
         this->_textureRectIt = this->_rectanglePositionsOnImage.begin();
     this->_clock->restart();

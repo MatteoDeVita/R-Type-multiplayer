@@ -16,7 +16,6 @@ void Threaded_Send(Network *ClassAccess)//envoie les actions du client -> A FAIR
 
         std::ostringstream archive_stream;
         boost::archive::text_oarchive archive(archive_stream);
-        ClassAccess->EnvClientData.sprite_ids.at(0) = "Salut Mha-teho SAN";//test  
         archive << ClassAccess->EnvClientData;
         ClassAccess->_socket->send_to(boost::asio::buffer(archive_stream.str()),ClassAccess->_server_endpoint);//envoie de la struct au serv
         std::cout << BOLDYELLOW << "[DATA SENT]" << RESET << " -> DEST=" << ClassAccess->_server_endpoint << std::endl;//DEBUG
@@ -52,8 +51,8 @@ Network::Network(char **argv) // //_resolver(_io), _io() _resolver(io) _socker(i
     this->ms_speed = atoi(argv[2]);
 
     this->EnvClientData.pos_x.push_back(0);//test
-    this->EnvClientData.pos_y.push_back(11);//test
-    this->EnvClientData.sprite_ids.push_back("Salut Mha-teho SAN");//test
+    this->EnvClientData.pos_y.push_back(0);//test
+    this->EnvClientData.sprite_ids.push_back("");//test
 
     this->_server_endpoint = *_resolver->resolve(udp::v4(), argv[1], "3000").begin(); //recuperation du endpoint
     this->_socket->open(udp::v4()); // ouverture du socket

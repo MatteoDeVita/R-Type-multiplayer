@@ -6,6 +6,7 @@
 */
 
 #include <vector>
+#include <iostream>
 
 #include "GameContainer.hpp"
 #include "Sprite.hpp"
@@ -23,7 +24,7 @@ void GameContainer::push_newclient(boost::asio::ip::udp::endpoint endpointer)
 GameContainer::GameContainer()
 {
     std::vector<gameEngine_ns::geometry_ns::Rectangle> vec;
-        
+
     vec.push_back(gameEngine_ns::geometry_ns::Rectangle(1, 0, 64, 132));
     vec.push_back(gameEngine_ns::geometry_ns::Rectangle(70, 0, 56, 132));
     vec.push_back(gameEngine_ns::geometry_ns::Rectangle(196, 0, 64, 132));
@@ -51,12 +52,19 @@ GameContainer::~GameContainer()
 
 void GameContainer::update_struct()
 {
-    this->EnvServData.pos_x.clear();
-    this->EnvServData.pos_y.clear();
-    this->EnvServData.sprite_ids.clear();
+    // this->EnvServData.pos_x.clear();
+    // this->EnvServData.pos_y.clear();
+    // this->EnvServData.sprite_ids.clear();    
     for (const std::pair<const std::string, gameEngine_ns::object_ns::Object *> &pair : this->_gameEngine.getObjects()) {
+        std::cout << "pos.x = " << pair.second->getPos().x << " pos.y = " << pair.second->getPos().y <<
+        " sprite ID = " << pair.first << std::endl;
         this->EnvServData.pos_x.push_back(pair.second->getPos().x);
         this->EnvServData.pos_x.push_back(pair.second->getPos().y);
-        this->EnvServData.sprite_ids.push_back(pair.first);
+        this->EnvServData.sprite_ids.push_back(pair.first);        
     }
+    for (int i = 0; i < this->EnvServData.pos_x.size(); i++) {
+        // std::cout << "i = " << i <<  " pos.x = " << this->EnvServData.pos_x.at(i) <<
+        // " pos.y = " << this->EnvServData.pos_y.at(i) << " sprite id = " << this->EnvServData.sprite_ids.at(i);
+    }
+
 }
