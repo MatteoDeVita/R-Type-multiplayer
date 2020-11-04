@@ -40,3 +40,11 @@ bool gameEngine_ns::geometry_ns::Vector::operator==(const Vector &vector) const
 {
     return this->x == vector.x && this->y == vector.y;
 }
+
+sf::Vector2f gameEngine_ns::geometry_ns::Vector:: toSfVector2f() const
+{
+    return sf::Vector2f(
+        this->x,
+        this->y
+    );
+}

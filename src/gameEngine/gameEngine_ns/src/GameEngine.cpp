@@ -47,13 +47,17 @@ int gameEngine_ns::GameEngine::addSprite(const std::string &id, gameEngine_ns::o
     return 0;
 }
 
-gameEngine_ns::object_ns::Sprite *gameEngine_ns::GameEngine::createSprite(const std::string &textureId, const std::vector<gameEngine_ns::geometry_ns::Rectangle> rectanglePositionsOnImage)
+gameEngine_ns::object_ns::Sprite *gameEngine_ns::GameEngine::createSprite(const std::string &textureId, const std::vector<gameEngine_ns::geometry_ns::Rectangle> rectanglePositionsOnImage, float updateDelayMs)
 {
     if (this->_textures.count(textureId) == false) {
         std::cerr << "The texture id \"" << textureId << "\" doesn't exists." << std::endl;
         return nullptr;
     }
-    gameEngine_ns::object_ns::Sprite *sprite = new gameEngine_ns::object_ns::Sprite(this->_textures[textureId], rectanglePositionsOnImage);
+    gameEngine_ns::object_ns::Sprite *sprite;
+    if (updateDelayMs <= 0)
+        sprite = new gameEngine_ns::object_ns::Sprite(this->_textures[textureId], rectanglePositionsOnImage);
+    else        
+        sprite = new gameEngine_ns::object_ns::Sprite(this->_textures[textureId], rectanglePositionsOnImage, updateDelayMs);    
     return sprite;
 }
 
@@ -77,4 +81,9 @@ gameEngine_ns::object_ns::Sprite *gameEngine_ns::GameEngine::getSprite(const std
     if (this->_sprites.count(id) == false)
         return nullptr;
     return this->_sprites.at(id);
+}
+
+const std::map<const std::string, gameEngine_ns::object_ns::Object *> gameEngine_ns::GameEngine::getObjects() const
+{
+    return this->_objects;
 }

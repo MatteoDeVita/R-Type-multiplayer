@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include <SFML/Graphics.hpp>
+
 namespace gameEngine_ns {
     namespace geometry_ns {
         class Vector {
@@ -19,6 +21,7 @@ namespace gameEngine_ns {
                 Vector operator*(const Vector &vector) const;
                 Vector operator/(const Vector &vector) const;
                 bool operator==(const Vector &vector) const;
+                sf::Vector2f toSfVector2f() const;
         };
     }
 }

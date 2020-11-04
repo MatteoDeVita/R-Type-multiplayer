@@ -17,3 +17,14 @@ gameEngine_ns::object_ns::Sprite * gameEngine_ns::object_ns::Object::getSprite()
 {
     return this->_sprite;
 }
+
+gameEngine_ns::geometry_ns::Vector gameEngine_ns::object_ns::Object::getPos() const
+{
+    return this->_position;
+}
+
+void gameEngine_ns::object_ns::Object::setPos(const gameEngine_ns::geometry_ns::Vector &vector)
+{
+    this->_position = _position;
+    this->_sprite->getSFMLSprite()->setPosition(this->_position.toSfVector2f());
+}

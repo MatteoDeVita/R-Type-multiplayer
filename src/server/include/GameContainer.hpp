@@ -9,6 +9,7 @@
 
 #include "ClientServerSide.hpp"
 #include "environment.hpp"
+#include "GameEngine.hpp"
 
 class GameContainer {
     public:
@@ -18,6 +19,7 @@ class GameContainer {
         void push_newclient(boost::asio::ip::udp::endpoint);
         std::vector<ClientServerSide> _clients;
         environment_t EnvServData;
+        gameEngine_ns::GameEngine _gameEngine;
     protected:
     private:
 };

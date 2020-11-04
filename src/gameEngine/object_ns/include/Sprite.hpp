@@ -23,6 +23,7 @@ namespace gameEngine_ns {
                 std::vector<geometry_ns::Rectangle> _rectanglePositionsOnImage;
                 float _delayMs;
                 std::vector<geometry_ns::Rectangle>::iterator _textureRectIt;
+                sf::Clock *_clock;
             public:
                 void update();
                 sf::Sprite *getSFMLSprite() const;
