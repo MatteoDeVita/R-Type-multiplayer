@@ -33,6 +33,7 @@ GameContainer::GameContainer()
     vec.push_back(gameEngine_ns::geometry_ns::Rectangle(457, 0, 64, 132));
     gameEngine_ns::object_ns::Sprite *sprite;
     gameEngine_ns::object_ns::Object *object;
+    gameEngine_ns::object_ns::Object *object2;
 
     if (this->_gameEngine.addTexture("monster1-texture", "../../assets/monsters/monster1.gif") != 0)
         throw Error("Can't load texture monster1.gif");
@@ -40,8 +41,11 @@ GameContainer::GameContainer()
         throw Error("Can't load sprite");
     if (this->_gameEngine.addSprite("monster1-sprite", sprite) != 0)
         throw Error("Can't add sprite");
-    object = new gameEngine_ns::object_ns::Object(sprite, gameEngine_ns::geometry_ns::Vector());
+    object = new gameEngine_ns::object_ns::Object(sprite, gameEngine_ns::geometry_ns::Vector(10, 15));
     if (this->_gameEngine.addObject("object-monster1", object) != 0)
+        throw Error("Can't add object");
+    object2 = new gameEngine_ns::object_ns::Object(sprite, gameEngine_ns::geometry_ns::Vector(2, 7));
+    if (this->_gameEngine.addObject("object-monster2", object2) != 0)
         throw Error("Can't add object");
 }
 
