@@ -19,6 +19,7 @@ namespace gameEngine_ns {
                 gameEngine_ns::geometry_ns::Vector _position;
             public:
                 Object(gameEngine_ns::object_ns::Sprite *sprite, const gameEngine_ns::geometry_ns::Vector &position = gameEngine_ns::geometry_ns::Vector());
+                gameEngine_ns::object_ns::Sprite *getSprite() const;
                 ~Object();
         }; 
     }

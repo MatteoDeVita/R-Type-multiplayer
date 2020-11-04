@@ -12,3 +12,8 @@ gameEngine_ns::object_ns::Object::Object(gameEngine_ns::object_ns::Sprite *sprit
     this->_sprite = sprite;
     this->_position = position;
 }
+
+gameEngine_ns::object_ns::Sprite * gameEngine_ns::object_ns::Object::getSprite() const
+{
+    return this->_sprite;
+}

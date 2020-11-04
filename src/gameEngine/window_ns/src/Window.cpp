@@ -9,9 +9,8 @@
 
 gameEngine_ns::window_ns::Window::Window(const gameEngine_ns::geometry_ns::Vector &size)
 {
-    this->_window = new sf::Window(sf::VideoMode(size.x, size.y), "R-Type");
+    this->_window = new sf::RenderWindow(sf::VideoMode(size.x, size.y), "R-Type");
 }
-
 
 void gameEngine_ns::window_ns::Window::display()
 {
@@ -31,4 +30,14 @@ bool gameEngine_ns::window_ns::Window::isOpen() const
 sf::Window *gameEngine_ns::window_ns::Window::getSFMLWindow() const
 {
     return this->_window;
+}
+
+int gameEngine_ns::window_ns::Window::addObject(gameEngine_ns::object_ns::Object *object)
+{
+    this->_window->draw(*object->getSprite()->getSFMLSprite());
+}
+
+void gameEngine_ns::window_ns::Window::reset()
+{
+    this->_window->clear(sf::Color::Black);
 }

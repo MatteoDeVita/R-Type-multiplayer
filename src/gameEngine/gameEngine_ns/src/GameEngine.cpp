@@ -27,7 +27,6 @@ int gameEngine_ns::GameEngine::addTexture(const std::string &id, const std::stri
 {
     sf::Texture *newTexture = new sf::Texture;
 
-    std::cout << "ID = " << id << std::endl;
     if (newTexture->loadFromFile(filePath) != true) {
         std::cerr << "Can't load texture " << filePath << '.' << std::endl;
         return -1;

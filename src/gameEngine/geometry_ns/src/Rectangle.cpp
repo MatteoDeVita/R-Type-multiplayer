@@ -59,3 +59,12 @@ float gameEngine_ns::geometry_ns::Rectangle::perimeter() const
 {
     return this->origin.x + this->origin.y + this->size.x + this->size.y;
 }
+
+sf::IntRect gameEngine_ns::geometry_ns::Rectangle::toSfIntRect() const 
+{
+    int left = (int) this->origin.x;
+    int top = (int) this->origin.y;
+    int width = (int) this->size.x;
+    int height = (int) this->size.y;
+    return sf::IntRect(left, top, width, height);
+}

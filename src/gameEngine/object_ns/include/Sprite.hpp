@@ -21,9 +21,12 @@ namespace gameEngine_ns {
                 sf::Texture *_texture;
                 sf::Sprite *_sprite;
                 std::vector<geometry_ns::Rectangle> _rectanglePositionsOnImage;
+                float _delayMs;
+                std::vector<geometry_ns::Rectangle>::iterator _textureRectIt;
             public:
+                void update();
                 sf::Sprite *getSFMLSprite() const;
-                Sprite(sf::Texture *texture, const std::vector<geometry_ns::Rectangle> &rectanglePositionsOnImage);
+                Sprite(sf::Texture *texture, const std::vector<geometry_ns::Rectangle> &rectanglePositionsOnImage, float delayMs = 10);
                 ~Sprite();
         };
     }

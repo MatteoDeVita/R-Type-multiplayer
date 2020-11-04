@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include <SFML/Graphics.hpp>
+
 #include "Vector.hpp"
 
 namespace gameEngine_ns {
@@ -26,6 +28,7 @@ namespace gameEngine_ns {
                 bool operator==(const Rectangle &rectangle) const;
                 float area() const;
                 float perimeter() const;
+                sf::IntRect toSfIntRect() const;
         };
     }
 }
