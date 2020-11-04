@@ -23,7 +23,8 @@ int main(int argc, char **argv)
             std::cerr << "Usage: client <host> <UDP packets speed in MS>" << std::endl;
             throw Error("Bad usage.");
         }
-        Network net(argv);
+        environment_t *environment = new environment_t;
+        Network net(argv, environment);
         gameEngine_ns::GameEngine gameEngine;
         std::vector<gameEngine_ns::geometry_ns::Rectangle> vec;
         vec.push_back(gameEngine_ns::geometry_ns::Rectangle(1, 0, 64, 132));

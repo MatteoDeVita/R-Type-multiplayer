@@ -24,9 +24,9 @@ using boost::asio::ip::udp;
 
 class Network {
     public:
-        Network(char **argv);
+        Network(char **argv, environment_t *EnvClientData);
         ~Network();
-        environment_t EnvClientData;
+        environment_t *EnvClientData;
         boost::asio::io_context *_io;
         udp::socket *_socket;
         int ms_speed;
