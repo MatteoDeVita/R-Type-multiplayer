@@ -18,8 +18,6 @@
 #include <boost/archive/text_oarchive.hpp>
 
 typedef struct {
-    std::vector<float> pos_x;
-    std::vector<float> pos_y;
-    std::vector<std::string> sprite_ids;
-    template<typename Ar> void serialize(Ar& ar, unsigned) { ar & pos_x & pos_y & sprite_ids;}
+    std::string datas;
+    template<typename Ar> void serialize(Ar& ar, unsigned) { ar & datas;}
 } environment_t;

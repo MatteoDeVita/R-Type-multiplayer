@@ -63,13 +63,12 @@ void UDP_Server::set_user_info(udp::endpoint client_endpoint, std::string seriel
         for (unsigned int y = 0; y < this->_gameContainers.at(i)._clients.size(); y++) {
             if(client_endpoint.address() == this->_gameContainers.at(i)._clients.at(y)._endpoint.address()) {
                 this->_gameContainers.at(i)._clients.at(y)._endpoint = client_endpoint;
+                this->_gameContainers.at(i).EnvServData.datas.clear();
                 archive >> this->_gameContainers.at(i).EnvServData;
 
                 std::cout << BOLDGREEN << "[DATA RECEIVED AND UPDATED]" << RESET << " -> USER=" << this->_gameContainers.at(i)._clients.at(y).ton_num << " CONTAINER=" << this->_gameContainers.at(i)._clients.at(y).ton_num / 4  << " FROM=" << client_endpoint << std::endl;//DEBUG
-
-                std::cout << GREEN << "contenu de pos_y : " << this->_gameContainers.at(i).EnvServData.pos_y.at(0) << std::endl; //TEST
-                std::cout << "contenu de pos_x : " <<  this->_gameContainers.at(i).EnvServData.pos_x.at(0) << std::endl; //TEST
-                std::cout << "contenu de sprite_ids : " <<  this->_gameContainers.at(i).EnvServData.sprite_ids.at(0) << RESET <<std::endl; //TEST
+                std::cout << BOLDBLUE << "CONTENT : " << this->_gameContainers.at(i).EnvServData.datas << RESET << std::endl; //TEST
+            
                 return;
             }
         }
