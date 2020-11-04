@@ -1,7 +1,7 @@
 [requires]
 sfml/2.5.1@bincrafters/stable
 bzip2/1.0.8@conan/stable
-boost/1.71.0@conan/stable
+boost/1.69.0@conan/stable
 
 [options]
 
