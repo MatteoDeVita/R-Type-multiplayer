@@ -23,7 +23,7 @@ gameEngine_ns::GameEngine::~GameEngine()
     delete this->event;
 }
 
-int gameEngine_ns::GameEngine::addTexture(const std::string &filePath, const std::string &id)
+int gameEngine_ns::GameEngine::addTexture(const std::string &id, const std::string &filePath)
 {
     sf::Texture *newTexture = new sf::Texture;
 
@@ -62,4 +62,20 @@ void gameEngine_ns::GameEngine::createWindow(const gameEngine_ns::geometry_ns::V
 {
     this->window = new gameEngine_ns::window_ns::Window(vector);
     this->event->setWindow(this->window);
+}
+
+int gameEngine_ns::GameEngine::addObject(const std::string &id, gameEngine_ns::object_ns::Object *object)
+{
+    if (this->_objects.insert(std::make_pair(id, object)).second == false) {
+        std::cerr << "An object with id \"" << id << "\" already exists." << std::endl;
+        return -1;
+    }
+    return 0;
+}
+
+gameEngine_ns::object_ns::Sprite *gameEngine_ns::GameEngine::getSprite(const std::string &id) const
+{
+    if (this->_sprites.count(id) == false)
+        return nullptr;
+    return this->_sprites.at(id);
 }

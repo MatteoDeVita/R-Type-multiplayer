@@ -37,7 +37,7 @@ namespace gameEngine_ns {
     
         + int addObject(const std::string &id, gameEngine_ns::object_ns::Object *object)
         + int addObject(const std::string &filePath, const std::string &id)
-        + int addTexture(const std::string &filePath, const std::string &id)
+        + int addTexture(const std::string &id, const std::string &filePath)
         + int addSprite(const std::string &id, gameEngine_ns::object_ns::Sprite *sprite)
         + gameEngine_ns::object_ns::Sprite createSprite(const std::string &filePath, const std::vector<geometry_ns::Rectangle> &rectanglePositionsOnImage);
         + int loadFromConfigurationFile(const std::string &filePath)
