@@ -21,10 +21,6 @@ void Threaded_Send(Network *ClassAccess)//envoie les actions du client -> A FAIR
         boost::asio::steady_timer timer1_(*ClassAccess->_io, boost::asio::chrono::milliseconds(ClassAccess->ms_speed));//1000ms
         timer1_.wait();
 
-        /*std::ostringstream archive_stream;
-        boost::archive::text_oarchive archive(archive_stream);
-        archive << ClassAccess->EnvClientData;*/
-        //ClassAccess->EnvClientData->datas = "UP";//test
         ClassAccess->_socket->send_to(boost::asio::buffer(ClassAccess->EnvClientData->datas_send/*archive_stream.str()*/),ClassAccess->_server_endpoint);//envoie de la struct au serv
         std::cout << BOLDYELLOW << "[DATA SENT]" << RESET << " -> DEST=" << ClassAccess->_server_endpoint << std::endl;//DEBUG
     }
@@ -35,15 +31,9 @@ void Threaded_Receive(Network *ClassAccess) //recoit et met a jour les datas du 
     boost::array<char, 4096>_test_recv;
     while(1) {
         udp::endpoint client_endpoint;
-        // size_t len = 
-        //ClassAccess->EnvClientData->datas.clear();
 
         ClassAccess->_socket->receive_from(boost::asio::buffer(_test_recv), client_endpoint);
 
-
-        /*std::istringstream archive_stream(str);
-        boost::archive::text_iarchive archive(archive_stream);
-        archive >> ClassAccess->EnvClientData;*/
         ClassAccess->EnvClientData->datas_receive = _test_recv.data();
 
         std::cout << BOLDGREEN << "[DATA RECEIVED AND UPDATED]" << RESET <<  " -> FROM=" << ClassAccess->_server_endpoint << std::endl;//DEBUG

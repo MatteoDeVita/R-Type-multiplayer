@@ -40,7 +40,6 @@ int main(int argc, char **argv)
                 pair.second->getSprite()->update();
                 gameEngine.window->addObject(pair.second);                
             }
-            // gameEngine.window->addObject(object);
             gameEngine.window->display();
         }
         return 0;
