@@ -18,6 +18,7 @@
 #include <boost/archive/text_oarchive.hpp>
 
 typedef struct {
-    std::string datas;
-    template<typename Ar> void serialize(Ar& ar, unsigned) { ar & datas;}
+    std::string datas_receive;
+    std::string datas_send;
+    //template<typename Ar> void serialize(Ar& ar, unsigned) { ar & datas;}
 } environment_t;

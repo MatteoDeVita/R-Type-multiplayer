@@ -14,34 +14,34 @@ void Threaded_Send(Network *ClassAccess)//envoie les actions du client -> A FAIR
         boost::asio::steady_timer timer1_(*ClassAccess->_io, boost::asio::chrono::milliseconds(ClassAccess->ms_speed));//1000ms
         timer1_.wait();
 
-        std::ostringstream archive_stream;
+        /*std::ostringstream archive_stream;
         boost::archive::text_oarchive archive(archive_stream);
-        archive << ClassAccess->EnvClientData;
-        ClassAccess->_socket->send_to(boost::asio::buffer(archive_stream.str()),ClassAccess->_server_endpoint);//envoie de la struct au serv
+        archive << ClassAccess->EnvClientData;*/
+        //ClassAccess->EnvClientData->datas = "UP";//test
+        ClassAccess->_socket->send_to(boost::asio::buffer(ClassAccess->EnvClientData->datas_send/*archive_stream.str()*/),ClassAccess->_server_endpoint);//envoie de la struct au serv
         std::cout << BOLDYELLOW << "[DATA SENT]" << RESET << " -> DEST=" << ClassAccess->_server_endpoint << std::endl;//DEBUG
     }
 }
 
 void Threaded_Receive(Network *ClassAccess) //recoit et met a jour les datas du client
 {
-    std::string str;
-   // str.resize(1024);
-
+    boost::array<char, 4096>_test_recv;
     while(1) {
         udp::endpoint client_endpoint;
         // size_t len = 
-        ClassAccess->EnvClientData->datas.clear();
+        //ClassAccess->EnvClientData->datas.clear();
 
-        ClassAccess->_socket->receive_from(boost::asio::buffer(str), client_endpoint);
+        ClassAccess->_socket->receive_from(boost::asio::buffer(_test_recv), client_endpoint);
 
-        std::cout << "STR = " << str << std::endl;
+        std::cout << "STR = " << _test_recv.data() << std::endl;
 
-        std::istringstream archive_stream(str);
+        /*std::istringstream archive_stream(str);
         boost::archive::text_iarchive archive(archive_stream);
-        archive >> ClassAccess->EnvClientData;
+        archive >> ClassAccess->EnvClientData;*/
+        ClassAccess->EnvClientData->datas_receive = _test_recv.data();
 
         std::cout << BOLDGREEN << "[DATA RECEIVED AND UPDATED]" << RESET <<  " -> FROM=" << ClassAccess->_server_endpoint << std::endl;//DEBUG
-        std::cout << BOLDBLUE << "CONTENT : " << ClassAccess->EnvClientData->datas << RESET << std::endl; //TEST
+        std::cout << BOLDBLUE << "CONTENT : " << ClassAccess->EnvClientData->datas_receive <<  "\nSIZE :" << ClassAccess->EnvClientData->datas_receive.size() <<RESET << std::endl; //TEST
     }
 }
 
@@ -51,10 +51,9 @@ Network::Network(char **argv, environment_t *EnvClientData) // //_resolver(_io),
     this->_resolver = new udp::resolver(*this->_io);
     this->_socket = new udp::socket(*this->_io);
     this->ms_speed = atoi(argv[2]);
-
     this->EnvClientData = EnvClientData;
-    // this->EnvClientData->datas = "UP";//test
-
+    this->EnvClientData->datas_send = "INIT";//test
+    
     this->_server_endpoint = *_resolver->resolve(udp::v4(), argv[1], "3000").begin(); //recuperation du endpoint
     this->_socket->open(udp::v4()); // ouverture du socket
 
