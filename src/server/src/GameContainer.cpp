@@ -35,6 +35,7 @@ GameContainer::GameContainer()
     gameEngine_ns::object_ns::Sprite *sprite;
     gameEngine_ns::object_ns::Object *object;
     gameEngine_ns::object_ns::Object *object2;
+    gameEngine_ns::object_ns::Object *object3;
 
     if (this->_gameEngine.addTexture("monster1-texture", "../../assets/monsters/monster1.gif") != 0)
         throw Error("Can't load texture monster1.gif");
@@ -42,12 +43,12 @@ GameContainer::GameContainer()
         throw Error("Can't load sprite");
     if (this->_gameEngine.addSprite("monster1-sprite", sprite) != 0)
         throw Error("Can't add sprite");
-    object = new gameEngine_ns::object_ns::Object(sprite, gameEngine_ns::geometry_ns::Vector(10, 15));
-    if (this->_gameEngine.addObject("object-monster1", object) != 0)
+    object = new gameEngine_ns::object_ns::Object(sprite, gameEngine_ns::geometry_ns::Vector(1000, 800));
+    if (this->_gameEngine.addObject("test", object) != 0)
         throw Error("Can't add object");
-    object2 = new gameEngine_ns::object_ns::Object(sprite, gameEngine_ns::geometry_ns::Vector(2, 7));
-    if (this->_gameEngine.addObject("object-monster2", object2) != 0)
-        throw Error("Can't add object");
+    // object2 = new gameEngine_ns::object_ns::Object(sprite, gameEngine_ns::geometry_ns::Vector(500, 1000));
+    // if (this->_gameEngine.addObject("test2", object2) != 0)
+    //     throw Error("Can't add object");   
 }
 
 GameContainer::~GameContainer()
@@ -66,10 +67,10 @@ void GameContainer::update_struct()
     for (const std::pair<const std::string, gameEngine_ns::object_ns::Object *> &pair : this->_gameEngine.getObjects()) {
         //this->EnvServData.data
         sstream << pair.second->getPos().x;
-        this->EnvServData.datas_send += std::string(sstream.str()) + '|';
+        this->EnvServData.datas_send += std::string(sstream.str()) + ' ';
         sstream.str("");
         sstream << pair.second->getPos().y;
-        this->EnvServData.datas_send += std::string(sstream.str()) + '|' + pair.first + '#';
+        this->EnvServData.datas_send += std::string(sstream.str()) + ' ' + pair.first + '|';
         sstream.str("");
 
         // std::cout << "pos.x = " << pair.second->getPos().x << " pos.y = " << pair.second->getPos().y <<

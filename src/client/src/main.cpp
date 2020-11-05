@@ -15,6 +15,7 @@
 #include "Vector.hpp"
 #include "Rectangle.hpp"
 #include "Object.hpp"
+#include "factory.hpp"
 
 int main(int argc, char **argv)
 {
@@ -24,8 +25,8 @@ int main(int argc, char **argv)
             throw Error("Bad usage.");
         }
         environment_t *environment = new environment_t;
-        Network net(argv, environment);
         gameEngine_ns::GameEngine gameEngine;
+        Network net(argv, environment, &gameEngine);
         std::vector<gameEngine_ns::geometry_ns::Rectangle> vec;
         vec.push_back(gameEngine_ns::geometry_ns::Rectangle(1, 0, 64, 132));
         vec.push_back(gameEngine_ns::geometry_ns::Rectangle(70, 0, 56, 132));
@@ -38,22 +39,17 @@ int main(int argc, char **argv)
         
         gameEngine.createWindow(gameEngine_ns::geometry_ns::Vector(1600, 900));
 
-        if (gameEngine.addTexture("monster1-texture", "../../assets/monsters/monster1.gif") != 0)
-            throw Error("Can't load texture monster1.gif");
-        if ((sprite = gameEngine.createSprite("monster1-texture", vec, 100)) == nullptr)
-            throw Error("Can't load sprite");
-        if (gameEngine.addSprite("monster1-sprite", sprite) != 0)
-            throw Error("Can't add sprite");
-        object = new gameEngine_ns::object_ns::Object(sprite, gameEngine_ns::geometry_ns::Vector());
-        if (gameEngine.addObject("object-monster1", object) != 0)
-            throw Error("Can't add object");
+        factory_ns::loadTextures(&gameEngine);
 
         while (gameEngine.window->isOpen()) {
             gameEngine.event->handlePollEvent();
 
-            sprite->update();
             gameEngine.window->reset();
-            gameEngine.window->addObject(object);
+            for (const std::pair<const std::string, gameEngine_ns::object_ns::Object *> &pair : gameEngine.getObjects()) { 
+                pair.second->getSprite()->update();
+                gameEngine.window->addObject(pair.second);                
+            }
+            // gameEngine.window->addObject(object);
             gameEngine.window->display();
         }
         return 0;

@@ -18,13 +18,15 @@
 #include <boost/thread/thread.hpp>
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/archive/text_oarchive.hpp>
+
 #include "environment.hpp"
+#include "GameEngine.hpp"
 
 using boost::asio::ip::udp;
 
 class Network {
     public:
-        Network(char **argv, environment_t *EnvClientData);
+        Network(char **argv, environment_t *EnvClientData, gameEngine_ns::GameEngine *gameEngine);
         ~Network();
         environment_t *EnvClientData;
         boost::asio::io_context *_io;
@@ -32,6 +34,7 @@ class Network {
         int ms_speed;
         udp::resolver *_resolver;
         udp::endpoint _server_endpoint;
+        gameEngine_ns::GameEngine *_gameEngine;
     protected:
     private:
 };

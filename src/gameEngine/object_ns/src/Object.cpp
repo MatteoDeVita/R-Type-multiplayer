@@ -5,6 +5,8 @@
 ** Object
 */
 
+#include <iostream>
+
 #include "Object.hpp"
 
 gameEngine_ns::object_ns::Object::Object(gameEngine_ns::object_ns::Sprite *sprite, const gameEngine_ns::geometry_ns::Vector &position)
@@ -24,7 +26,7 @@ gameEngine_ns::geometry_ns::Vector gameEngine_ns::object_ns::Object::getPos() co
 }
 
 void gameEngine_ns::object_ns::Object::setPos(const gameEngine_ns::geometry_ns::Vector &vector)
-{
+{    
     this->_position = _position;
     this->_sprite->getSFMLSprite()->setPosition(this->_position.toSfVector2f());
 }

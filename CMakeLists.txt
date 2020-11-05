@@ -40,6 +40,7 @@ SET(
     "${PROJECT_SOURCE_DIR}/src/client/include"
     "${PROJECT_SOURCE_DIR}/src/utils/error/include"
     "${PROJECT_SOURCE_DIR}/src/utils/models"
+    "${PROJECT_SOURCE_DIR}/src/factory/include"
 )
 
 include_directories(${CMAKE_INCLUDE_PATH})
@@ -51,9 +52,10 @@ file(GLOB ServerSourceFiles src/server/src/*.cpp)
 file(GLOB ClientSourceFiles src/client/src/*.cpp)
 file(GLOB GameEnigneSourceFiles src/gameEngine/*/src/*.cpp)
 file(GLOB UtilsSourceFiles src/utils/*/src/*.cpp)
+file(GLOB FactoryrSourceFiles src/factory/src/*.cpp)
 
-add_executable("r-type_server" ${ServerSourceFiles} ${GameEnigneSourceFiles} ${UtilsSourceFiles})
-add_executable("r-type_client" ${ClientSourceFiles} ${GameEnigneSourceFiles} ${UtilsSourceFiles})
+add_executable("r-type_server" ${ServerSourceFiles} ${GameEnigneSourceFiles} ${UtilsSourceFiles} ${FactoryrSourceFiles})
+add_executable("r-type_client" ${ClientSourceFiles} ${GameEnigneSourceFiles} ${UtilsSourceFiles} ${FactoryrSourceFiles})
 
 find_package(Boost 1.69.0 COMPONENTS system serialization thread REQUIRED)
 if (Boost_FOUND)

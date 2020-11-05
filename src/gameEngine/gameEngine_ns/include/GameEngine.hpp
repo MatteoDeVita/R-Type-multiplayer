@@ -38,5 +38,6 @@ namespace gameEngine_ns {
             gameEngine_ns::object_ns::Sprite *createSprite(const std::string &textureId, const std::vector<gameEngine_ns::geometry_ns::Rectangle> rectanglePositionsOnImage, float updateDelayMs = -1);
             void createWindow(const gameEngine_ns::geometry_ns::Vector &vector);
             const std::map<const std::string, gameEngine_ns::object_ns::Object *> getObjects() const;
+            gameEngine_ns::object_ns::Object *getObject(const std::string &id) const;
     };
 }

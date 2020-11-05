@@ -87,3 +87,11 @@ const std::map<const std::string, gameEngine_ns::object_ns::Object *> gameEngine
 {
     return this->_objects;
 }
+
+gameEngine_ns::object_ns::Object *gameEngine_ns::GameEngine::getObject(const std::string &id) const
+{
+    if (this->_objects.count(id) == false) {
+        return nullptr;
+    }   
+    return this->_objects.at(id);
+}
