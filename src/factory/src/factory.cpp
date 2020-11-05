@@ -22,7 +22,7 @@ void factory_ns::loadTextures(gameEngine_ns::GameEngine *gameEngine)
         throw Error("Can't load texture monster5.gif");
     if (gameEngine->addTexture("monster6-texture", "../../assets/monsters/monster6.gif") != 0)
         throw Error("Can't load texture monster6.gif");
-    if (gameEngine->addTexture("monster7-texture", "../../assets/monsters/monster7.gif") != 0)
+    if (gameEngine->addTexture("monster7-texture", "../../assets/monsters/monster7.png") != 0)
         throw Error("Can't load texture monster7.gif");
     if (gameEngine->addTexture("monster8-texture", "../../assets/monsters/monster8.gif") != 0)
         throw Error("Can't load texture monster8.gif");  
@@ -48,9 +48,6 @@ std::vector<gameEngine_ns::geometry_ns::Rectangle> factory_ns::getMonster2Vec()
     vec.push_back(gameEngine_ns::geometry_ns::Rectangle(1, 1, 63, 48));
     vec.push_back(gameEngine_ns::geometry_ns::Rectangle(66, 1, 63, 48));
     vec.push_back(gameEngine_ns::geometry_ns::Rectangle(131, 1, 63, 48));
-    vec.push_back(gameEngine_ns::geometry_ns::Rectangle(198, 1, 63, 48));
-    vec.push_back(gameEngine_ns::geometry_ns::Rectangle(263, 1, 63, 48));
-    vec.push_back(gameEngine_ns::geometry_ns::Rectangle(328, 1, 63, 48));
     return vec;
 }
 
@@ -87,7 +84,7 @@ std::vector<gameEngine_ns::geometry_ns::Rectangle> factory_ns::getMonster5Vec()
     std::vector<gameEngine_ns::geometry_ns::Rectangle> vec;
 
     vec.push_back(gameEngine_ns::geometry_ns::Rectangle(1, 2, 31, 25));
-    vec.push_back(gameEngine_ns::geometry_ns::Rectangle(34, 2, 31, 25));
+    vec.push_back(gameEngine_ns::geometry_ns::Rectangle(34, 2, 32, 25));
     vec.push_back(gameEngine_ns::geometry_ns::Rectangle(37, 2, 32, 25));
     vec.push_back(gameEngine_ns::geometry_ns::Rectangle(67, 2, 32, 25));
     vec.push_back(gameEngine_ns::geometry_ns::Rectangle(100, 2, 31, 25));

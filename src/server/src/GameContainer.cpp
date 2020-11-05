@@ -43,7 +43,7 @@ GameContainer::GameContainer()
         throw Error("Can't load sprite");
     if (this->_gameEngine.addSprite("monster1-sprite", sprite) != 0)
         throw Error("Can't add sprite");
-    object = new gameEngine_ns::object_ns::Object(sprite, gameEngine_ns::geometry_ns::Vector(1000, 800));
+    object = new gameEngine_ns::object_ns::Object(sprite, gameEngine_ns::geometry_ns::Vector(1000, 500));
     if (this->_gameEngine.addObject("test", object) != 0)
         throw Error("Can't add object");
     // object2 = new gameEngine_ns::object_ns::Object(sprite, gameEngine_ns::geometry_ns::Vector(500, 1000));

@@ -27,15 +27,6 @@ int main(int argc, char **argv)
         environment_t *environment = new environment_t;
         gameEngine_ns::GameEngine gameEngine;
         Network net(argv, environment, &gameEngine);
-        std::vector<gameEngine_ns::geometry_ns::Rectangle> vec;
-        vec.push_back(gameEngine_ns::geometry_ns::Rectangle(1, 0, 64, 132));
-        vec.push_back(gameEngine_ns::geometry_ns::Rectangle(70, 0, 56, 132));
-        vec.push_back(gameEngine_ns::geometry_ns::Rectangle(196, 0, 64, 132));
-        vec.push_back(gameEngine_ns::geometry_ns::Rectangle(262, 0, 64, 132));
-        vec.push_back(gameEngine_ns::geometry_ns::Rectangle(333, 0, 52, 132));
-        vec.push_back(gameEngine_ns::geometry_ns::Rectangle(457, 0, 64, 132));
-        gameEngine_ns::object_ns::Sprite *sprite;
-        gameEngine_ns::object_ns::Object *object;
         
         gameEngine.createWindow(gameEngine_ns::geometry_ns::Vector(1600, 900));
 

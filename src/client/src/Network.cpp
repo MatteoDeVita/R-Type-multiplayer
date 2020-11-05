@@ -13,6 +13,7 @@
 #include "Debug_color.hpp"
 #include "Object.hpp"
 #include "Error.hpp"
+#include "factory.hpp"
 
 void Threaded_Send(Network *ClassAccess)//envoie les actions du client -> A FAIRE : regler le tickRate 
 {
@@ -52,14 +53,6 @@ void Threaded_Receive(Network *ClassAccess) //recoit et met a jour les datas du 
         std::stringstream ss(ClassAccess->EnvClientData->datas_receive);
         std::string tmp;
 
-        std::vector<gameEngine_ns::geometry_ns::Rectangle> vec;
-
-        vec.push_back(gameEngine_ns::geometry_ns::Rectangle(1, 0, 64, 132));
-        vec.push_back(gameEngine_ns::geometry_ns::Rectangle(70, 0, 56, 132));
-        vec.push_back(gameEngine_ns::geometry_ns::Rectangle(196, 0, 64, 132));
-        vec.push_back(gameEngine_ns::geometry_ns::Rectangle(262, 0, 64, 132));
-        vec.push_back(gameEngine_ns::geometry_ns::Rectangle(333, 0, 52, 132));
-        vec.push_back(gameEngine_ns::geometry_ns::Rectangle(457, 0, 64, 132));
 
         std::size_t firstSpaceIndex = 0;
         std::size_t secondSpaceIndex = 0;
@@ -79,13 +72,13 @@ void Threaded_Receive(Network *ClassAccess) //recoit et met a jour les datas du 
             y = std::stof(y_str);
 
             if (ClassAccess->_gameEngine->getObject(id_str) == nullptr) {
-                if ((sprite = ClassAccess->_gameEngine->createSprite("monster1-texture", vec, 100)) == nullptr)
+                if ((sprite = ClassAccess->_gameEngine->createSprite("monster8-texture", factory_ns::getMonster8Vec() , 100)) == nullptr)
                     throw Error("Can't load sprite");
-                if (ClassAccess->_gameEngine->addSprite("monster1-sprite", sprite) != 0)
-                    throw Error("Can't add sprite");               
+                if (ClassAccess->_gameEngine->addSprite("monster8-sprite", sprite) != 0)
+                    throw Error("Can't add sprite");
                 ClassAccess->_gameEngine->addObject(
                     id_str, new gameEngine_ns::object_ns::Object(
-                        ClassAccess->_gameEngine->getSprite("monster1-sprite"),
+                        ClassAccess->_gameEngine->getSprite("monster8-sprite"),
                         gameEngine_ns::geometry_ns::Vector(x, y)
                     )
                 );
