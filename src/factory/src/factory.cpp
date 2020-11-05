@@ -5,8 +5,13 @@
 ** factory
 */
 
+#include <iostream>
+#include <string>
+#include <sstream>
+
 #include "factory.hpp"
 #include "Error.hpp"
+#include "Vector.hpp"
 
 void factory_ns::loadTextures(gameEngine_ns::GameEngine *gameEngine)
 {
@@ -137,4 +142,46 @@ std::vector<gameEngine_ns::geometry_ns::Rectangle> factory_ns::getMonster8Vec()
     vec.push_back(gameEngine_ns::geometry_ns::Rectangle(103, 102, 29, 30));
     
     return vec;
+}
+
+void factory_ns::updateObjectsFromNetworkData(gameEngine_ns::GameEngine *gameEngine, const std::string &data)
+{
+    std::stringstream ss(data);
+    std::string tmp;
+    gameEngine_ns::object_ns::Sprite *sprite;
+
+
+    std::size_t firstSpaceIndex = 0;
+    std::size_t secondSpaceIndex = 0;
+    std::string x_str, y_str, id_str;
+    float x = 0;
+    float y = 0;
+    while (std::getline(ss, tmp, '|')) {
+        firstSpaceIndex = tmp.find(" ");
+        x_str = tmp.substr(0, firstSpaceIndex);
+
+        secondSpaceIndex = tmp.find(" ", x_str.length() + 1);
+        y_str = tmp.substr(firstSpaceIndex + 1, secondSpaceIndex - firstSpaceIndex - 1);
+
+        id_str = tmp.substr(secondSpaceIndex + 1, tmp.length() - firstSpaceIndex - 1);
+
+        x = std::stof(x_str);
+        y = std::stof(y_str);
+
+        if (gameEngine->getObject(id_str) == nullptr) {
+            if ((sprite = gameEngine->createSprite("monster8-texture", factory_ns::getMonster8Vec() , 100)) == nullptr)
+                throw Error("Can't load sprite");
+            if (gameEngine->addSprite("monster8-sprite", sprite) != 0)
+                throw Error("Can't add sprite");
+            gameEngine->addObject(
+                id_str, new gameEngine_ns::object_ns::Object(
+                    gameEngine->getSprite("monster8-sprite"),
+                    gameEngine_ns::geometry_ns::Vector(x, y)
+                )
+            );
+        }
+        else {
+            gameEngine->getObject(id_str)->setPos(gameEngine_ns::geometry_ns::Vector(x, y));
+        }        
+    }
 }

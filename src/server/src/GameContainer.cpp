@@ -44,11 +44,8 @@ GameContainer::GameContainer()
     if (this->_gameEngine.addSprite("monster1-sprite", sprite) != 0)
         throw Error("Can't add sprite");
     object = new gameEngine_ns::object_ns::Object(sprite, gameEngine_ns::geometry_ns::Vector(1000, 500));
-    if (this->_gameEngine.addObject("test", object) != 0)
-        throw Error("Can't add object");
-    // object2 = new gameEngine_ns::object_ns::Object(sprite, gameEngine_ns::geometry_ns::Vector(500, 1000));
-    // if (this->_gameEngine.addObject("test2", object2) != 0)
-    //     throw Error("Can't add object");   
+    if (this->_gameEngine.addObject("monster8-object", object) != 0)
+        throw Error("Can't add object");  
 }
 
 GameContainer::~GameContainer()
@@ -61,23 +58,14 @@ void GameContainer::update_struct()
     
     std::ostringstream sstream;
     this->EnvServData.datas_send.clear();
-    // this->EnvServData.pos_x.clear();
-    // this->EnvServData.pos_y.clear();
-    // this->EnvServData.sprite_ids.clear();    
+   
     for (const std::pair<const std::string, gameEngine_ns::object_ns::Object *> &pair : this->_gameEngine.getObjects()) {
-        //this->EnvServData.data
         sstream << pair.second->getPos().x;
         this->EnvServData.datas_send += std::string(sstream.str()) + ' ';
         sstream.str("");
         sstream << pair.second->getPos().y;
         this->EnvServData.datas_send += std::string(sstream.str()) + ' ' + pair.first + '|';
         sstream.str("");
-
-        // std::cout << "pos.x = " << pair.second->getPos().x << " pos.y = " << pair.second->getPos().y <<
-        // " sprite ID = " << pair.first << std::endl;
-        // this->EnvServData.pos_x.push_back(pair.second->getPos().x);
-        // this->EnvServData.pos_y.push_back(pair.second->getPos().y);
-        // this->EnvServData.sprite_ids.push_back(std::string(pair.first));
     }
     std::cout << "DATA = " << this->EnvServData.datas_send << std::endl;;
 }

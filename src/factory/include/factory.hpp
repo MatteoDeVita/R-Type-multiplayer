@@ -22,4 +22,5 @@ namespace factory_ns {
     std::vector<gameEngine_ns::geometry_ns::Rectangle> getMonster6Vec();
     std::vector<gameEngine_ns::geometry_ns::Rectangle> getMonster7Vec();
     std::vector<gameEngine_ns::geometry_ns::Rectangle> getMonster8Vec();
+    void updateObjectsFromNetworkData(gameEngine_ns::GameEngine *gameEngine, const std::string &data);
 }
