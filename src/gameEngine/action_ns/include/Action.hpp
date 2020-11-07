@@ -17,7 +17,11 @@ namespace gameEngine_ns {
                 Action();
                 Action(gameEngine_ns::object_ns::Object *relateObject);
                 virtual ~Action();
-                void setActionObject(gameEngine_ns::object_ns::Object *actionObject);                            
+                void setActionObject(gameEngine_ns::object_ns::Object *actionObject);
+                void setRelatedObject(gameEngine_ns::object_ns::Object *relatedObject);
+                virtual void enable() = 0;
+                virtual void disable() = 0;
+                bool isEnable();
         };
     }
 }

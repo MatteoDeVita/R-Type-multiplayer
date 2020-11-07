@@ -17,10 +17,14 @@ namespace gameEngine_ns {
                 IAction(gameEngine_ns::object_ns::Object *relatedObject);
                 ~IAction();
                 virtual void setActionObject(gameEngine_ns::object_ns::Object *object) = 0;
+                virtual void setRelatedObject(gameEngine_ns::object_ns::Object *relatedObject) = 0;
+                virtual void enable() = 0;
+                virtual void disable() = 0;
+                virtual bool isEnable() = 0;
             protected:
                 gameEngine_ns::object_ns::Object *_relatedObject;
                 gameEngine_ns::object_ns::Object *_actionObject;
+                bool _isEnable;
         };
     }
 }
-
