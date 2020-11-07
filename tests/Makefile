@@ -13,6 +13,7 @@ CXXFLAGS        =		-I ../src/server/include \
 						-I ../src/gameEngine/object_ns/include \
 						-I ../src/gameEngine/window_ns/include \
 						-I ../src/gameEngine/event_ns/include \
+						-I ../src/gameEngine/action_ns/include \
 						-I ../src/client/include \
 						-I ../src/utils/error/include \
 						-I ../src/utils/models \

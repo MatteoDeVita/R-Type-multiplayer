@@ -21,7 +21,7 @@ namespace gameEngine_ns {
                 Window(const gameEngine_ns::geometry_ns::Vector &size);
                 bool isOpen() const;
                 sf::Window *getSFMLWindow() const;
-                int addObject(gameEngine_ns::object_ns::Object *object);
+                void addObject(gameEngine_ns::object_ns::Object *object);
                 void display();
                 void reset();
                 ~Window();

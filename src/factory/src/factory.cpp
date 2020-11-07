@@ -149,19 +149,14 @@ void factory_ns::updateObjectsFromNetworkData(gameEngine_ns::GameEngine *gameEng
 {
     std::stringstream ss(data);
     std::string tmp;
-    gameEngine_ns::object_ns::Sprite *sprite;
-    std::vector<std::string> vec;
 
 
-    // std::cout << "data = " << data << std::endl;
     std::size_t firstSpaceIndex = 0;
     std::size_t secondSpaceIndex = 0;
     std::string x_str, y_str, id_str;
     float x = 0;
     float y = 0;
     while (std::getline(ss, tmp, '|')) {
-        // std::cout << "TMP = " << tmp << '|' << std::endl;
-        
         firstSpaceIndex = tmp.find(" ");
         x_str = tmp.substr(0, firstSpaceIndex);
 
