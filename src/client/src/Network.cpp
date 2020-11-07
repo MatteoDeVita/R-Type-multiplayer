@@ -38,6 +38,8 @@ void Threaded_Receive(Network *ClassAccess) //recoit et met a jour les datas du 
 
         std::cout << BOLDGREEN << "[DATA RECEIVED AND UPDATED]" << RESET <<  " -> FROM=" << ClassAccess->_server_endpoint << std::endl;//DEBUG
         std::cout << BOLDBLUE << "CONTENT : " << ClassAccess->EnvClientData->datas_receive <<  "\nSIZE :" << ClassAccess->EnvClientData->datas_receive.size() <<RESET << std::endl; //TEST
+        if (ClassAccess->EnvClientData->datas_receive == "")
+            return;
         factory_ns::updateObjectsFromNetworkData(ClassAccess->_gameEngine, ClassAccess->EnvClientData->datas_receive);
     }
         

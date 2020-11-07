@@ -8,6 +8,7 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <time.h>
 
 #include "factory.hpp"
 #include "Error.hpp"
@@ -149,14 +150,18 @@ void factory_ns::updateObjectsFromNetworkData(gameEngine_ns::GameEngine *gameEng
     std::stringstream ss(data);
     std::string tmp;
     gameEngine_ns::object_ns::Sprite *sprite;
+    std::vector<std::string> vec;
 
 
+    // std::cout << "data = " << data << std::endl;
     std::size_t firstSpaceIndex = 0;
     std::size_t secondSpaceIndex = 0;
     std::string x_str, y_str, id_str;
     float x = 0;
     float y = 0;
     while (std::getline(ss, tmp, '|')) {
+        // std::cout << "TMP = " << tmp << '|' << std::endl;
+        
         firstSpaceIndex = tmp.find(" ");
         x_str = tmp.substr(0, firstSpaceIndex);
 
@@ -169,19 +174,63 @@ void factory_ns::updateObjectsFromNetworkData(gameEngine_ns::GameEngine *gameEng
         y = std::stof(y_str);
 
         if (gameEngine->getObject(id_str) == nullptr) {
-            if ((sprite = gameEngine->createSprite("monster8-texture", factory_ns::getMonster8Vec() , 100)) == nullptr)
-                throw Error("Can't load sprite");
-            if (gameEngine->addSprite("monster8-sprite", sprite) != 0)
-                throw Error("Can't add sprite");
-            gameEngine->addObject(
-                id_str, new gameEngine_ns::object_ns::Object(
-                    gameEngine->getSprite("monster8-sprite"),
+            if (id_str.substr(0, id_str.find('-')).substr(0, 7) == "monster") {
+                factory_ns::addAndCreateMonster(
+                    gameEngine,
+                    std::stoi(id_str.substr(7, 1)),
                     gameEngine_ns::geometry_ns::Vector(x, y)
-                )
-            );
+                );
+            }            
         }
         else {
             gameEngine->getObject(id_str)->setPos(gameEngine_ns::geometry_ns::Vector(x, y));
-        }        
+        }
+    }
+}
+
+void factory_ns::addAndCreateMonster(gameEngine_ns::GameEngine *gameEngine, const int &monsterNb, const gameEngine_ns::geometry_ns::Vector &position)
+{
+    std::string timestamp(std::to_string(time(nullptr)));
+    gameEngine_ns::object_ns::Sprite *sprite = gameEngine->createSprite(
+        std::string("monster" + std::to_string(monsterNb) + "-texture"),
+        getMonsterVec(monsterNb),
+        (float ((rand() % 100) + 100))
+    );
+    if (sprite == nullptr)
+        throw Error("Can't load sprite");
+    if (gameEngine->addSprite(std::string("sprite-" + timestamp),sprite) != 0)
+        throw Error("Can't add sprite");
+    gameEngine_ns::object_ns::Object *object = new gameEngine_ns::object_ns::Object(
+        sprite,
+        position
+    );
+    object->setPos(position);
+    if (object == nullptr)
+        throw Error("Can't create object");
+    if (gameEngine->addObject(std::string("monster" + std::to_string(monsterNb) + "-" + timestamp), object) != 0)
+        throw Error("Can't add object");
+}
+
+std::vector<gameEngine_ns::geometry_ns::Rectangle> factory_ns::getMonsterVec(const int &monsterNb)
+{
+    switch (monsterNb) {
+        case 1:
+            return getMonster1Vec();
+        case 2:
+            return getMonster2Vec();
+        case 3:
+            return getMonster3Vec();
+        case 4:
+            return getMonster4Vec();
+        case 5:
+            return getMonster5Vec();
+        case 6:
+            return getMonster6Vec();
+        case 7:
+            return getMonster7Vec();
+        case 8:
+            return getMonster8Vec();
+        default:
+            throw Error("Wrong monster number (must be beetween 1 and 8).");
     }
 }

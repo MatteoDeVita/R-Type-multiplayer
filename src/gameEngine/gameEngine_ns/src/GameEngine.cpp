@@ -18,6 +18,21 @@ gameEngine_ns::GameEngine::GameEngine()
 
 gameEngine_ns::GameEngine::~GameEngine()
 {
+    for (const std::pair<const std::string, gameEngine_ns::object_ns::Object *> &pair : this->_objects ) {
+        if (pair.second != nullptr)
+            delete pair.second;
+    }
+    for (const std::pair<const std::string, gameEngine_ns::object_ns::Sprite *> &pair : this->_sprites ) {
+        if (pair.second != nullptr)
+            delete pair.second;
+    }
+    for (const std::pair<const std::string, sf::Texture *> &pair : this->_textures ) {
+        if (pair.second != nullptr)
+            delete pair.second;
+    }
+    this->_objects.clear();
+    this->_sprites.clear();
+    this->_textures.clear();
     if (this->window != nullptr)
         delete this->window;
     delete this->event;

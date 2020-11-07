@@ -5,6 +5,8 @@
 ** Window
 */
 
+#include <iostream>
+
 #include "Window.hpp"
 
 gameEngine_ns::window_ns::Window::Window(const gameEngine_ns::geometry_ns::Vector &size)

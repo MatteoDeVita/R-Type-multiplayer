@@ -26,11 +26,11 @@ int main(int argc, char **argv)
         }
         environment_t *environment = new environment_t;
         gameEngine_ns::GameEngine gameEngine;
-        Network net(argv, environment, &gameEngine);
         
         gameEngine.createWindow(gameEngine_ns::geometry_ns::Vector(1600, 900));
 
         factory_ns::loadTextures(&gameEngine);
+        Network net(argv, environment, &gameEngine);
 
         while (gameEngine.window->isOpen()) {
             gameEngine.event->handlePollEvent();
@@ -38,7 +38,7 @@ int main(int argc, char **argv)
             gameEngine.window->reset();
             for (const std::pair<const std::string, gameEngine_ns::object_ns::Object *> &pair : gameEngine.getObjects()) { 
                 pair.second->getSprite()->update();
-                gameEngine.window->addObject(pair.second);                
+                gameEngine.window->addObject(pair.second);
             }
             gameEngine.window->display();
         }
