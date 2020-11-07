@@ -26,8 +26,6 @@ int main(int argc, char **argv)
             std::cerr << "Usage: client <host> <UDP packets speed in MS>" << std::endl;
             throw Error("Bad usage.");
         }
-        gameEngine_ns::action_ns::Moove m(nullptr);
-        m.enable();
         environment_t *environment = new environment_t;
         gameEngine_ns::GameEngine gameEngine;
         

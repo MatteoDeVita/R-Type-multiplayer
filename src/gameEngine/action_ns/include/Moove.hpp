@@ -25,7 +25,7 @@ namespace gameEngine_ns {
                 Moove();
                 ~Moove();
                 void setVector(const gameEngine_ns::geometry_ns::Vector &vector = gameEngine_ns::geometry_ns::Vector(1, 1));
-                void enable();
+                void act();
                 void disable();
             private:
                 gameEngine_ns::geometry_ns::Vector _vector;

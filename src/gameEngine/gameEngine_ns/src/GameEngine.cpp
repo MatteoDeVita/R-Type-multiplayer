@@ -110,3 +110,12 @@ gameEngine_ns::object_ns::Object *gameEngine_ns::GameEngine::getObject(const std
     }   
     return this->_objects.at(id);
 }
+
+int gameEngine_ns::GameEngine::addAction(const std::string &id, gameEngine_ns::action_ns::Action *action)
+{
+    if (this->_actions.insert(std::make_pair(id, action)).second == false) {
+        std::cerr << "Ann action with id \"" << id << "\" already exists." << std::endl;
+        return -1;
+    }
+    return 0;
+}

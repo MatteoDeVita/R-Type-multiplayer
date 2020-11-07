@@ -18,7 +18,7 @@ namespace gameEngine_ns {
                 ~IAction();
                 virtual void setActionObject(gameEngine_ns::object_ns::Object *object) = 0;
                 virtual void setRelatedObject(gameEngine_ns::object_ns::Object *relatedObject) = 0;
-                virtual void enable() = 0;
+                virtual void act() = 0;
                 virtual void disable() = 0;
                 virtual bool isEnable() = 0;
             protected:

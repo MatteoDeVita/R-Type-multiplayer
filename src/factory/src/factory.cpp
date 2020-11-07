@@ -13,6 +13,7 @@
 #include "factory.hpp"
 #include "Error.hpp"
 #include "Vector.hpp"
+#include "Moove.hpp"
 
 void factory_ns::loadTextures(gameEngine_ns::GameEngine *gameEngine)
 {
@@ -204,6 +205,9 @@ void factory_ns::addAndCreateMonster(gameEngine_ns::GameEngine *gameEngine, cons
         throw Error("Can't create object");
     if (gameEngine->addObject(std::string("monster" + std::to_string(monsterNb) + "-" + timestamp), object) != 0)
         throw Error("Can't add object");
+    gameEngine_ns::action_ns::Moove *mooveAction = new gameEngine_ns::action_ns::Moove(object);
+    if (gameEngine->addAction("moove-action", mooveAction) != 0)
+        throw Error("Can't add moove action");
 }
 
 std::vector<gameEngine_ns::geometry_ns::Rectangle> factory_ns::getMonsterVec(const int &monsterNb)
