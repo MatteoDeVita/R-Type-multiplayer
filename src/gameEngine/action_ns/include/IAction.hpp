@@ -13,11 +13,13 @@ namespace gameEngine_ns {
     namespace action_ns {
         class IAction {
             public:
-                IAction(gameEngine_ns::object_ns::Object *related_object);
+                IAction();
+                IAction(gameEngine_ns::object_ns::Object *relatedObject);
                 ~IAction();
-                virtual void setObject() = 0;
+                virtual void setActionObject(gameEngine_ns::object_ns::Object *object) = 0;
             protected:
-                gameEngine_ns::object_ns::Object *_related_object;
+                gameEngine_ns::object_ns::Object *_relatedObject;
+                gameEngine_ns::object_ns::Object *_actionObject;
         };
     }
 }
