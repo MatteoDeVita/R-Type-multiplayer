@@ -11,6 +11,8 @@
 #include <boost/asio.hpp>
 #include <boost/thread/thread.hpp>
 #include <vector>
+#include <stdlib.h>
+#include <time.h>
 
 #include "Server.hpp"
 #include "GameEngine.hpp"
@@ -21,6 +23,7 @@
 int main()
 {
     try {
+        srand(time(NULL));
         UDP_Server s;
         s._io.run();
     }
@@ -28,4 +31,4 @@ int main()
         std::cerr << "Exception: " << e.what() << "\n";
     }
     return 0;
-}
+};

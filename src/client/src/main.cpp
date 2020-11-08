@@ -31,13 +31,15 @@ int main(int argc, char **argv)
         
         gameEngine.createWindow(gameEngine_ns::geometry_ns::Vector(1600, 900));
 
-        factory_ns::loadTextures(&gameEngine);
+        factory_ns::loadMonsterTextures(&gameEngine);
+        factory_ns::loadEnvironment(&gameEngine);
         Network net(argv, environment, &gameEngine);
 
         while (gameEngine.window->isOpen()) {
             gameEngine.event->handlePollEvent();
 
             gameEngine.window->reset();
+            gameEngine.window->addObject(gameEngine.getObject("background-object"));
             for (const std::pair<const std::string, gameEngine_ns::object_ns::IObject *> &pair : gameEngine.getObjects()) { 
                 pair.second->getSprite()->update();
                 gameEngine.window->addObject(pair.second);

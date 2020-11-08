@@ -52,3 +52,4 @@ void gameEngine_ns::object_ns::Sprite::moove(const gameEngine_ns::geometry_ns::V
 {
     this->_sprite->move(vector.toSfVector2f());
 }
+

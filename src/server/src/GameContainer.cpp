@@ -8,6 +8,10 @@
 #include <vector>
 #include <iostream>
 #include <sstream>
+#include <stdlib.h>
+#include <time.h>
+#include <stdlib.h>
+#include <time.h>
 
 #include "GameContainer.hpp"
 #include "Sprite.hpp"
@@ -22,11 +26,13 @@ void GameContainer::push_newclient(boost::asio::ip::udp::endpoint endpointer)
     newest._endpoint = endpointer;
     this->_clients.push_back(newest);
     this->_spawnChrono = std::chrono::high_resolution_clock::now();
+    this->_mooveChrono = std::chrono::high_resolution_clock::now();
 }
 
 GameContainer::GameContainer()
 {
-    factory_ns::loadTextures(&this->_gameEngine);
+    srand(time(NULL));
+    factory_ns::loadMonsterTextures(&this->_gameEngine);
     // factory_ns::addAndCreateMonster(&this->_gameEngine, 2, gameEngine_ns::geometry_ns::Vector(500, 500));
 }
 
@@ -39,7 +45,7 @@ void GameContainer::update_struct()
     
     std::ostringstream sstream;
     this->EnvServData.datas_send = "";
-   
+
     this->updateGameObjects();
     for (const std::pair<const std::string, gameEngine_ns::object_ns::IObject *> &pair : this->_gameEngine.getObjects()) {
         sstream << pair.second->getPos().x;
@@ -53,17 +59,20 @@ void GameContainer::update_struct()
 
 void GameContainer::updateGameObjects()
 {    
-    int randms = (rand() % 3000) + 2000;
-    std::chrono::time_point<std::chrono::high_resolution_clock> currentChrono = std::chrono::high_resolution_clock::now();
-    double diff = std::chrono::duration<double, std::milli>(currentChrono - this->_spawnChrono).count();
+    int spawnRand = (rand() % 3000) + 2000;
+    // int mooveRand = (rand () % 5000);
+    std::chrono::time_point<std::chrono::high_resolution_clock> currentSpawnChrono = std::chrono::high_resolution_clock::now();
+    double spawnDiff = std::chrono::duration<double, std::milli>(currentSpawnChrono - this->_spawnChrono).count();
 
-    if (diff >= randms) {
-        factory_ns::addAndCreateMonster(&this->_gameEngine, (rand() % 8) + 1, gameEngine_ns::geometry_ns::Vector(rand() % 1000, rand() % 1000));
+    if (spawnDiff >= spawnRand) {
+        factory_ns::addAndCreateMonster(&this->_gameEngine, (rand() % 8) + 1, gameEngine_ns::geometry_ns::Vector(1700, rand() % 850));
         this->_spawnChrono = std::chrono::high_resolution_clock::now();
     }
+    // std::chrono::time_point<std::chrono::high_resolution_clock> currentMooveChrono = std::chrono::high_resolution_clock::now();
+    // double mooveDiff = std::chrono::duration<double, std::milli>(currentMooveChrono - this->_mooveChrono).count();
+
+    // if ()
     for (const std::pair<const std::string, gameEngine_ns::object_ns::IObject *> &pair : this->_gameEngine.getObjects()) {
-        std::cout << "x = " << pair.second->getPos().x << " y = " << pair.second->getPos().y << std::endl;
-        pair.second->moove(gameEngine_ns::geometry_ns::Vector(-1, 0));
-        std::cout << "x = " << pair.second->getPos().x << " y = " << pair.second->getPos().y << std::endl;
+        pair.second->moove(gameEngine_ns::geometry_ns::Vector(- ((rand() % 50) + 10), (rand() % 100) - 50));
     }
 }

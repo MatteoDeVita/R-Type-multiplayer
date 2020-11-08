@@ -16,7 +16,7 @@
 #include "Moove.hpp"
 #include "Monster.hpp"
 
-void factory_ns::loadTextures(gameEngine_ns::GameEngine *gameEngine)
+void factory_ns::loadMonsterTextures(gameEngine_ns::GameEngine *gameEngine)
 {
     if (gameEngine->addTexture("monster1-texture", "../../assets/monsters/monster1.gif") != 0)
         throw Error("Can't load texture monster1.gif");
@@ -34,6 +34,36 @@ void factory_ns::loadTextures(gameEngine_ns::GameEngine *gameEngine)
         throw Error("Can't load texture monster7.gif");
     if (gameEngine->addTexture("monster8-texture", "../../assets/monsters/monster8.gif") != 0)
         throw Error("Can't load texture monster8.gif");  
+}
+
+void factory_ns::loadEnvironment(gameEngine_ns::GameEngine *gameEngine)
+{
+    if (gameEngine->addTexture("background-texture", "../../assets/environment/Nebula_Red.png") != 0)
+        throw Error("Can't load texture Nebula_Red.png");
+    std::vector<gameEngine_ns::geometry_ns::Rectangle> backgroundVec;
+    backgroundVec.push_back(gameEngine_ns::geometry_ns::Rectangle(0, 0, 1920, 1080));
+    gameEngine_ns::object_ns::Sprite *backgroundSprite = gameEngine->createSprite(
+        "background-texture",
+        backgroundVec
+    );
+    if (backgroundSprite == nullptr)
+        throw Error("Can't load sprite");
+    backgroundSprite->getSFMLSprite()->scale(
+        gameEngine_ns::geometry_ns::Vector(
+            0.833, 0.833
+        ).toSfVector2f()
+    );
+    if (gameEngine->addSprite("background-sprite", backgroundSprite) != 0)
+        throw Error("Can't add sprite");
+    gameEngine_ns::object_ns::Object *backgroundObject = new gameEngine_ns::object_ns::Object(
+        backgroundSprite,
+        gameEngine_ns::geometry_ns::Vector()
+    );
+    // monster->setPos(gameEngine_ns::);
+    if (backgroundObject == nullptr)
+        throw Error("Can't create object");
+    if (gameEngine->addObject("background-object", backgroundObject) != 0)
+        throw Error("Can't add object");
 }
 
 std::vector<gameEngine_ns::geometry_ns::Rectangle> factory_ns::getMonster1Vec()
@@ -159,6 +189,8 @@ void factory_ns::updateObjectsFromNetworkData(gameEngine_ns::GameEngine *gameEng
     float x = 0;
     float y = 0;
     while (std::getline(ss, tmp, '|')) {
+        if (tmp == "" && tmp.length() == 0)
+            continue;
         firstSpaceIndex = tmp.find(" ");
         x_str = tmp.substr(0, firstSpaceIndex);
 
@@ -180,7 +212,6 @@ void factory_ns::updateObjectsFromNetworkData(gameEngine_ns::GameEngine *gameEng
             }
         }
         else {
-            std::cout << "set pos|" << "x = " << x << " y = " << y << std::endl;
             gameEngine->getObject(id_str)->setPos(gameEngine_ns::geometry_ns::Vector(x, y));
         }
     }

@@ -45,5 +45,7 @@ gameEngine_ns::object_ns::Object::~Object()
 
 void gameEngine_ns::object_ns::Object::moove(const gameEngine_ns::geometry_ns::Vector &vector)
 {
+    this->_position.x += vector.x;
+    this->_position.y += vector.y;
     this->_sprite->moove(vector);
 }
