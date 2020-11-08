@@ -13,6 +13,7 @@
 
 #include "Rectangle.hpp"
 #include "Sprite.hpp"
+#include "Vector.hpp"
 
 namespace gameEngine_ns {
     namespace object_ns {
@@ -28,6 +29,7 @@ namespace gameEngine_ns {
                 void update();
                 sf::Sprite *getSFMLSprite() const;
                 Sprite(sf::Texture *texture, const std::vector<geometry_ns::Rectangle> &rectanglePositionsOnImage, float delayMs = 10);
+                void moove(const gameEngine_ns::geometry_ns::Vector &vector);
                 ~Sprite();
         };
     }

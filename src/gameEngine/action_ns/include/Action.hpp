@@ -21,6 +21,7 @@ namespace gameEngine_ns {
                 void setRelatedObject(gameEngine_ns::object_ns::Object *relatedObject);
                 virtual void act() = 0;
                 virtual void disable() = 0;
+                virtual void setVector(const gameEngine_ns::geometry_ns::Vector &vector = gameEngine_ns::geometry_ns::Vector(1, 1)) = 0;
                 bool isEnable();
         };
     }

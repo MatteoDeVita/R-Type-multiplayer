@@ -47,3 +47,8 @@ void gameEngine_ns::object_ns::Sprite::update()
         this->_textureRectIt = this->_rectanglePositionsOnImage.begin();
     this->_clock->restart();
 }
+
+void gameEngine_ns::object_ns::Sprite::moove(const gameEngine_ns::geometry_ns::Vector &vector)
+{
+    this->_sprite->move(vector.toSfVector2f());
+}

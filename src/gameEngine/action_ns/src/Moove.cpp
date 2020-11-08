@@ -44,7 +44,7 @@ void gameEngine_ns::action_ns::Moove::act()
 {
     this->_isEnable = true;
     if (this->_clock->getElapsedTime().asMilliseconds() >= this->_speed) {
-        this->_relatedObject->getSprite()->getSFMLSprite()->move(this->_vector.toSfVector2f());
+        this->_relatedObject->getSprite()->moove(this->_vector);
         this->_clock->restart();
     }
 }
