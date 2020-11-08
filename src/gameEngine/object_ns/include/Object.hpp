@@ -25,6 +25,7 @@ namespace gameEngine_ns {
                 Object();
                 Object(gameEngine_ns::object_ns::Sprite *sprite, const gameEngine_ns::geometry_ns::Vector &position = gameEngine_ns::geometry_ns::Vector());
                 ~Object();
+                void autoUpdatePos();
                 gameEngine_ns::geometry_ns::Vector getPos() const;
                 void setPos(const gameEngine_ns::geometry_ns::Vector &vector);
                 void moove(const gameEngine_ns::geometry_ns::Vector &vector);

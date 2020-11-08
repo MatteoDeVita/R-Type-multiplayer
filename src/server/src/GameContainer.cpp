@@ -71,8 +71,8 @@ void GameContainer::updateGameObjects()
     // std::chrono::time_point<std::chrono::high_resolution_clock> currentMooveChrono = std::chrono::high_resolution_clock::now();
     // double mooveDiff = std::chrono::duration<double, std::milli>(currentMooveChrono - this->_mooveChrono).count();
 
-    // if ()
     for (const std::pair<const std::string, gameEngine_ns::object_ns::IObject *> &pair : this->_gameEngine.getObjects()) {
-        pair.second->moove(gameEngine_ns::geometry_ns::Vector(- ((rand() % 50) + 10), (rand() % 100) - 50));
+        pair.second->autoUpdatePos();
+        // pair.second->moove(gameEngine_ns::geometry_ns::Vector(- ((rand() % 50) + 10), (rand() % 100) - 50));
     }
 }

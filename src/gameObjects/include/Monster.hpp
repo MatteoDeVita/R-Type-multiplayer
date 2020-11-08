@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include <SFML/Graphics.hpp>
+
 #include "Sprite.hpp"
 #include "Object.hpp"
 #include "Vector.hpp"
@@ -16,4 +18,7 @@ class Monster : public gameEngine_ns::object_ns::Object {
         Monster();
         Monster(gameEngine_ns::object_ns::Sprite *sprite, const gameEngine_ns::geometry_ns::Vector &position = gameEngine_ns::geometry_ns::Vector());
         ~Monster();
+        void autoUpdatePos();
+    private:
+        sf::Clock *_posClock;
 };

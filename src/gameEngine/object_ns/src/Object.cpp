@@ -49,3 +49,8 @@ void gameEngine_ns::object_ns::Object::moove(const gameEngine_ns::geometry_ns::V
     this->_position.y += vector.y;
     this->_sprite->moove(vector);
 }
+
+void gameEngine_ns::object_ns::Object::autoUpdatePos()
+{
+    
+}
