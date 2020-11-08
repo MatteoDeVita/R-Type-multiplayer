@@ -57,8 +57,8 @@ file(GLOB UtilsSourceFiles src/utils/*/src/*.cpp)
 file(GLOB FactoryrSourceFiles src/factory/src/*.cpp)
 file(GLOB gameObjectsSourceFiles src/gameObjects/src/*.cpp)
 
-add_executable("r-type_server" ${ServerSourceFiles} ${GameEnigneSourceFiles} ${UtilsSourceFiles} ${FactoryrSourceFiles})
-add_executable("r-type_client" ${ClientSourceFiles} ${GameEnigneSourceFiles} ${UtilsSourceFiles} ${FactoryrSourceFiles})
+add_executable("r-type_server" ${ServerSourceFiles} ${GameEnigneSourceFiles} ${UtilsSourceFiles} ${FactoryrSourceFiles} ${gameObjectsSourceFiles})
+add_executable("r-type_client" ${ClientSourceFiles} ${GameEnigneSourceFiles} ${UtilsSourceFiles} ${FactoryrSourceFiles} ${gameObjectsSourceFiles})
 
 find_package(Boost 1.69.0 COMPONENTS system serialization thread REQUIRED)
 if (Boost_FOUND)

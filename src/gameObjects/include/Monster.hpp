@@ -13,6 +13,7 @@
 
 class Monster : public gameEngine_ns::object_ns::Object {
     public:
+        Monster();
         Monster(gameEngine_ns::object_ns::Sprite *sprite, const gameEngine_ns::geometry_ns::Vector &position = gameEngine_ns::geometry_ns::Vector());
         ~Monster();
 };

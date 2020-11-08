@@ -10,6 +10,7 @@
 #include <map>
 
 #include "Sprite.hpp"
+#include "Vector.hpp"
 
 namespace gameEngine_ns {
     namespace object_ns {
@@ -24,7 +25,6 @@ namespace gameEngine_ns {
             protected:
                 gameEngine_ns::object_ns::Sprite *_sprite;
                 gameEngine_ns::geometry_ns::Vector _position;
-                
         };
     }
 }

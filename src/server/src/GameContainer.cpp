@@ -62,11 +62,8 @@ void GameContainer::updateGameObjects()
         this->_spawnChrono = std::chrono::high_resolution_clock::now();
     }
     for (const std::pair<const std::string, gameEngine_ns::object_ns::IObject *> &pair : this->_gameEngine.getObjects()) {
-        pair.second->setPos(
-            gameEngine_ns::geometry_ns::Vector(
-                pair.second->getPos().x - 1,
-                pair.second->getPos().y
-            )
-        );        
+        std::cout << "x = " << pair.second->getPos().x << " y = " << pair.second->getPos().y << std::endl;
+        pair.second->moove(gameEngine_ns::geometry_ns::Vector(-1, 0));
+        std::cout << "x = " << pair.second->getPos().x << " y = " << pair.second->getPos().y << std::endl;
     }
 }

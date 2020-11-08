@@ -14,6 +14,7 @@
 #include "Error.hpp"
 #include "Vector.hpp"
 #include "Moove.hpp"
+#include "Monster.hpp"
 
 void factory_ns::loadTextures(gameEngine_ns::GameEngine *gameEngine)
 {
@@ -176,17 +177,10 @@ void factory_ns::updateObjectsFromNetworkData(gameEngine_ns::GameEngine *gameEng
                     std::stoi(id_str.substr(7, 1)),
                     gameEngine_ns::geometry_ns::Vector(x, y)
                 );
-            }            
+            }
         }
         else {
-            // if (id_str.substr(0, id_str.find('-')).substr(0, 7) == "monster") {
-
-                // gameEngine->getObject(id_str)->getAction("moove-action")->setVector(
-                //     gameEngine_ns::geometry_ns::Vector(
-                //         x - gameEngine->getObject(id_str)->getPos().x,
-                //         y - gameEngine->getObject(id_str)->getPos().y
-                //     )
-                // );
+            std::cout << "set pos|" << "x = " << x << " y = " << y << std::endl;
             gameEngine->getObject(id_str)->setPos(gameEngine_ns::geometry_ns::Vector(x, y));
         }
     }
@@ -204,14 +198,14 @@ void factory_ns::addAndCreateMonster(gameEngine_ns::GameEngine *gameEngine, cons
         throw Error("Can't load sprite");
     if (gameEngine->addSprite(std::string("sprite-" + timestamp),sprite) != 0)
         throw Error("Can't add sprite");
-    gameEngine_ns::object_ns::Object *object = new gameEngine_ns::object_ns::Object(
+    Monster *monster = new Monster(
         sprite,
         position
     );
-    object->setPos(position);
-    if (object == nullptr)
+    monster->setPos(position);
+    if (monster == nullptr)
         throw Error("Can't create object");
-    if (gameEngine->addObject(std::string("monster" + std::to_string(monsterNb) + "-" + timestamp), object) != 0)
+    if (gameEngine->addObject(std::string("monster" + std::to_string(monsterNb) + "-" + timestamp), monster) != 0)
         throw Error("Can't add object");
     // gameEngine_ns::action_ns::Moove *mooveAction = new gameEngine_ns::action_ns::Moove(object);
     // if (object->addAction("moove-action", mooveAction) != 0)

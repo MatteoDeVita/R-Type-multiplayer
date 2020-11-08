@@ -19,6 +19,7 @@
 #include "Event.hpp"
 
 namespace gameEngine_ns {
+
     class GameEngine {
         private:
             std::map<const std::string, sf::Texture *> _textures;
