@@ -38,6 +38,7 @@ SET(
     "${PROJECT_SOURCE_DIR}/src/gameEngine/window_ns/include"
     "${PROJECT_SOURCE_DIR}/src/gameEngine/event_ns/include"
     "${PROJECT_SOURCE_DIR}/src/gameEngine/action_ns/include"
+    "${PROJECT_SOURCE_DIR}/src/gameObjects/include"
     "${PROJECT_SOURCE_DIR}/src/client/include"
     "${PROJECT_SOURCE_DIR}/src/utils/error/include"
     "${PROJECT_SOURCE_DIR}/src/utils/models"
@@ -54,6 +55,7 @@ file(GLOB ClientSourceFiles src/client/src/*.cpp)
 file(GLOB GameEnigneSourceFiles src/gameEngine/*/src/*.cpp)
 file(GLOB UtilsSourceFiles src/utils/*/src/*.cpp)
 file(GLOB FactoryrSourceFiles src/factory/src/*.cpp)
+file(GLOB gameObjectsSourceFiles src/gameObjects/src/*.cpp)
 
 add_executable("r-type_server" ${ServerSourceFiles} ${GameEnigneSourceFiles} ${UtilsSourceFiles} ${FactoryrSourceFiles})
 add_executable("r-type_client" ${ClientSourceFiles} ${GameEnigneSourceFiles} ${UtilsSourceFiles} ${FactoryrSourceFiles})

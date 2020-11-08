@@ -34,7 +34,7 @@ sf::Window *gameEngine_ns::window_ns::Window::getSFMLWindow() const
     return this->_window;
 }
 
-void gameEngine_ns::window_ns::Window::addObject(gameEngine_ns::object_ns::Object *object)
+void gameEngine_ns::window_ns::Window::addObject(gameEngine_ns::object_ns::IObject *object)
 {
     this->_window->draw(*object->getSprite()->getSFMLSprite());
 }

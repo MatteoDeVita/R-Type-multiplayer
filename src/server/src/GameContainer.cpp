@@ -41,15 +41,14 @@ void GameContainer::update_struct()
     this->EnvServData.datas_send = "";
    
     this->updateGameObjects();
-    for (const std::pair<const std::string, gameEngine_ns::object_ns::Object *> &pair : this->_gameEngine.getObjects()) {
+    for (const std::pair<const std::string, gameEngine_ns::object_ns::IObject *> &pair : this->_gameEngine.getObjects()) {
         sstream << pair.second->getPos().x;
         this->EnvServData.datas_send += std::string(sstream.str()) + ' ';
         sstream.str("");
         sstream << pair.second->getPos().y;
         this->EnvServData.datas_send += std::string(sstream.str()) + ' ' + pair.first + '|';
         sstream.str("");
-    }
-    std::cout << "DATA = " << this->EnvServData.datas_send << std::endl;;
+    }    
 }
 
 void GameContainer::updateGameObjects()
@@ -61,5 +60,13 @@ void GameContainer::updateGameObjects()
     if (diff >= randms) {
         factory_ns::addAndCreateMonster(&this->_gameEngine, (rand() % 8) + 1, gameEngine_ns::geometry_ns::Vector(rand() % 1000, rand() % 1000));
         this->_spawnChrono = std::chrono::high_resolution_clock::now();
+    }
+    for (const std::pair<const std::string, gameEngine_ns::object_ns::IObject *> &pair : this->_gameEngine.getObjects()) {
+        pair.second->setPos(
+            gameEngine_ns::geometry_ns::Vector(
+                pair.second->getPos().x - 1,
+                pair.second->getPos().y
+            )
+        );        
     }
 }

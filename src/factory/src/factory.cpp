@@ -179,16 +179,15 @@ void factory_ns::updateObjectsFromNetworkData(gameEngine_ns::GameEngine *gameEng
             }            
         }
         else {
-            if (id_str.substr(0, id_str.find('-')).substr(0, 7) == "monster") {
+            // if (id_str.substr(0, id_str.find('-')).substr(0, 7) == "monster") {
 
-                gameEngine->getObject(id_str)->getAction("moove-action")->setVector(
-                    gameEngine_ns::geometry_ns::Vector(
-                        x - gameEngine->getObject(id_str)->getPos().x,
-                        y - gameEngine->getObject(id_str)->getPos().y
-                    )
-                );
-                // gameEngine->getObject(id_str)->setPos(gameEngine_ns::geometry_ns::Vector(x, y));
-            }
+                // gameEngine->getObject(id_str)->getAction("moove-action")->setVector(
+                //     gameEngine_ns::geometry_ns::Vector(
+                //         x - gameEngine->getObject(id_str)->getPos().x,
+                //         y - gameEngine->getObject(id_str)->getPos().y
+                //     )
+                // );
+            gameEngine->getObject(id_str)->setPos(gameEngine_ns::geometry_ns::Vector(x, y));
         }
     }
 }
@@ -214,9 +213,9 @@ void factory_ns::addAndCreateMonster(gameEngine_ns::GameEngine *gameEngine, cons
         throw Error("Can't create object");
     if (gameEngine->addObject(std::string("monster" + std::to_string(monsterNb) + "-" + timestamp), object) != 0)
         throw Error("Can't add object");
-    gameEngine_ns::action_ns::Moove *mooveAction = new gameEngine_ns::action_ns::Moove(object);
-    if (object->addAction("moove-action", mooveAction) != 0)
-        throw Error("Can't add moove action");
+    // gameEngine_ns::action_ns::Moove *mooveAction = new gameEngine_ns::action_ns::Moove(object);
+    // if (object->addAction("moove-action", mooveAction) != 0)
+    //     throw Error("Can't add moove action");
 }
 
 std::vector<gameEngine_ns::geometry_ns::Rectangle> factory_ns::getMonsterVec(const int &monsterNb)

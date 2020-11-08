@@ -29,5 +29,5 @@ class GameContainer {
         void updateGameObjects();
     protected:
     private:
-        std::chrono::time_point<std::chrono::high_resolution_clock> _spawnChrono;
+        std::chrono::time_point<std::chrono::high_resolution_clock> _spawnChrono;        
 };

@@ -38,7 +38,7 @@ int main(int argc, char **argv)
             gameEngine.event->handlePollEvent();
 
             gameEngine.window->reset();
-            for (const std::pair<const std::string, gameEngine_ns::object_ns::Object *> &pair : gameEngine.getObjects()) { 
+            for (const std::pair<const std::string, gameEngine_ns::object_ns::IObject *> &pair : gameEngine.getObjects()) { 
                 pair.second->getSprite()->update();
                 gameEngine.window->addObject(pair.second);
             }

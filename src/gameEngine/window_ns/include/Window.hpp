@@ -10,7 +10,7 @@
 #include <SFML/Graphics.hpp>
 #include <Vector.hpp>
 
-#include "Object.hpp"
+#include "IObject.hpp"
 
 namespace gameEngine_ns {
     namespace window_ns {
@@ -21,7 +21,7 @@ namespace gameEngine_ns {
                 Window(const gameEngine_ns::geometry_ns::Vector &size);
                 bool isOpen() const;
                 sf::Window *getSFMLWindow() const;
-                void addObject(gameEngine_ns::object_ns::Object *object);
+                void addObject(gameEngine_ns::object_ns::IObject *object);
                 void display();
                 void reset();
                 ~Window();

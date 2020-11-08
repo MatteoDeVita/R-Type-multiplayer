@@ -18,7 +18,7 @@ gameEngine_ns::GameEngine::GameEngine()
 
 gameEngine_ns::GameEngine::~GameEngine()
 {
-    for (const std::pair<const std::string, gameEngine_ns::object_ns::Object *> &pair : this->_objects ) {
+    for (const std::pair<const std::string, gameEngine_ns::object_ns::IObject *> &pair : this->_objects ) {
         if (pair.second != nullptr)
             delete pair.second;
     }
@@ -82,7 +82,7 @@ void gameEngine_ns::GameEngine::createWindow(const gameEngine_ns::geometry_ns::V
     this->event->setWindow(this->window);
 }
 
-int gameEngine_ns::GameEngine::addObject(const std::string &id, gameEngine_ns::object_ns::Object *object)
+int gameEngine_ns::GameEngine::addObject(const std::string &id, gameEngine_ns::object_ns::IObject *object)
 {
     if (this->_objects.insert(std::make_pair(id, object)).second == false) {
         std::cerr << "An object with id \"" << id << "\" already exists." << std::endl;
@@ -98,12 +98,12 @@ gameEngine_ns::object_ns::Sprite *gameEngine_ns::GameEngine::getSprite(const std
     return this->_sprites.at(id);
 }
 
-const std::map<const std::string, gameEngine_ns::object_ns::Object *> gameEngine_ns::GameEngine::getObjects() const
+const std::map<const std::string, gameEngine_ns::object_ns::IObject *> gameEngine_ns::GameEngine::getObjects() const
 {
     return this->_objects;
 }
 
-gameEngine_ns::object_ns::Object *gameEngine_ns::GameEngine::getObject(const std::string &id) const
+gameEngine_ns::object_ns::IObject *gameEngine_ns::GameEngine::getObject(const std::string &id) const
 {
     if (this->_objects.count(id) == false) {
         return nullptr;
