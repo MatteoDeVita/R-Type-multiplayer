@@ -17,7 +17,6 @@
 #include "Window.hpp"
 #include "Vector.hpp"
 #include "Event.hpp"
-#include "Action.hpp"
 
 namespace gameEngine_ns {
     class GameEngine {
@@ -25,7 +24,6 @@ namespace gameEngine_ns {
             std::map<const std::string, sf::Texture *> _textures;
             std::map<const std::string, gameEngine_ns::object_ns::Sprite *> _sprites;
             std::map<const std::string, gameEngine_ns::object_ns::Object *> _objects;
-            std::map<const std::string, gameEngine_ns::action_ns::Action *> _actions;
         public:
             GameEngine();
             ~GameEngine();
@@ -41,6 +39,5 @@ namespace gameEngine_ns {
             void createWindow(const gameEngine_ns::geometry_ns::Vector &vector);
             const std::map<const std::string, gameEngine_ns::object_ns::Object *> getObjects() const;
             gameEngine_ns::object_ns::Object *getObject(const std::string &id) const;
-            int addAction(const std::string &id, gameEngine_ns::action_ns::Action *action);
     };
 }

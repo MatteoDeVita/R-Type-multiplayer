@@ -1,3 +1,12 @@
+/*
+** EPITECH PROJECT, 2020
+** B-CPP-501-LYN-5-1-rtype-lorris.hamdaoui
+** File description:
+** Server
+*/
+
+#pragma once
+
 #include <ctime>
 #include <iostream>
 #include <string>

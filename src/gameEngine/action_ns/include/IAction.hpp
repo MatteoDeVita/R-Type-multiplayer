@@ -7,9 +7,14 @@
 
 #pragma once
 
-#include "Object.hpp"
+// #include "Object.hpp"
 
 namespace gameEngine_ns {
+
+    namespace object_ns {
+        class Object;
+    }
+
     namespace action_ns {
         class IAction {
             public:
