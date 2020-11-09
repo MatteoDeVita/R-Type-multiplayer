@@ -38,7 +38,7 @@ void UDP_Server::do_send()
     boost::asio::buffer(/*archive_stream.str()*/ test), _client_endpoint,
     [this](boost::system::error_code /*ec*/, std::size_t /*bytes_sent*/)
     {
-        std::cout << BOLDYELLOW << "[DATA SENT]" << RESET << " -> DEST=" << _client_endpoint << std::endl;//DEBUG
+        // std::cout << BOLDYELLOW << "[DATA SENT]" << RESET << " -> DEST=" << _client_endpoint << std::endl;//DEBUG
         do_receive();
     });
 }
@@ -67,8 +67,8 @@ void UDP_Server::set_user_info(udp::endpoint client_endpoint, std::string seriel
                 this->_gameContainers.at(i).EnvServData.datas_receive.clear();
                 this->_gameContainers.at(i).EnvServData.datas_receive = serielise_string;
 
-                std::cout << BOLDGREEN << "[DATA RECEIVED AND UPDATED]" << RESET << " -> USER=" << this->_gameContainers.at(i)._clients.at(y).ton_num << " CONTAINER=" << this->_gameContainers.at(i)._clients.at(y).ton_num / 4  << " FROM=" << client_endpoint << std::endl;//DEBUG
-                std::cout << BOLDBLUE << "CONTENT : " << this->_gameContainers.at(i).EnvServData.datas_receive << RESET << std::endl; //TEST
+                // std::cout << BOLDGREEN << "[DATA RECEIVED AND UPDATED]" << RESET << " -> USER=" << this->_gameContainers.at(i)._clients.at(y).ton_num << " CONTAINER=" << this->_gameContainers.at(i)._clients.at(y).ton_num / 4  << " FROM=" << client_endpoint << std::endl;//DEBUG
+                // std::cout << BOLDBLUE << "CONTENT : " << this->_gameContainers.at(i).EnvServData.datas_receive << RESET << std::endl; //TEST
             
                 return;
             }

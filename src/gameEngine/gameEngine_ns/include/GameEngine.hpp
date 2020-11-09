@@ -40,5 +40,6 @@ namespace gameEngine_ns {
             void createWindow(const gameEngine_ns::geometry_ns::Vector &vector);
             const std::map<const std::string, gameEngine_ns::object_ns::IObject *> getObjects() const;
             gameEngine_ns::object_ns::IObject *getObject(const std::string &id) const;
+            void removeObject(const std::string &id);
     };
 }

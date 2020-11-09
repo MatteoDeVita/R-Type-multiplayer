@@ -22,7 +22,7 @@ void Threaded_Send(Network *ClassAccess)//envoie les actions du client -> A FAIR
         timer1_.wait();
 
         ClassAccess->_socket->send_to(boost::asio::buffer(ClassAccess->EnvClientData->datas_send/*archive_stream.str()*/),ClassAccess->_server_endpoint);//envoie de la struct au serv
-        std::cout << BOLDYELLOW << "[DATA SENT]" << RESET << " -> DEST=" << ClassAccess->_server_endpoint << std::endl;//DEBUG
+        // std::cout << BOLDYELLOW << "[DATA SENT]" << RESET << " -> DEST=" << ClassAccess->_server_endpoint << std::endl;//DEBUG
     }
 }
 
@@ -36,8 +36,8 @@ void Threaded_Receive(Network *ClassAccess) //recoit et met a jour les datas du 
 
         ClassAccess->EnvClientData->datas_receive = _test_recv.data();
 
-        std::cout << BOLDGREEN << "[DATA RECEIVED AND UPDATED]" << RESET <<  " -> FROM=" << ClassAccess->_server_endpoint << std::endl;//DEBUG
-        std::cout << BOLDBLUE << "CONTENT : " << ClassAccess->EnvClientData->datas_receive <<  "\nSIZE :" << ClassAccess->EnvClientData->datas_receive.size() <<RESET << std::endl; //TEST
+        // std::cout << BOLDGREEN << "[DATA RECEIVED AND UPDATED]" << RESET <<  " -> FROM=" << ClassAccess->_server_endpoint << std::endl;//DEBUG
+        // std::cout << BOLDBLUE << "CONTENT : " << ClassAccess->EnvClientData->datas_receive <<  "\nSIZE: " << ClassAccess->EnvClientData->datas_receive.size() <<RESET << std::endl; //TEST
         if (ClassAccess->EnvClientData->datas_receive == "")
             return;
         factory_ns::updateObjectsFromNetworkData(ClassAccess->_gameEngine, ClassAccess->EnvClientData->datas_receive);

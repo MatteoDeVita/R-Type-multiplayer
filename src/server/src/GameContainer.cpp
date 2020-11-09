@@ -33,7 +33,6 @@ GameContainer::GameContainer()
 {
     srand(time(NULL));
     factory_ns::loadMonsterTextures(&this->_gameEngine);
-    // factory_ns::addAndCreateMonster(&this->_gameEngine, 2, gameEngine_ns::geometry_ns::Vector(500, 500));
 }
 
 GameContainer::~GameContainer()
@@ -60,7 +59,6 @@ void GameContainer::update_struct()
 void GameContainer::updateGameObjects()
 {    
     int spawnRand = (rand() % 3000) + 2000;
-    // int mooveRand = (rand () % 5000);
     std::chrono::time_point<std::chrono::high_resolution_clock> currentSpawnChrono = std::chrono::high_resolution_clock::now();
     double spawnDiff = std::chrono::duration<double, std::milli>(currentSpawnChrono - this->_spawnChrono).count();
 
@@ -68,11 +66,10 @@ void GameContainer::updateGameObjects()
         factory_ns::addAndCreateMonster(&this->_gameEngine, (rand() % 8) + 1, gameEngine_ns::geometry_ns::Vector(1700, rand() % 850));
         this->_spawnChrono = std::chrono::high_resolution_clock::now();
     }
-    // std::chrono::time_point<std::chrono::high_resolution_clock> currentMooveChrono = std::chrono::high_resolution_clock::now();
-    // double mooveDiff = std::chrono::duration<double, std::milli>(currentMooveChrono - this->_mooveChrono).count();
 
     for (const std::pair<const std::string, gameEngine_ns::object_ns::IObject *> &pair : this->_gameEngine.getObjects()) {
         pair.second->autoUpdatePos();
-        // pair.second->moove(gameEngine_ns::geometry_ns::Vector(- ((rand() % 50) + 10), (rand() % 100) - 50));
+        if (pair.second->getPos().x <= -50)
+            this->_gameEngine.removeObject(pair.first);
     }
 }

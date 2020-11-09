@@ -181,6 +181,7 @@ void factory_ns::updateObjectsFromNetworkData(gameEngine_ns::GameEngine *gameEng
 {
     std::stringstream ss(data);
     std::string tmp;
+    std::vector<std::string> ids;
 
 
     std::size_t firstSpaceIndex = 0;
@@ -189,7 +190,7 @@ void factory_ns::updateObjectsFromNetworkData(gameEngine_ns::GameEngine *gameEng
     float x = 0;
     float y = 0;
     while (std::getline(ss, tmp, '|')) {
-        if (tmp == "" && tmp.length() == 0)
+        if (tmp == "" || tmp.length() <= 5)
             continue;
         firstSpaceIndex = tmp.find(" ");
         x_str = tmp.substr(0, firstSpaceIndex);
@@ -198,6 +199,7 @@ void factory_ns::updateObjectsFromNetworkData(gameEngine_ns::GameEngine *gameEng
         y_str = tmp.substr(firstSpaceIndex + 1, secondSpaceIndex - firstSpaceIndex - 1);
 
         id_str = tmp.substr(secondSpaceIndex + 1, tmp.length() - firstSpaceIndex - 1);
+        ids.push_back(id_str);
 
         x = std::stof(x_str);
         y = std::stof(y_str);
@@ -213,6 +215,11 @@ void factory_ns::updateObjectsFromNetworkData(gameEngine_ns::GameEngine *gameEng
         }
         else {
             gameEngine->getObject(id_str)->setPos(gameEngine_ns::geometry_ns::Vector(x, y));
+        }
+    }
+    for (const std::pair<const std::string, gameEngine_ns::object_ns::IObject *> &pair : gameEngine->getObjects()) {
+        if (pair.first.substr(0, 7) == "monster" && std::find(ids.begin(), ids.end(), pair.first) == ids.end()) {
+            gameEngine->removeObject(pair.first);
         }
     }
 }

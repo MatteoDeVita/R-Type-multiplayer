@@ -17,7 +17,7 @@ namespace gameEngine_ns {
         class IObject {
             public:
                 IObject();
-                ~IObject();
+                virtual ~IObject();
                 virtual void autoUpdatePos() = 0;
                 virtual gameEngine_ns::geometry_ns::Vector getPos() const = 0;
                 virtual void setPos(const gameEngine_ns::geometry_ns::Vector &vector) = 0;
