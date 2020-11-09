@@ -7,4 +7,4 @@ iddle		66px	0px
 going_up1	99px	0px
 going_up2	132px	0px
 going_down1	33px	0px
-going_down2	0px	0px
+going_down2	0px	    0px
