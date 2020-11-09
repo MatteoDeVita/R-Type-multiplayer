@@ -32,6 +32,7 @@ int main(int argc, char **argv)
         gameEngine.createWindow(gameEngine_ns::geometry_ns::Vector(1600, 900));
 
         factory_ns::loadMonsterTextures(&gameEngine);
+        factory_ns::loadPlayerTextures(&gameEngine);
         factory_ns::loadEnvironment(&gameEngine);
         factory_ns::loadMusic(&gameEngine);
         Network net(argv, environment, &gameEngine);

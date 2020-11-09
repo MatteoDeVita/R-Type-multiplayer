@@ -6,6 +6,7 @@
 */
 
 #include "Server.hpp"
+#include "factory.hpp"
 
 UDP_Server::UDP_Server() : _socket(_io, udp::endpoint(udp::v4(), 3000))
 {
@@ -38,7 +39,7 @@ void UDP_Server::do_send()
     boost::asio::buffer(/*archive_stream.str()*/ test), _client_endpoint,
     [this](boost::system::error_code /*ec*/, std::size_t /*bytes_sent*/)
     {
-        // std::cout << BOLDYELLOW << "[DATA SENT]" << RESET << " -> DEST=" << _client_endpoint << std::endl;//DEBUG
+        std::cout << BOLDYELLOW << "[DATA SENT]" << RESET << " -> DEST=" << _client_endpoint << std::endl;//DEBUG
         do_receive();
     });
 }
@@ -67,8 +68,8 @@ void UDP_Server::set_user_info(udp::endpoint client_endpoint, std::string seriel
                 this->_gameContainers.at(i).EnvServData.datas_receive.clear();
                 this->_gameContainers.at(i).EnvServData.datas_receive = serielise_string;
 
-                // std::cout << BOLDGREEN << "[DATA RECEIVED AND UPDATED]" << RESET << " -> USER=" << this->_gameContainers.at(i)._clients.at(y).ton_num << " CONTAINER=" << this->_gameContainers.at(i)._clients.at(y).ton_num / 4  << " FROM=" << client_endpoint << std::endl;//DEBUG
-                // std::cout << BOLDBLUE << "CONTENT : " << this->_gameContainers.at(i).EnvServData.datas_receive << RESET << std::endl; //TEST
+                std::cout << BOLDGREEN << "[DATA RECEIVED AND UPDATED]" << RESET << " -> USER=" << this->_gameContainers.at(i)._clients.at(y).ton_num << " CONTAINER=" << this->_gameContainers.at(i)._clients.at(y).ton_num / 4  << " FROM=" << client_endpoint << std::endl;//DEBUG
+                std::cout << BOLDBLUE << "CONTENT : " << this->_gameContainers.at(i).EnvServData.datas_receive << RESET << std::endl; //TEST
             
                 return;
             }
@@ -78,17 +79,27 @@ void UDP_Server::set_user_info(udp::endpoint client_endpoint, std::string seriel
     new_client._endpoint = client_endpoint;
     new_client.ton_num = this->NbofClientassign;
     if (this->NbofClientassign % 4 == 0) {
-           std::cout << BOLDRED << "[NEW CONTAINER]" << RESET << " -> "<< "ID="<<NbofClientassign / 4 << std::endl;//DEBUG
-           std::cout << BOLDBLUE << "[USER ADDED]" << RESET << " -> USER=" << this->NbofClientassign << " CONTAINER=" << NbofClientassign / 4 << " FROM=" << client_endpoint << std::endl;//DEBUG
-           GameContainer newest;
-           newest._clients.push_back(new_client);
-           newest.EnvServData.datas_receive = serielise_string;
-           this->_gameContainers.push_back(newest);
+            std::cout << BOLDRED << "[NEW CONTAINER]" << RESET << " -> "<< "ID="<<NbofClientassign / 4 << std::endl;//DEBUG
+            std::cout << BOLDBLUE << "[USER ADDED]" << RESET << " -> USER=" << this->NbofClientassign << " CONTAINER=" << NbofClientassign / 4 << " FROM=" << client_endpoint << std::endl;//DEBUG
+            GameContainer newest;
+            newest._clients.push_back(new_client);
+            newest.EnvServData.datas_receive = serielise_string;
+            this->_gameContainers.push_back(newest);
+            factory_ns::addAndCreatePlayer(
+                &this->_gameContainers.back()._gameEngine,
+                this->_gameContainers.back()._clients.size(),
+                gameEngine_ns::geometry_ns::Vector(0, rand() % 850)
+            );
        }
        else {
            std::cout << BOLDBLUE << "[USER ADDED]" << RESET << " -> USER=" << this->NbofClientassign << " CONTAINER=" << NbofClientassign / 4 << " FROM=" << client_endpoint << std::endl;//DEBUG
            this->_gameContainers.at(_gameContainers.size() - 1).EnvServData.datas_receive = serielise_string;
            this->_gameContainers.at(_gameContainers.size() - 1)._clients.push_back(new_client);
+           factory_ns::addAndCreatePlayer(
+                &this->_gameContainers.back()._gameEngine,
+                this->_gameContainers.back()._clients.size(),
+                gameEngine_ns::geometry_ns::Vector(0, rand() % 850)
+            );
        }
        this->NbofClientassign++;
       // std::cout << this->_gameContainers.at(_gameContainers.size() - 1).data_struct.a << std::endl;//test

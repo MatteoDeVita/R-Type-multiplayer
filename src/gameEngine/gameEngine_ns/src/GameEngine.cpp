@@ -15,22 +15,22 @@ gameEngine_ns::GameEngine::GameEngine()
 {
     this->window = nullptr;
     this->event = new gameEngine_ns::event_ns::Event(this->window);
-    this->audio = new gameEngine_ns::audio_ns::Audio;
+    // this->audio = new gameEngine_ns::audio_ns::Audio;
 }
 
 gameEngine_ns::GameEngine::~GameEngine()
 {
-    for (const std::pair<const std::string, gameEngine_ns::object_ns::IObject *> &pair : this->_objects ) {
+    for (std::pair<const std::string, gameEngine_ns::object_ns::IObject *> pair : this->_objects ) {
         if (pair.second != nullptr)
-            delete pair.second;
+            delete pair.second;        
     }
-    for (const std::pair<const std::string, gameEngine_ns::object_ns::Sprite *> &pair : this->_sprites ) {
+    for (std::pair<const std::string, gameEngine_ns::object_ns::Sprite *> pair : this->_sprites ) {
         if (pair.second != nullptr)
-            delete pair.second;
+            delete pair.second;        
     }
-    for (const std::pair<const std::string, sf::Texture *> &pair : this->_textures ) {
+    for (std::pair<const std::string, sf::Texture *> pair : this->_textures ) {
         if (pair.second != nullptr)
-            delete pair.second;
+            delete pair.second;        
     }
     this->_objects.clear();
     this->_sprites.clear();
@@ -38,7 +38,7 @@ gameEngine_ns::GameEngine::~GameEngine()
     if (this->window != nullptr)
         delete this->window;
     delete this->event;
-    delete this->audio;
+    // delete this->audio;
 }
 
 int gameEngine_ns::GameEngine::addTexture(const std::string &id, const std::string &filePath)

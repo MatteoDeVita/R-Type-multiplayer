@@ -15,6 +15,7 @@
 
 namespace factory_ns {
     void loadMonsterTextures(gameEngine_ns::GameEngine *gameEngine);
+    void loadPlayerTextures(gameEngine_ns::GameEngine *gameEngine);
     void loadEnvironment(gameEngine_ns::GameEngine *gameEngine);
     void loadMusic(gameEngine_ns::GameEngine *gameEngine);
     std::vector<gameEngine_ns::geometry_ns::Rectangle> getMonster1Vec();
@@ -25,7 +26,9 @@ namespace factory_ns {
     std::vector<gameEngine_ns::geometry_ns::Rectangle> getMonster6Vec();
     std::vector<gameEngine_ns::geometry_ns::Rectangle> getMonster7Vec();
     std::vector<gameEngine_ns::geometry_ns::Rectangle> getMonster8Vec();
+    std::vector<gameEngine_ns::geometry_ns::Rectangle> getPlayerVec();
     void updateObjectsFromNetworkData(gameEngine_ns::GameEngine *gameEngine, const std::string &data);
     void addAndCreateMonster(gameEngine_ns::GameEngine *gameEngine, const int &monsterNb, const gameEngine_ns::geometry_ns::Vector &position);
+    void addAndCreatePlayer(gameEngine_ns::GameEngine *gameEngine, const int &playerNb, const gameEngine_ns::geometry_ns::Vector &position);    
     std::vector<gameEngine_ns::geometry_ns::Rectangle> getMonsterVec(const int &monsterNb);    
 }

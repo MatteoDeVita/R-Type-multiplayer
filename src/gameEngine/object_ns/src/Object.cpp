@@ -40,7 +40,8 @@ void gameEngine_ns::object_ns::Object::setPos(const gameEngine_ns::geometry_ns::
 
 gameEngine_ns::object_ns::Object::~Object()
 {
-
+    if (this->_sprite != nullptr)
+        delete this->_sprite;
 }
 
 void gameEngine_ns::object_ns::Object::moove(const gameEngine_ns::geometry_ns::Vector &vector)

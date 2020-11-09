@@ -8,10 +8,8 @@
 #include <vector>
 #include <iostream>
 #include <sstream>
-#include <stdlib.h>
 #include <time.h>
 #include <stdlib.h>
-#include <time.h>
 
 #include "GameContainer.hpp"
 #include "Sprite.hpp"
@@ -22,9 +20,10 @@
 void GameContainer::push_newclient(boost::asio::ip::udp::endpoint endpointer)
 {
     ClientServerSide newest;
-
+    
     newest._endpoint = endpointer;
     this->_clients.push_back(newest);
+    factory_ns::addAndCreatePlayer(&this->_gameEngine, this->_clients.size(), gameEngine_ns::geometry_ns::Vector(0, rand() % 850));
     this->_spawnChrono = std::chrono::high_resolution_clock::now();
     this->_mooveChrono = std::chrono::high_resolution_clock::now();
 }
@@ -33,6 +32,7 @@ GameContainer::GameContainer()
 {
     srand(time(NULL));
     factory_ns::loadMonsterTextures(&this->_gameEngine);
+    factory_ns::loadPlayerTextures(&this->_gameEngine);
 }
 
 GameContainer::~GameContainer()
@@ -57,7 +57,7 @@ void GameContainer::update_struct()
 }
 
 void GameContainer::updateGameObjects()
-{    
+{
     int spawnRand = (rand() % 2000) + 1000;
     std::chrono::time_point<std::chrono::high_resolution_clock> currentSpawnChrono = std::chrono::high_resolution_clock::now();
     double spawnDiff = std::chrono::duration<double, std::milli>(currentSpawnChrono - this->_spawnChrono).count();
@@ -68,8 +68,11 @@ void GameContainer::updateGameObjects()
     }
 
     for (const std::pair<const std::string, gameEngine_ns::object_ns::IObject *> &pair : this->_gameEngine.getObjects()) {
-        pair.second->autoUpdatePos();
-        if (pair.second->getPos().x <= -50)
-            this->_gameEngine.removeObject(pair.first);
+        std::cout << "id = " << pair.first << std::endl;
+        if (pair.first.substr(0, 7) == "monster") {
+            pair.second->autoUpdatePos();
+            if (pair.second->getPos().x <= -50)
+                this->_gameEngine.removeObject(pair.first);
+        }
     }
 }

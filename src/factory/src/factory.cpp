@@ -18,6 +18,7 @@
 #include "Audio.hpp"
 #include "FX.hpp"
 #include "Music.hpp"
+#include "Player.hpp"
 
 void factory_ns::loadMonsterTextures(gameEngine_ns::GameEngine *gameEngine)
 {
@@ -37,6 +38,18 @@ void factory_ns::loadMonsterTextures(gameEngine_ns::GameEngine *gameEngine)
         throw Error("Can't load texture monster7.gif");
     if (gameEngine->addTexture("monster8-texture", "../../assets/monsters/monster8.gif") != 0)
         throw Error("Can't load texture monster8.gif");  
+}
+
+void factory_ns::loadPlayerTextures(gameEngine_ns::GameEngine *gameEngine)
+{
+    if (gameEngine->addTexture("player1-texture", "../../assets/player/player1.gif") != 0)
+        throw Error("Can't load texture player1.gif");
+    if (gameEngine->addTexture("player2-texture", "../../assets/player/player2.gif") != 0)
+        throw Error("Can't load texture player2.gif");
+    if (gameEngine->addTexture("player3-texture", "../../assets/player/player3.gif") != 0)
+        throw Error("Can't load texture player3.gif");
+    if (gameEngine->addTexture("player4-texture", "../../assets/player/player4.gif") != 0)
+        throw Error("Can't load texture player4.gif");
 }
 
 void factory_ns::loadEnvironment(gameEngine_ns::GameEngine *gameEngine)
@@ -191,6 +204,19 @@ std::vector<gameEngine_ns::geometry_ns::Rectangle> factory_ns::getMonster8Vec()
     return vec;
 }
 
+std::vector<gameEngine_ns::geometry_ns::Rectangle> factory_ns::getPlayerVec()
+{
+    std::vector<gameEngine_ns::geometry_ns::Rectangle> vec;
+
+    vec.push_back(gameEngine_ns::geometry_ns::Rectangle(2, 3, 31, 14));
+    vec.push_back(gameEngine_ns::geometry_ns::Rectangle(35, 3, 31, 13));
+    vec.push_back(gameEngine_ns::geometry_ns::Rectangle(37, 3, 32, 12));
+    vec.push_back(gameEngine_ns::geometry_ns::Rectangle(100, 3, 32, 13));
+    vec.push_back(gameEngine_ns::geometry_ns::Rectangle(133, 2, 32, 14));
+    
+    return vec;
+}
+
 void factory_ns::updateObjectsFromNetworkData(gameEngine_ns::GameEngine *gameEngine, const std::string &data)
 {
     std::stringstream ss(data);
@@ -242,7 +268,7 @@ void factory_ns::addAndCreateMonster(gameEngine_ns::GameEngine *gameEngine, cons
     std::string timestamp(std::to_string(time(nullptr)));
     gameEngine_ns::object_ns::Sprite *sprite = gameEngine->createSprite(
         std::string("monster" + std::to_string(monsterNb) + "-texture"),
-        getMonsterVec(monsterNb),
+        factory_ns::getMonsterVec(monsterNb),
         (float ((rand() % 100) + 100))
     );
     if (sprite == nullptr)
@@ -257,6 +283,29 @@ void factory_ns::addAndCreateMonster(gameEngine_ns::GameEngine *gameEngine, cons
     if (monster == nullptr)
         throw Error("Can't create object");
     if (gameEngine->addObject(std::string("monster" + std::to_string(monsterNb) + "-" + timestamp), monster) != 0)
+        throw Error("Can't add object");
+}
+
+void factory_ns::addAndCreatePlayer(gameEngine_ns::GameEngine *gameEngine, const int &playerNb, const gameEngine_ns::geometry_ns::Vector &position)
+{
+    std::string timestamp(std::to_string(time(nullptr)));
+        gameEngine_ns::object_ns::Sprite *sprite = gameEngine->createSprite(
+        std::string("player" + std::to_string(playerNb) + "-texture"),
+        factory_ns::getPlayerVec(),
+        50
+    );
+    if (sprite == nullptr)
+        throw Error("Can't load sprite");
+    if (gameEngine->addSprite(std::string("sprite" + std::to_string(playerNb) + "-" + timestamp), sprite) != 0)
+        throw Error("Can't add sprite");
+    Player *player = new Player(
+        sprite,
+        position
+    );
+    player->setPos(position);
+    if (player == nullptr)
+        throw Error("Can't create object");
+    if (gameEngine->addObject(std::string("player" + std::to_string(playerNb) + "-" + timestamp), player) != 0)
         throw Error("Can't add object");
 }
 
