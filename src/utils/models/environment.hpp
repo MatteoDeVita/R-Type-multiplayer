@@ -13,9 +13,9 @@
 #include <string>
 
 #include "object.hpp"
-#include <boost/serialization/vector.hpp>
-#include <boost/archive/text_iarchive.hpp>
-#include <boost/archive/text_oarchive.hpp>
+// #include <boost/serialization/vector.hpp>
+// #include <boost/archive/text_iarchive.hpp>
+// #include <boost/archive/text_oarchive.hpp>
 
 typedef struct {
     std::string datas_receive;
