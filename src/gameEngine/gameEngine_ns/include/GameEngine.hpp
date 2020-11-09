@@ -17,6 +17,7 @@
 #include "Window.hpp"
 #include "Vector.hpp"
 #include "Event.hpp"
+#include "Audio.hpp"
 
 namespace gameEngine_ns {
 
@@ -30,6 +31,7 @@ namespace gameEngine_ns {
             ~GameEngine();
             gameEngine_ns::window_ns::Window *window;
             gameEngine_ns::event_ns::Event *event;
+            gameEngine_ns::audio_ns::Audio *audio;
             int addObject(const std::string &id, gameEngine_ns::object_ns::IObject *object);
             // int addObject(const std::string &filePath, const std::string &id);
             int addTexture(const std::string &id, const std::string &filePath);

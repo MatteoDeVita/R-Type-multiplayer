@@ -19,9 +19,9 @@ namespace gameEngine_ns {
                 void play();
                 void setVolume(const float &volume = 50);
                 void stop();
+                void setLoop(const bool &loop = true);
             private:
                 sf::Music *_music;
         };
     }
 }
-

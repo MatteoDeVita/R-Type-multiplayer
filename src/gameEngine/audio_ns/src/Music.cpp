@@ -38,3 +38,8 @@ void gameEngine_ns::audio_ns::Music::stop()
 {
     this->_music->stop();
 }
+
+void gameEngine_ns::audio_ns::Music::setLoop(const bool &loop)
+{
+    this->_music->setLoop(loop);
+}

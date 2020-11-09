@@ -15,6 +15,7 @@ gameEngine_ns::GameEngine::GameEngine()
 {
     this->window = nullptr;
     this->event = new gameEngine_ns::event_ns::Event(this->window);
+    this->audio = new gameEngine_ns::audio_ns::Audio;
 }
 
 gameEngine_ns::GameEngine::~GameEngine()
@@ -37,6 +38,7 @@ gameEngine_ns::GameEngine::~GameEngine()
     if (this->window != nullptr)
         delete this->window;
     delete this->event;
+    delete this->audio;
 }
 
 int gameEngine_ns::GameEngine::addTexture(const std::string &id, const std::string &filePath)

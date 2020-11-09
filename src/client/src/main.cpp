@@ -40,7 +40,6 @@ int main(int argc, char **argv)
 
             gameEngine.window->reset();
             gameEngine.window->addObject(gameEngine.getObject("background-object"));
-            std::cout << "LENGTH = " << gameEngine.getObjects().size() << std::endl;
             for (const std::pair<const std::string, gameEngine_ns::object_ns::IObject *> &pair : gameEngine.getObjects()) { 
                 pair.second->getSprite()->update();
                 gameEngine.window->addObject(pair.second);

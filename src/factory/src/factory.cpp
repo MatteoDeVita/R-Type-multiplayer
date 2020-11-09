@@ -15,6 +15,9 @@
 #include "Vector.hpp"
 #include "Moove.hpp"
 #include "Monster.hpp"
+#include "Audio.hpp"
+#include "FX.hpp"
+#include "Music.hpp"
 
 void factory_ns::loadMonsterTextures(gameEngine_ns::GameEngine *gameEngine)
 {
@@ -64,6 +67,13 @@ void factory_ns::loadEnvironment(gameEngine_ns::GameEngine *gameEngine)
         throw Error("Can't create object");
     if (gameEngine->addObject("background-object", backgroundObject) != 0)
         throw Error("Can't add object");
+}
+
+void factory_ns::loadMusic(gameEngine_ns::GameEngine *gameEngine)
+{
+    gameEngine_ns::audio_ns::Music *music = new gameEngine_ns::audio_ns::Music("../../assets/sound/music.wav");
+    if (music == nullptr)
+        throw Error("Can't load music");    
 }
 
 std::vector<gameEngine_ns::geometry_ns::Rectangle> factory_ns::getMonster1Vec()
@@ -245,9 +255,6 @@ void factory_ns::addAndCreateMonster(gameEngine_ns::GameEngine *gameEngine, cons
         throw Error("Can't create object");
     if (gameEngine->addObject(std::string("monster" + std::to_string(monsterNb) + "-" + timestamp), monster) != 0)
         throw Error("Can't add object");
-    // gameEngine_ns::action_ns::Moove *mooveAction = new gameEngine_ns::action_ns::Moove(object);
-    // if (object->addAction("moove-action", mooveAction) != 0)
-    //     throw Error("Can't add moove action");
 }
 
 std::vector<gameEngine_ns::geometry_ns::Rectangle> factory_ns::getMonsterVec(const int &monsterNb)

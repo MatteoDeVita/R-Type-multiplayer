@@ -38,6 +38,7 @@ SET(
     "${PROJECT_SOURCE_DIR}/src/gameEngine/window_ns/include"
     "${PROJECT_SOURCE_DIR}/src/gameEngine/event_ns/include"
     "${PROJECT_SOURCE_DIR}/src/gameEngine/action_ns/include"
+    "${PROJECT_SOURCE_DIR}/src/gameEngine/audio_ns/include"
     "${PROJECT_SOURCE_DIR}/src/gameObjects/include"
     "${PROJECT_SOURCE_DIR}/src/client/include"
     "${PROJECT_SOURCE_DIR}/src/utils/error/include"
