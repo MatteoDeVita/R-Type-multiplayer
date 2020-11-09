@@ -208,9 +208,9 @@ std::vector<gameEngine_ns::geometry_ns::Rectangle> factory_ns::getPlayerVec()
 {
     std::vector<gameEngine_ns::geometry_ns::Rectangle> vec;
 
-    vec.push_back(gameEngine_ns::geometry_ns::Rectangle(2, 3, 31, 14));
-    vec.push_back(gameEngine_ns::geometry_ns::Rectangle(35, 3, 31, 13));
-    vec.push_back(gameEngine_ns::geometry_ns::Rectangle(37, 3, 32, 12));
+    vec.push_back(gameEngine_ns::geometry_ns::Rectangle(1, 3, 32, 14));
+    vec.push_back(gameEngine_ns::geometry_ns::Rectangle(34, 3, 32, 13));
+    vec.push_back(gameEngine_ns::geometry_ns::Rectangle(67, 3, 32, 12));
     vec.push_back(gameEngine_ns::geometry_ns::Rectangle(100, 3, 32, 13));
     vec.push_back(gameEngine_ns::geometry_ns::Rectangle(133, 2, 32, 14));
     
@@ -299,7 +299,7 @@ void factory_ns::addAndCreatePlayer(gameEngine_ns::GameEngine *gameEngine, const
         gameEngine_ns::object_ns::Sprite *sprite = gameEngine->createSprite(
         std::string("player" + std::to_string(playerNb) + "-texture"),
         factory_ns::getPlayerVec(),
-        50
+        75
     );
     if (sprite == nullptr)
         throw Error("Can't load sprite");
