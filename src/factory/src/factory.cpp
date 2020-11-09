@@ -73,7 +73,11 @@ void factory_ns::loadMusic(gameEngine_ns::GameEngine *gameEngine)
 {
     gameEngine_ns::audio_ns::Music *music = new gameEngine_ns::audio_ns::Music("../../assets/sound/music.wav");
     if (music == nullptr)
-        throw Error("Can't load music");    
+        throw Error("Can't load music");
+    music->setLoop();
+    music->setVolume();    
+    if (gameEngine->audio->addMusic("music-main", music) != 0)
+        throw Error("Can't add music");
 }
 
 std::vector<gameEngine_ns::geometry_ns::Rectangle> factory_ns::getMonster1Vec()

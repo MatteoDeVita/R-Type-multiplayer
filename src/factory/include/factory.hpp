@@ -16,7 +16,7 @@
 namespace factory_ns {
     void loadMonsterTextures(gameEngine_ns::GameEngine *gameEngine);
     void loadEnvironment(gameEngine_ns::GameEngine *gameEngine);
-    void factory_ns::loadMusic(gameEngine_ns::GameEngine *gameEngine);
+    void loadMusic(gameEngine_ns::GameEngine *gameEngine);
     std::vector<gameEngine_ns::geometry_ns::Rectangle> getMonster1Vec();
     std::vector<gameEngine_ns::geometry_ns::Rectangle> getMonster2Vec();
     std::vector<gameEngine_ns::geometry_ns::Rectangle> getMonster3Vec();

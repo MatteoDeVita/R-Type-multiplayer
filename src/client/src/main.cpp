@@ -33,7 +33,10 @@ int main(int argc, char **argv)
 
         factory_ns::loadMonsterTextures(&gameEngine);
         factory_ns::loadEnvironment(&gameEngine);
+        factory_ns::loadMusic(&gameEngine);
         Network net(argv, environment, &gameEngine);
+
+        // gameEngine.audio->getMusic("music-main")->play();
 
         while (gameEngine.window->isOpen()) {
             gameEngine.event->handlePollEvent();
