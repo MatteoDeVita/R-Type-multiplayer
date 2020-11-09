@@ -58,7 +58,7 @@ void GameContainer::update_struct()
 
 void GameContainer::updateGameObjects()
 {    
-    int spawnRand = (rand() % 3000) + 2000;
+    int spawnRand = (rand() % 2000) + 1000;
     std::chrono::time_point<std::chrono::high_resolution_clock> currentSpawnChrono = std::chrono::high_resolution_clock::now();
     double spawnDiff = std::chrono::duration<double, std::milli>(currentSpawnChrono - this->_spawnChrono).count();
 

@@ -196,13 +196,12 @@ void factory_ns::updateObjectsFromNetworkData(gameEngine_ns::GameEngine *gameEng
     std::stringstream ss(data);
     std::string tmp;
     std::vector<std::string> ids;
-
-
     std::size_t firstSpaceIndex = 0;
     std::size_t secondSpaceIndex = 0;
     std::string x_str, y_str, id_str;
     float x = 0;
     float y = 0;
+
     while (std::getline(ss, tmp, '|')) {
         if (tmp == "" || tmp.length() <= 5)
             continue;
