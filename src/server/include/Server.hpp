@@ -26,12 +26,37 @@ using boost::asio::ip::udp;
 class UDP_Server
 {
     public:
+    
+        /**
+         * @brief Construct a new udp server object
+         * 
+         */
         UDP_Server();
+
+        /**
+         * @brief Destroy the udp server object
+         * 
+         */
         ~UDP_Server();
+
+        /**
+         * @brief send your informations where stock in game
+         * 
+        */
         void do_send();
+        /**
+         * @brief call this function to receive information 
+         * 
+         */
         void do_receive();
+
+        /**
+         * @brief set the receive information on the gamer where the player is  connected
+         * 
+         * @param client_endpoint  information of incoming communication
+         * @param serielise_string the binary where serializing in a string
+         */
         void set_user_info(udp::endpoint remote_endpoint, std::string serielise_string);
-        bool get_user_is_know();
         std::vector<GameContainer> _gameContainers;
         int NbofClientassign;
         boost::asio::io_context _io;
