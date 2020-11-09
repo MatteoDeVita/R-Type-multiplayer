@@ -21,8 +21,8 @@ UDP_Server::~UDP_Server()
 
 void UDP_Server::do_send()
 {
-    std::ostringstream archive_stream;
-    boost::archive::text_oarchive archive(archive_stream);  
+    // std::ostringstream archive_stream;
+    // boost::archive::text_oarchive archive(archive_stream);  
     std::string test;
     for (unsigned int i = 0; i < this->_gameContainers.size(); i++) {
         for (unsigned int y = 0; y <  this->_gameContainers.at(i)._clients.size(); y++) {
