@@ -244,7 +244,14 @@ void factory_ns::updateObjectsFromNetworkData(gameEngine_ns::GameEngine *gameEng
         y = std::stof(y_str);
 
         if (gameEngine->getObject(id_str) == nullptr) {
-            if (id_str.substr(0, id_str.find('-')).substr(0, 7) == "monster") {
+            if (id_str.substr(0, 6) == "player") {
+                factory_ns::addAndCreatePlayer(
+                    gameEngine,
+                    std::stoi(id_str.substr(6, 7)),
+                    gameEngine_ns::geometry_ns::Vector(x, y)
+                );                
+            }
+            else if (id_str.substr(0, id_str.find('-')).substr(0, 7) == "monster") {
                 factory_ns::addAndCreateMonster(
                     gameEngine,
                     std::stoi(id_str.substr(7, 1)),

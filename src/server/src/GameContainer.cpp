@@ -53,7 +53,7 @@ void GameContainer::update_struct()
         sstream << pair.second->getPos().y;
         this->EnvServData.datas_send += std::string(sstream.str()) + ' ' + pair.first + '|';
         sstream.str("");
-    }    
+    }
 }
 
 void GameContainer::updateGameObjects()
@@ -68,7 +68,6 @@ void GameContainer::updateGameObjects()
     }
 
     for (const std::pair<const std::string, gameEngine_ns::object_ns::IObject *> &pair : this->_gameEngine.getObjects()) {
-        std::cout << "id = " << pair.first << std::endl;
         if (pair.first.substr(0, 7) == "monster") {
             pair.second->autoUpdatePos();
             if (pair.second->getPos().x <= -50)

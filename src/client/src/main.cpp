@@ -17,8 +17,6 @@
 #include "Object.hpp"
 #include "factory.hpp"
 
-#include "Moove.hpp"
-
 int main(int argc, char **argv)
 {
     try {        
