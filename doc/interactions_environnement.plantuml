@@ -1,14 +1,14 @@
 @startuml
-title interaction avec l'environnement
+title interacting with the game environment
 actor player1 order 10
 participant client order 20
 participant server order 30
 database scene order 40
 
-player1 -> client ++ : déplacement à droite
-client -> server ++ : joueur se déplace à droite
-server -> scene ++ : mise à jour de l'environnement
-scene -> server -- : environnement mis à jour
-server -> client : envoie de l'environnement
-client -> player1 : affichage du joueur à droite
+player1 -> client ++ : Pressed UP key
+client -> server ++ : Player|ID|UP
+server -> scene ++ : Updating game envionment
+scene -> server -- : game environment updated
+server -> client : [game environment]
+client -> player1 : player moved up
 @enduml
