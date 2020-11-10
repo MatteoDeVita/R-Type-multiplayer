@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include <string>
+
 #include "Window.hpp"
 
 namespace gameEngine_ns {
@@ -17,7 +19,7 @@ namespace gameEngine_ns {
                 gameEngine_ns::window_ns::Window *_window;
             public:
                 Event(gameEngine_ns::window_ns::Window *window);
-                void handlePollEvent();
+                void handlePollEvent(std::string *networkData);
                 void setWindow(gameEngine_ns::window_ns::Window *window);
                 ~Event();
         };

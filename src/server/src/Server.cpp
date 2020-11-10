@@ -45,10 +45,10 @@ void UDP_Server::do_send()
 }
 
 void UDP_Server::do_receive()
-{
+{    
     this->_socket.async_receive_from(boost::asio::buffer(_data, max_length), _client_endpoint,[this](boost::system::error_code ec, std::size_t bytes_recvd){
         if (!ec && bytes_recvd > 0) {
-             this->set_user_info(_client_endpoint, _data );
+            this->set_user_info(_client_endpoint, _data );
             do_send();
         }
         else {

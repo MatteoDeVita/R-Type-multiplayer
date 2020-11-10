@@ -20,7 +20,7 @@
 void GameContainer::push_newclient(boost::asio::ip::udp::endpoint endpointer)
 {
     ClientServerSide newest;
-    
+
     newest._endpoint = endpointer;
     this->_clients.push_back(newest);
     factory_ns::addAndCreatePlayer(&this->_gameEngine, this->_clients.size(), gameEngine_ns::geometry_ns::Vector(0, rand() % 850));
@@ -44,6 +44,8 @@ void GameContainer::update_struct()
     
     std::ostringstream sstream;
     this->EnvServData.datas_send = "";
+
+    std::cout << this->EnvServData.datas_receive << std::endl;
 
     this->updateGameObjects();
     for (const std::pair<const std::string, gameEngine_ns::object_ns::IObject *> &pair : this->_gameEngine.getObjects()) {

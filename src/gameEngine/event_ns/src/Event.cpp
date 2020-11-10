@@ -21,10 +21,17 @@ void gameEngine_ns::event_ns::Event::setWindow(gameEngine_ns::window_ns::Window 
     this->_window = window;
 }
 
-void gameEngine_ns::event_ns::Event::handlePollEvent()
-{
+void gameEngine_ns::event_ns::Event::handlePollEvent(std::string *networkData)
+{    
     while (this->_window->getSFMLWindow()->pollEvent(this->_event)) {
         if (this->_event.type == sf::Event::Closed)
             this->_window->getSFMLWindow()->close();
-    }
+        if (this->_event.type == sf::Event::KeyPressed) {
+            if (this->_event.key.code == sf::Keyboard::Z)
+                (*networkData) = "moove-up\0";
+        }
+        if (this->_event.type == sf::Event::KeyReleased) {
+            (*networkData) = "INIT\0";
+        }
+    }    
 }

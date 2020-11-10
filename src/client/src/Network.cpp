@@ -8,6 +8,7 @@
 #include <sstream>
 #include <vector>
 #include <string>
+#include <iostream>
 
 #include "Network.hpp"
 #include "Debug_color.hpp"
@@ -21,8 +22,9 @@ void Threaded_Send(Network *ClassAccess)//envoie les actions du client -> A FAIR
         boost::asio::steady_timer timer1_(*ClassAccess->_io, boost::asio::chrono::milliseconds(ClassAccess->ms_speed));//1000ms
         timer1_.wait();
 
+        
         ClassAccess->_socket->send_to(boost::asio::buffer(ClassAccess->EnvClientData->datas_send/*archive_stream.str()*/),ClassAccess->_server_endpoint);//envoie de la struct au serv
-        // std::cout << BOLDYELLOW << "[DATA SENT]" << RESET << " -> DEST=" << ClassAccess->_server_endpoint << std::endl;//DEBUG
+        std::cout << BOLDYELLOW << "[DATA SENT]" << RESET << " -> DEST=" << ClassAccess->_server_endpoint << std::endl;//DEBUG
     }
 }
 
