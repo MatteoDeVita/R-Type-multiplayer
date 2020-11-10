@@ -1,17 +1,26 @@
 @startuml
-title communication client serveur
+title communication client server
 actor player2 order 30
 actor player1 order 10
 participant server order 20
 
-server -> server  ++ : préparation des threads
-server -> server : lancement des threads
-server -> server : affectation des ports
-server -> server -- : serveur pret
-player1 -> server ++ : envoie d'informations du client
-player2 -> server : envoie d'informations du client
-player1 -> server : déplacement haut
-server -> server : mise à jour du serveur
-server -> player1 : mise à jour du client
-server -> player2 : mise à jour du client
+server -> server  ++ : preparing threads
+server -> server : run all threads
+server -> server : affecting ports
+server -> server -- : server ready
+player1 -> server ++ : Sending information about client
+note left
+Sending client information
+to allow server to communicate back
+end note
+player2 -> server : Sending information about client
+player1 -> server : PLAYER|ID|UP
+server -> server : Updating server information
+server -> player1 : Player 1 goes up*
+server -> player2 : Player 1 goes up*
+note left
+*
+Client recieve the 
+updated game environment
+end note
 @enduml
