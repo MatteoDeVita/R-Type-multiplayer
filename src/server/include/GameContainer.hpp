@@ -21,12 +21,12 @@ class GameContainer {
     public:
         GameContainer();
         ~GameContainer();
-        void update_struct();
+        void update_struct(const int &playerNb = 0);
         void push_newclient(boost::asio::ip::udp::endpoint);
         std::vector<ClientServerSide> _clients;
         environment_t EnvServData;
         gameEngine_ns::GameEngine _gameEngine;
-        void updateGameObjects();
+        void updateGameObjects(const int &playerNb);
     protected:
     private:
         std::chrono::time_point<std::chrono::high_resolution_clock> _spawnChrono;

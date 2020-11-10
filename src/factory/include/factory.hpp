@@ -12,6 +12,7 @@
 
 #include "GameEngine.hpp"
 #include "Rectangle.hpp"
+#include "IObject.hpp"
 
 namespace factory_ns {
     void loadMonsterTextures(gameEngine_ns::GameEngine *gameEngine);
@@ -31,4 +32,5 @@ namespace factory_ns {
     void addAndCreateMonster(gameEngine_ns::GameEngine *gameEngine, const int &monsterNb, const gameEngine_ns::geometry_ns::Vector &position);
     void addAndCreatePlayer(gameEngine_ns::GameEngine *gameEngine, const int &playerNb, const gameEngine_ns::geometry_ns::Vector &position);    
     std::vector<gameEngine_ns::geometry_ns::Rectangle> getMonsterVec(const int &monsterNb);    
+    std::vector<gameEngine_ns::object_ns::IObject *> getPlayers(const gameEngine_ns::GameEngine &gameEngine);
 }

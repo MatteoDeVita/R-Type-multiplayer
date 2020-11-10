@@ -22,7 +22,6 @@ void Threaded_Send(Network *ClassAccess)//envoie les actions du client -> A FAIR
         boost::asio::steady_timer timer1_(*ClassAccess->_io, boost::asio::chrono::milliseconds(ClassAccess->ms_speed));//1000ms
         timer1_.wait();
 
-        
         ClassAccess->_socket->send_to(boost::asio::buffer(ClassAccess->EnvClientData->datas_send/*archive_stream.str()*/),ClassAccess->_server_endpoint);//envoie de la struct au serv
         std::cout << BOLDYELLOW << "[DATA SENT]" << RESET << " -> DEST=" << ClassAccess->_server_endpoint << std::endl;//DEBUG
     }
@@ -44,7 +43,6 @@ void Threaded_Receive(Network *ClassAccess) //recoit et met a jour les datas du 
             return;
         factory_ns::updateObjectsFromNetworkData(ClassAccess->_gameEngine, ClassAccess->EnvClientData->datas_receive);
     }
-        
 }
 
 Network::Network(char **argv, environment_t *EnvClientData, gameEngine_ns::GameEngine *gameEngine) // //_resolver(_io), _io() _resolver(io) _socker(io)

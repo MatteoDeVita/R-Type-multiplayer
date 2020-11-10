@@ -339,3 +339,13 @@ std::vector<gameEngine_ns::geometry_ns::Rectangle> factory_ns::getMonsterVec(con
             throw Error("Wrong monster number (must be beetween 1 and 8).");
     }
 }
+
+std::vector<gameEngine_ns::object_ns::IObject *> factory_ns::getPlayers(const gameEngine_ns::GameEngine &gameEngine)
+{
+    std::vector<gameEngine_ns::object_ns::IObject *> players;
+
+    for (const std::pair<const std::string, gameEngine_ns::object_ns::IObject *> &pair : gameEngine.getObjects())
+        if (pair.first.substr(0, 6) == "player")
+            players.push_back(pair.second);
+    return players;
+}

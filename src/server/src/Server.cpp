@@ -5,6 +5,8 @@
 ** Server
 */
 
+#include <string.h>
+
 #include "Server.hpp"
 #include "factory.hpp"
 
@@ -45,7 +47,8 @@ void UDP_Server::do_send()
 }
 
 void UDP_Server::do_receive()
-{    
+{
+    memset(this->_data, '\0', max_length);
     this->_socket.async_receive_from(boost::asio::buffer(_data, max_length), _client_endpoint,[this](boost::system::error_code ec, std::size_t bytes_recvd){
         if (!ec && bytes_recvd > 0) {
             this->set_user_info(_client_endpoint, _data );
@@ -65,12 +68,12 @@ void UDP_Server::set_user_info(udp::endpoint client_endpoint, std::string seriel
         for (unsigned int y = 0; y < this->_gameContainers.at(i)._clients.size(); y++) {
             if(client_endpoint.address() == this->_gameContainers.at(i)._clients.at(y)._endpoint.address()) {
                 this->_gameContainers.at(i)._clients.at(y)._endpoint = client_endpoint;
-                this->_gameContainers.at(i).EnvServData.datas_receive.clear();
+                this->_gameContainers.at(i).EnvServData.datas_receive.clear();                
                 this->_gameContainers.at(i).EnvServData.datas_receive = serielise_string;
 
                 std::cout << BOLDGREEN << "[DATA RECEIVED AND UPDATED]" << RESET << " -> USER=" << this->_gameContainers.at(i)._clients.at(y).ton_num << " CONTAINER=" << this->_gameContainers.at(i)._clients.at(y).ton_num / 4  << " FROM=" << client_endpoint << std::endl;//DEBUG
                 std::cout << BOLDBLUE << "CONTENT : " << this->_gameContainers.at(i).EnvServData.datas_receive << RESET << std::endl; //TEST
-            
+                this->_gameContainers.at(i).update_struct(y);
                 return;
             }
         }

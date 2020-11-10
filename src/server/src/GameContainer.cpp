@@ -39,15 +39,13 @@ GameContainer::~GameContainer()
 {
 }
 
-void GameContainer::update_struct()
+void GameContainer::update_struct(const int &playerNb)
 {
     
     std::ostringstream sstream;
     this->EnvServData.datas_send = "";
 
-    std::cout << this->EnvServData.datas_receive << std::endl;
-
-    this->updateGameObjects();
+    this->updateGameObjects(playerNb);
     for (const std::pair<const std::string, gameEngine_ns::object_ns::IObject *> &pair : this->_gameEngine.getObjects()) {
         sstream << pair.second->getPos().x;
         this->EnvServData.datas_send += std::string(sstream.str()) + ' ';
@@ -58,7 +56,7 @@ void GameContainer::update_struct()
     }
 }
 
-void GameContainer::updateGameObjects()
+void GameContainer::updateGameObjects(const int &playerNb)
 {
     int spawnRand = (rand() % 2000) + 1000;
     std::chrono::time_point<std::chrono::high_resolution_clock> currentSpawnChrono = std::chrono::high_resolution_clock::now();
@@ -69,6 +67,17 @@ void GameContainer::updateGameObjects()
         this->_spawnChrono = std::chrono::high_resolution_clock::now();
     }
 
+    if (this->EnvServData.datas_receive.substr(0, 5) == "moove")  {
+        const std::string &direction = this->EnvServData.datas_receive.substr(6, 8);
+        if (direction == "up")
+            factory_ns::getPlayers(this->_gameEngine).at(playerNb)->moove(gameEngine_ns::geometry_ns::Vector(0, -5));
+        if (direction == "down")
+            factory_ns::getPlayers(this->_gameEngine).at(playerNb)->moove(gameEngine_ns::geometry_ns::Vector(0, 5));
+        if (direction == "right")
+            factory_ns::getPlayers(this->_gameEngine).at(playerNb)->moove(gameEngine_ns::geometry_ns::Vector(5, 0));
+        if (direction == "left")
+            factory_ns::getPlayers(this->_gameEngine).at(playerNb)->moove(gameEngine_ns::geometry_ns::Vector(-5, 0));
+    }
     for (const std::pair<const std::string, gameEngine_ns::object_ns::IObject *> &pair : this->_gameEngine.getObjects()) {
         if (pair.first.substr(0, 7) == "monster") {
             pair.second->autoUpdatePos();
