@@ -232,6 +232,7 @@ void factory_ns::updateObjectsFromNetworkData(gameEngine_ns::GameEngine *gameEng
     while (std::getline(ss, tmp, '|')) {
         if (tmp == "" || tmp.length() <= 5)
             continue;
+        std::cout << "TMP = " << tmp << std::endl;
         firstSpaceIndex = tmp.find(" ");
         x_str = tmp.substr(0, firstSpaceIndex);
 

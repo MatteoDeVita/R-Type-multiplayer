@@ -17,6 +17,7 @@ namespace gameEngine_ns {
             private:
                 sf::Event _event;
                 gameEngine_ns::window_ns::Window *_window;
+                sf::Clock *_eventClock;
             public:
                 Event(gameEngine_ns::window_ns::Window *window);
                 void handlePollEvent(std::string *networkData);

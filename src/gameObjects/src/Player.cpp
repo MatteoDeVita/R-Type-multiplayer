@@ -5,6 +5,8 @@
 ** Player
 */
 
+#include <iostream>
+
 #include "Player.hpp"
 
 Player::Player(

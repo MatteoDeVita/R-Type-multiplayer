@@ -34,7 +34,7 @@ gameEngine_ns::geometry_ns::Vector gameEngine_ns::object_ns::Object::getPos() co
 
 void gameEngine_ns::object_ns::Object::setPos(const gameEngine_ns::geometry_ns::Vector &vector)
 {
-    this->_position = _position;
+    this->_position = vector;    
     this->_sprite->getSFMLSprite()->setPosition(vector.toSfVector2f());
 }
 

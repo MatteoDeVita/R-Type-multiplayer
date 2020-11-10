@@ -22,7 +22,7 @@ namespace gameEngine_ns {
                 virtual gameEngine_ns::geometry_ns::Vector getPos() const = 0;
                 virtual void setPos(const gameEngine_ns::geometry_ns::Vector &vector) = 0;
                 virtual void moove(const gameEngine_ns::geometry_ns::Vector &vector) = 0;
-                virtual gameEngine_ns::object_ns::Sprite *getSprite() const = 0;
+                virtual gameEngine_ns::object_ns::Sprite *getSprite() const = 0;                
             protected:
                 gameEngine_ns::object_ns::Sprite *_sprite;
                 gameEngine_ns::geometry_ns::Vector _position;
