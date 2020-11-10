@@ -42,6 +42,7 @@ SET(
     "${PROJECT_SOURCE_DIR}/src/gameObjects/include"
     "${PROJECT_SOURCE_DIR}/src/client/include"
     "${PROJECT_SOURCE_DIR}/src/utils/error/include"
+    "${PROJECT_SOURCE_DIR}/src/utils/parsing/include"
     "${PROJECT_SOURCE_DIR}/src/utils/models"
     "${PROJECT_SOURCE_DIR}/src/factory/include"
 )

@@ -18,6 +18,7 @@ CXXFLAGS        =		-I ../src/server/include \
     					-I ../src/gameObjects/include \
 						-I ../src/client/include \
 						-I ../src/utils/error/include \
+						-I ../src/utils/parsing/include \
 						-I ../src/utils/models \
 						-fPIC \
 						-g \

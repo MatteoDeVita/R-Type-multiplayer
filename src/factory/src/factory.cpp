@@ -19,6 +19,7 @@
 #include "FX.hpp"
 #include "Music.hpp"
 #include "Player.hpp"
+#include "parsing.hpp"
 
 void factory_ns::loadMonsterTextures(gameEngine_ns::GameEngine *gameEngine)
 {
@@ -231,6 +232,7 @@ void factory_ns::updateObjectsFromNetworkData(gameEngine_ns::GameEngine *gameEng
     while (std::getline(ss, tmp, '|')) {
         if (tmp == "" || tmp.length() <= 5)
             continue;
+        // std::cout << "tmp = " << tmp << '|' << std::endl;
         firstSpaceIndex = tmp.find(" ");
         x_str = tmp.substr(0, firstSpaceIndex);
 
@@ -240,8 +242,10 @@ void factory_ns::updateObjectsFromNetworkData(gameEngine_ns::GameEngine *gameEng
         id_str = tmp.substr(secondSpaceIndex + 1, tmp.length() - firstSpaceIndex - 1);
         ids.push_back(id_str);
 
-        x = std::stof(x_str);
-        y = std::stof(y_str);
+        if (!parsing::strIsNumber(x_str) || !parsing::strIsNumber(y_str))
+            continue;
+        x = std::stoi(x_str);
+        y = std::stoi(y_str);
 
         if (gameEngine->getObject(id_str) == nullptr) {
             if (id_str.substr(0, 6) == "player") {

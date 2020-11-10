@@ -116,18 +116,8 @@ gameEngine_ns::object_ns::IObject *gameEngine_ns::GameEngine::getObject(const st
 
 void gameEngine_ns::GameEngine::removeObject(const std::string &id)
 {
-    gameEngine_ns::object_ns::Sprite *sprite = this->_objects[id]->getSprite();    
-    for (
-        std::map<const std::string, gameEngine_ns::object_ns::Sprite *>::iterator it = this->_sprites.begin();
-        it != this->_sprites.end();
-        it++
-    ) {
-        if (it->second == sprite) {
-            delete it->second;
-            this->_sprites.erase(it);
-            break;
-        }
-    }    
-    delete this->_objects[id];
-    this->_objects.erase(id);
+    if (this->_objects.count(id) == 0)
+        return;
+    delete this->_objects.at(id);
+    this->_objects.erase(id);    
 }

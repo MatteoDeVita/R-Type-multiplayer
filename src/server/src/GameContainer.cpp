@@ -47,12 +47,16 @@ void GameContainer::update_struct(const int &playerNb)
 
     this->updateGameObjects(playerNb);
     for (const std::pair<const std::string, gameEngine_ns::object_ns::IObject *> &pair : this->_gameEngine.getObjects()) {
-        sstream << pair.second->getPos().x;
-        this->EnvServData.datas_send += std::string(sstream.str()) + ' ';
-        sstream.str("");
-        sstream << pair.second->getPos().y;
-        this->EnvServData.datas_send += std::string(sstream.str()) + ' ' + pair.first + '|';
-        sstream.str("");
+        if (pair.second != nullptr) {
+            sstream << pair.second->getPos().x;
+            std::cout << "x = " << pair.second->getPos().x << std::endl;
+            this->EnvServData.datas_send += std::string(sstream.str()) +' ';
+            sstream.str("");
+            sstream << pair.second->getPos().y;
+            std::cout << "y = " << pair.second->getPos().y << std::endl;
+            this->EnvServData.datas_send += std::string(sstream.str()) + ' ' + pair.first + '|';
+            sstream.str("");
+        }
     }
 }
 
@@ -81,8 +85,9 @@ void GameContainer::updateGameObjects(const int &playerNb)
     for (const std::pair<const std::string, gameEngine_ns::object_ns::IObject *> &pair : this->_gameEngine.getObjects()) {
         if (pair.first.substr(0, 7) == "monster") {
             pair.second->autoUpdatePos();
-            if (pair.second->getPos().x <= -50)
-                this->_gameEngine.removeObject(pair.first);
+            if (pair.second->getPos().x <= -50) {
+                this->_gameEngine.removeObject(pair.first);                
+            }
         }
     }
 }
