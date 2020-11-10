@@ -45,8 +45,13 @@ int main(int argc, char **argv)
             gameEngine.window->reset();
             gameEngine.window->addObject(gameEngine.getObject("background-object"));
             for (const std::pair<const std::string, gameEngine_ns::object_ns::IObject *> &pair : gameEngine.getObjects()) {
-                std::cout << "id = " << pair.first << " x = " << pair.second->getPos().x << " y = " << pair.second->getPos().y << std::endl;
-                if (pair.second->getPos().x < 0)
+                // std::cout << "id = " << pair.first << " x = " << pair.second->getPos().x << " y = " << pair.second->getPos().y << std::endl;
+                if (pair.first != "background-object" && pair.second->getPos().y <= 15)
+                    pair.second->setPos(gameEngine_ns::geometry_ns::Vector(
+                        pair.second->getPos().x,
+                        pair.second->getPos().y + 5
+                    ));
+                if (pair.first.substr(0, 6) != "player" && pair.second->getPos().x <= 17)
                     continue;
                 if (pair.second == nullptr)
                     continue;

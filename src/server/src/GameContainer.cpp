@@ -71,14 +71,16 @@ void GameContainer::updateGameObjects(const int &playerNb)
 
     if (this->EnvServData.datas_receive.substr(0, 5) == "moove")  {
         const std::string &direction = this->EnvServData.datas_receive.substr(6, 8);
-        if (direction == "up")
-            factory_ns::getPlayers(this->_gameEngine).at(playerNb)->moove(gameEngine_ns::geometry_ns::Vector(0, -5));
-        if (direction == "down")
-            factory_ns::getPlayers(this->_gameEngine).at(playerNb)->moove(gameEngine_ns::geometry_ns::Vector(0, 5));
-        if (direction == "right")
-            factory_ns::getPlayers(this->_gameEngine).at(playerNb)->moove(gameEngine_ns::geometry_ns::Vector(5, 0));
-        if (direction == "left")
-            factory_ns::getPlayers(this->_gameEngine).at(playerNb)->moove(gameEngine_ns::geometry_ns::Vector(-5, 0));
+        gameEngine_ns::object_ns::IObject *player = factory_ns::getPlayers(this->_gameEngine).at(playerNb);
+        
+        if (direction == "up" && player->getPos().y > 5)
+            player->moove(gameEngine_ns::geometry_ns::Vector(0, -5));
+        if (direction == "down" && player->getPos().y < 895)
+            player->moove(gameEngine_ns::geometry_ns::Vector(0, 5));
+        if (direction == "right" && player->getPos().x < 1595)
+            player->moove(gameEngine_ns::geometry_ns::Vector(5, 0));
+        if (direction == "left" && player->getPos().x > 5)
+            player->moove(gameEngine_ns::geometry_ns::Vector(-5, 0));
     }
     for (const std::pair<const std::string, gameEngine_ns::object_ns::IObject *> &pair : this->_gameEngine.getObjects()) {
         if (pair.first.substr(0, 7) == "monster") {

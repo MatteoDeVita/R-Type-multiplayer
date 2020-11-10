@@ -29,8 +29,10 @@ Monster::~Monster()
 
 void Monster::autoUpdatePos()
 {    
-    if (this->_posClock->getElapsedTime().asMilliseconds() >= (rand() % 10) + 2) {
+    if (this->_posClock->getElapsedTime().asMilliseconds() >= 30) {
         this->moove(gameEngine_ns::geometry_ns::Vector(-((rand() % 12) + 5), (rand() % 10) - 5));
+        if (this->getPos().y <= 15)
+            this->moove(gameEngine_ns::geometry_ns::Vector(0, 20));
         this->_posClock->restart();
     }
 }

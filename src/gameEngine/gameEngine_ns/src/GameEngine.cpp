@@ -119,5 +119,5 @@ void gameEngine_ns::GameEngine::removeObject(const std::string &id)
     if (this->_objects.count(id) == 0)
         return;
     delete this->_objects.at(id);
-    this->_objects.erase(id);    
+    // this->_objects.erase(id);
 }
