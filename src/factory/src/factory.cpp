@@ -20,6 +20,7 @@
 #include "Music.hpp"
 #include "Player.hpp"
 #include "parsing.hpp"
+#include "Laser.hpp"
 
 void factory_ns::loadMonsterTextures(gameEngine_ns::GameEngine *gameEngine)
 {
@@ -83,6 +84,12 @@ void factory_ns::loadEnvironment(gameEngine_ns::GameEngine *gameEngine)
         throw Error("Can't add object");
 }
 
+void factory_ns::loadLasersTextures(gameEngine_ns::GameEngine *gameEngine)
+{
+    if (gameEngine->addTexture("lasers-texture", "../../assets/bullets/lasers.png") != 0)
+        throw Error("Can't load texture lasers.png");
+}
+
 void factory_ns::loadMusic(gameEngine_ns::GameEngine *gameEngine)
 {
     gameEngine_ns::audio_ns::Music *music = new gameEngine_ns::audio_ns::Music("../../assets/sound/music.wav");
@@ -92,6 +99,37 @@ void factory_ns::loadMusic(gameEngine_ns::GameEngine *gameEngine)
     music->setVolume();    
     if (gameEngine->audio->addMusic("music-main", music) != 0)
         throw Error("Can't add music");
+}
+
+void factory_ns::loadLaserObjects(gameEngine_ns::GameEngine *gameEngine, const bool &leftToRight)
+{
+    for (int i = 1; i <= 10; i++) {
+        addAndCreateLaser(
+            gameEngine,
+            gameEngine_ns::geometry_ns::Vector(-100, 0),
+            i,
+            leftToRight,
+            1
+        );
+    }
+    for (int i = 1; i <= 10; i++) {
+        addAndCreateLaser(
+            gameEngine,
+            gameEngine_ns::geometry_ns::Vector(-100, 0),
+            i,
+            leftToRight,
+            2
+        );
+    }
+    for (int i = 1; i <= 10; i++) {
+        addAndCreateLaser(
+            gameEngine,
+            gameEngine_ns::geometry_ns::Vector(-100, 0),
+            i,
+            leftToRight,
+            3
+        );
+    }
 }
 
 std::vector<gameEngine_ns::geometry_ns::Rectangle> factory_ns::getMonster1Vec()
@@ -218,6 +256,66 @@ std::vector<gameEngine_ns::geometry_ns::Rectangle> factory_ns::getPlayerVec()
     return vec;
 }
 
+std::vector<gameEngine_ns::geometry_ns::Rectangle> factory_ns::getLaser1Vec()
+{
+    std::vector<gameEngine_ns::geometry_ns::Rectangle> vec;
+
+    vec.push_back(gameEngine_ns::geometry_ns::Rectangle(2, 0, 64, 14));
+    vec.push_back(gameEngine_ns::geometry_ns::Rectangle(67, 0, 64, 14));
+    
+    return vec;
+}
+
+std::vector<gameEngine_ns::geometry_ns::Rectangle> factory_ns::getLaser2Vec()
+{
+    std::vector<gameEngine_ns::geometry_ns::Rectangle> vec;
+
+    vec.push_back(gameEngine_ns::geometry_ns::Rectangle(2, 34, 32, 10));
+    vec.push_back(gameEngine_ns::geometry_ns::Rectangle(35, 33, 32, 12));
+    
+    return vec;
+}
+
+std::vector<gameEngine_ns::geometry_ns::Rectangle> factory_ns::getLaser3Vec()
+{
+    std::vector<gameEngine_ns::geometry_ns::Rectangle> vec;
+
+    vec.push_back(gameEngine_ns::geometry_ns::Rectangle(2, 61, 16, 12));
+    vec.push_back(gameEngine_ns::geometry_ns::Rectangle(19, 63, 16, 8));
+    
+    return vec;
+}
+
+std::vector<gameEngine_ns::geometry_ns::Rectangle> factory_ns::getLaser1InverseVec()
+{
+    std::vector<gameEngine_ns::geometry_ns::Rectangle> vec;
+
+    vec.push_back(gameEngine_ns::geometry_ns::Rectangle(1, 15, 64, 14));
+    vec.push_back(gameEngine_ns::geometry_ns::Rectangle(66, 15, 64, 14));
+    
+    return vec;
+}
+
+std::vector<gameEngine_ns::geometry_ns::Rectangle> factory_ns::getLaser2InverseVec()
+{
+    std::vector<gameEngine_ns::geometry_ns::Rectangle> vec;
+
+    vec.push_back(gameEngine_ns::geometry_ns::Rectangle(1, 46, 32, 12));
+    vec.push_back(gameEngine_ns::geometry_ns::Rectangle(34, 47, 32, 10));
+    
+    return vec;
+}
+
+std::vector<gameEngine_ns::geometry_ns::Rectangle> factory_ns::getLaser3InverseVec()
+{
+    std::vector<gameEngine_ns::geometry_ns::Rectangle> vec;
+
+    vec.push_back(gameEngine_ns::geometry_ns::Rectangle(1, 76, 16, 8));
+    vec.push_back(gameEngine_ns::geometry_ns::Rectangle(18, 74, 16, 12));
+    
+    return vec;
+}
+
 void factory_ns::updateObjectsFromNetworkData(gameEngine_ns::GameEngine *gameEngine, const std::string &data)
 {
     std::stringstream ss(data);
@@ -232,6 +330,7 @@ void factory_ns::updateObjectsFromNetworkData(gameEngine_ns::GameEngine *gameEng
     while (std::getline(ss, tmp, '|')) {
         if (tmp == "" || tmp.length() <= 5)
             continue;
+        // std::cout << "TMP = " << tmp << '|' << std::endl;
         firstSpaceIndex = tmp.find(" ");
         x_str = tmp.substr(0, firstSpaceIndex);
 
@@ -260,7 +359,7 @@ void factory_ns::updateObjectsFromNetworkData(gameEngine_ns::GameEngine *gameEng
                     std::stoi(id_str.substr(7, 1)),
                     gameEngine_ns::geometry_ns::Vector(x, y)
                 );
-            }
+            }            
         }
         else {
             gameEngine->getObject(id_str)->setPos(gameEngine_ns::geometry_ns::Vector(x, y));
@@ -283,8 +382,8 @@ void factory_ns::addAndCreateMonster(gameEngine_ns::GameEngine *gameEngine, cons
     );
     if (sprite == nullptr)
         throw Error("Can't load sprite");
-    if (gameEngine->addSprite(std::string("sprite-" + timestamp),sprite) != 0)
-        throw Error("Can't add sprite");
+    if (gameEngine->addSprite(std::string("sprite-" + timestamp + std::to_string(rand() % 100000)),sprite) != 0)
+        throw Error("Can't add monster sprite");
     Monster *monster = new Monster(
         sprite,
         position
@@ -293,7 +392,7 @@ void factory_ns::addAndCreateMonster(gameEngine_ns::GameEngine *gameEngine, cons
     if (monster == nullptr)
         throw Error("Can't create object");
     if (gameEngine->addObject(std::string("monster" + std::to_string(monsterNb) + "-" + timestamp), monster) != 0)
-        throw Error("Can't add object");
+        throw Error("Can't add monster object");
 }
 
 void factory_ns::addAndCreatePlayer(gameEngine_ns::GameEngine *gameEngine, const int &playerNb, const gameEngine_ns::geometry_ns::Vector &position)
@@ -306,8 +405,8 @@ void factory_ns::addAndCreatePlayer(gameEngine_ns::GameEngine *gameEngine, const
     );
     if (sprite == nullptr)
         throw Error("Can't load sprite");
-    if (gameEngine->addSprite(std::string("sprite" + std::to_string(playerNb) + "-" + timestamp), sprite) != 0)
-        throw Error("Can't add sprite");
+    if (gameEngine->addSprite(std::string("sprite" + std::to_string(playerNb) + "-" + timestamp + std::to_string(rand() % 100000)), sprite) != 0)
+        throw Error("Can't add player sprite");
     Player *player = new Player(
         sprite,
         position
@@ -316,7 +415,7 @@ void factory_ns::addAndCreatePlayer(gameEngine_ns::GameEngine *gameEngine, const
     if (player == nullptr)
         throw Error("Can't create object");
     if (gameEngine->addObject(std::string("player" + std::to_string(playerNb) + "-" + timestamp), player) != 0)
-        throw Error("Can't add object");
+        throw Error("Can't add player object");
 }
 
 std::vector<gameEngine_ns::geometry_ns::Rectangle> factory_ns::getMonsterVec(const int &monsterNb)
@@ -351,4 +450,79 @@ std::vector<gameEngine_ns::object_ns::IObject *> factory_ns::getPlayers(const ga
         if (pair.first.substr(0, 6) == "player")
             players.push_back(pair.second);
     return players;
+}
+
+void factory_ns::addAndCreateLaser(gameEngine_ns::GameEngine *gameEngine, const gameEngine_ns::geometry_ns::Vector &position, const int &laserNb, const bool &leftToRight, const int &laserType)
+{
+    std::string timestamp(std::to_string(time(nullptr)));
+        gameEngine_ns::object_ns::Sprite *sprite = gameEngine->createSprite(
+        std::string("lasers-texture"),
+        getLaserVec(leftToRight, laserType),
+        20
+    );
+    std::string id("");
+    id += "laser";
+    id += std::to_string(laserType);
+    id += leftToRight ? "-player-" : "-monster-";
+    id += std::to_string(laserNb);
+    if (sprite == nullptr)
+        throw Error("Can't load sprite");
+    if (gameEngine->addSprite(std::string("sprite-" + id), sprite) != 0)
+        throw Error("Can't add laser sprite");
+
+    Laser *laser = new Laser(
+        sprite,
+        leftToRight,
+        position
+    );
+    laser->setPos(position);
+    if (laser == nullptr)
+        throw Error("Can't create object");    
+    if (gameEngine->addObject(id, laser) != 0)
+        throw Error("Can't add laser object");
+}
+
+std::vector<gameEngine_ns::geometry_ns::Rectangle> factory_ns::getLaserVec(const bool leftToRight, const int &laserType)
+{
+    if (leftToRight) {
+        switch (laserType) {
+            case 1:
+                return getLaser1Vec();
+            case 2:
+                return getLaser2Vec();
+            case 3:
+                return getLaser3Vec();
+            default:
+                throw Error("Wrong laser number");
+        }
+    }
+    else {
+        switch (laserType) {
+            case 1:
+                return getLaser1InverseVec();
+            case 2:
+                return getLaser2InverseVec();
+            case 3:
+                return getLaser3InverseVec();
+            default:
+                throw Error("Wrong laser number");
+        }
+    }
+}
+
+std::vector<gameEngine_ns::object_ns::IObject *> factory_ns::getValidLasers(const gameEngine_ns::GameEngine &gameEngine, const bool &leftToRight)
+{
+    std::vector<gameEngine_ns::object_ns::IObject *> vec;
+    const std::string validStr = leftToRight ? "player" : "monste";
+
+    for (const std::pair<const std::string, gameEngine_ns::object_ns::IObject *> &pair : gameEngine.getObjects()) {        
+        if (
+            pair.first.substr(0, 5) == "laser" &&
+            pair.first.substr(7, 6) == validStr &&
+            pair.second->getPos().x < 0 
+        ) {
+            vec.push_back(pair.second);
+        }
+    }
+    return vec;
 }

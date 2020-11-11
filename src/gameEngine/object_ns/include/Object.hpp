@@ -30,6 +30,8 @@ namespace gameEngine_ns {
                 void setPos(const gameEngine_ns::geometry_ns::Vector &vector);
                 void moove(const gameEngine_ns::geometry_ns::Vector &vector);
                 gameEngine_ns::object_ns::Sprite *getSprite() const;
+                void autoMoove();
+                bool isFromMonster() const;
         };
     }
 }

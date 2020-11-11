@@ -55,3 +55,13 @@ void gameEngine_ns::object_ns::Object::autoUpdatePos()
 {
     
 }
+
+void gameEngine_ns::object_ns::Object::autoMoove()
+{
+    
+}
+
+bool gameEngine_ns::object_ns::Object::isFromMonster() const
+{
+
+}

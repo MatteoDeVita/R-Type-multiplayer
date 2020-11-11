@@ -57,12 +57,12 @@ class UDP_Server
          * @param serielise_string the binary where serializing in a string
          */
         void set_user_info(udp::endpoint remote_endpoint, std::string serielise_string);
-        std::vector<GameContainer> _gameContainers;
+        std::vector<GameContainer *> _gameContainers;
         int NbofClientassign;
         boost::asio::io_context _io;
     private:
         udp::socket _socket;
         udp::endpoint _client_endpoint;
-        enum { max_length = 4096 };
+        enum { max_length = 10000 };
         char _data[max_length];
 };
