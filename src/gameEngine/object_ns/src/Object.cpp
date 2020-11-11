@@ -65,3 +65,13 @@ bool gameEngine_ns::object_ns::Object::isFromMonster() const
 {
 
 }
+
+void gameEngine_ns::object_ns::Object::autoMoove(const gameEngine_ns::geometry_ns::Vector &vector)
+{
+
+}
+
+void gameEngine_ns::object_ns::Object::setSpeed(const unsigned int &speed)
+{
+
+}

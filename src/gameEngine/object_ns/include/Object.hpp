@@ -31,6 +31,8 @@ namespace gameEngine_ns {
                 void moove(const gameEngine_ns::geometry_ns::Vector &vector);
                 gameEngine_ns::object_ns::Sprite *getSprite() const;
                 void autoMoove();
+                void autoMoove(const gameEngine_ns::geometry_ns::Vector &vector);
+                void setSpeed(const unsigned int &speed);
                 bool isFromMonster() const;
         };
     }

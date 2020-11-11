@@ -24,6 +24,8 @@ namespace gameEngine_ns {
                 virtual void moove(const gameEngine_ns::geometry_ns::Vector &vector) = 0;
                 virtual gameEngine_ns::object_ns::Sprite *getSprite() const = 0;
                 virtual void autoMoove() = 0;
+                virtual void autoMoove(const gameEngine_ns::geometry_ns::Vector &vector) = 0;
+                virtual void setSpeed(const unsigned int &speed) = 0;
                 virtual bool isFromMonster() const = 0;
             protected:
                 gameEngine_ns::object_ns::Sprite *_sprite;
@@ -31,4 +33,3 @@ namespace gameEngine_ns {
         };
     }
 }
-

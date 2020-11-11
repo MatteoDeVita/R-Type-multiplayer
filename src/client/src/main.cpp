@@ -47,17 +47,29 @@ int main(int argc, char **argv)
         while (gameEngine.window->isOpen()) {
             gameEngine.event->handlePollEvent(&net.EnvClientData->datas_send);
             gameEngine.window->reset();
-            gameEngine.window->addObject(gameEngine.getObject("background-object"));
+            gameEngine.window->addObject(gameEngine.getObject("background-object1"));
+            gameEngine.getObject("background-object2")->autoMoove();
+            gameEngine.getObject("background-object3")->autoMoove();
+            gameEngine.getObject("background-object4")->autoMoove();
+            gameEngine.getObject("background-object5")->autoMoove();
+            gameEngine.getObject("background-object6")->autoMoove();
+            gameEngine.getObject("background-object7")->autoMoove();
+            gameEngine.getObject("background-object8")->autoMoove();
+            gameEngine.getObject("background-object9")->autoMoove();
             gameEngine.window->addObject(gameEngine.getObject("background-object2"));
             gameEngine.window->addObject(gameEngine.getObject("background-object3"));
             gameEngine.window->addObject(gameEngine.getObject("background-object4"));
             gameEngine.window->addObject(gameEngine.getObject("background-object5"));
+            gameEngine.window->addObject(gameEngine.getObject("background-object6"));
+            gameEngine.window->addObject(gameEngine.getObject("background-object7"));
+            gameEngine.window->addObject(gameEngine.getObject("background-object8"));
+            gameEngine.window->addObject(gameEngine.getObject("background-object9"));
             for (const std::pair<const std::string, gameEngine_ns::object_ns::IObject *> &pair : gameEngine.getObjects()) {
                 if (pair.second == nullptr)
                     continue;
-                if (pair.first.substr(0, 5) == "laser" && pair.first.substr(7, 6) == "monste" && pair.second->getPos().x <= 30)
+                if (pair.first.substr(0, 5) == "laser" && (pair.second->getPos().x <= 30 || pair.second->getPos().y <= 10 ))
                     continue;
-                if (pair.first != "background-object" && pair.second->getPos().y <= 15)
+                if (pair.first != "background-object1" && pair.second->getPos().y <= 15)
                     pair.second->setPos(gameEngine_ns::geometry_ns::Vector(
                         pair.second->getPos().x,
                         pair.second->getPos().y + 5

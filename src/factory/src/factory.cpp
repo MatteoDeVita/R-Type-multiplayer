@@ -21,6 +21,7 @@
 #include "Player.hpp"
 #include "parsing.hpp"
 #include "Laser.hpp"
+#include "Parallax.hpp"
 
 void factory_ns::loadMonsterTextures(gameEngine_ns::GameEngine *gameEngine)
 {
@@ -79,7 +80,7 @@ void factory_ns::loadEnvironment(gameEngine_ns::GameEngine *gameEngine)
     );
     if (backgroundObject == nullptr)
         throw Error("Can't create object");
-    if (gameEngine->addObject("background-object", backgroundObject) != 0)
+    if (gameEngine->addObject("background-object1", backgroundObject) != 0)
         throw Error("Can't add object");
 
     if (gameEngine->addTexture("background-texture2", "../../assets/environment/Stars Small_1.png") != 0)
@@ -94,14 +95,27 @@ void factory_ns::loadEnvironment(gameEngine_ns::GameEngine *gameEngine)
     gameEngine_ns::object_ns::Sprite *backgroundSprite3 = gameEngine->createSprite("background-texture3", backgroundVec);
     gameEngine_ns::object_ns::Sprite *backgroundSprite4 = gameEngine->createSprite("background-texture4", backgroundVec);
     gameEngine_ns::object_ns::Sprite *backgroundSprite5 = gameEngine->createSprite("background-texture5", backgroundVec);
-    gameEngine_ns::object_ns::Object *backgroundObject2 = new gameEngine_ns::object_ns::Object(backgroundSprite2, gameEngine_ns::geometry_ns::Vector());
-    gameEngine_ns::object_ns::Object *backgroundObject3 = new gameEngine_ns::object_ns::Object(backgroundSprite3, gameEngine_ns::geometry_ns::Vector());
-    gameEngine_ns::object_ns::Object *backgroundObject4 = new gameEngine_ns::object_ns::Object(backgroundSprite4, gameEngine_ns::geometry_ns::Vector());
-    gameEngine_ns::object_ns::Object *backgroundObject5 = new gameEngine_ns::object_ns::Object(backgroundSprite5, gameEngine_ns::geometry_ns::Vector());
+    gameEngine_ns::object_ns::Sprite *backgroundSprite6 = gameEngine->createSprite("background-texture2", backgroundVec);
+    gameEngine_ns::object_ns::Sprite *backgroundSprite7 = gameEngine->createSprite("background-texture3", backgroundVec);
+    gameEngine_ns::object_ns::Sprite *backgroundSprite8 = gameEngine->createSprite("background-texture4", backgroundVec);
+    gameEngine_ns::object_ns::Sprite *backgroundSprite9 = gameEngine->createSprite("background-texture5", backgroundVec);
+
+    gameEngine_ns::object_ns::Object *backgroundObject2 = new Parallax(backgroundSprite2, 2, gameEngine_ns::geometry_ns::Vector());
+    gameEngine_ns::object_ns::Object *backgroundObject3 = new Parallax(backgroundSprite3, 3, gameEngine_ns::geometry_ns::Vector());
+    gameEngine_ns::object_ns::Object *backgroundObject4 = new Parallax(backgroundSprite4, 5, gameEngine_ns::geometry_ns::Vector());
+    gameEngine_ns::object_ns::Object *backgroundObject5 = new Parallax(backgroundSprite5, 7, gameEngine_ns::geometry_ns::Vector());
+    gameEngine_ns::object_ns::Object *backgroundObject6 = new Parallax(backgroundSprite6, 2, gameEngine_ns::geometry_ns::Vector(1600, 0));
+    gameEngine_ns::object_ns::Object *backgroundObject7 = new Parallax(backgroundSprite7, 3, gameEngine_ns::geometry_ns::Vector(1600, 0));
+    gameEngine_ns::object_ns::Object *backgroundObject8 = new Parallax(backgroundSprite8, 5, gameEngine_ns::geometry_ns::Vector(1600, 0));
+    gameEngine_ns::object_ns::Object *backgroundObject9 = new Parallax(backgroundSprite9, 7, gameEngine_ns::geometry_ns::Vector(1600, 0));
     gameEngine->addObject("background-object2", backgroundObject2);
     gameEngine->addObject("background-object3", backgroundObject3);
     gameEngine->addObject("background-object4", backgroundObject4);
     gameEngine->addObject("background-object5", backgroundObject5);
+    gameEngine->addObject("background-object6", backgroundObject6);
+    gameEngine->addObject("background-object7", backgroundObject7);
+    gameEngine->addObject("background-object8", backgroundObject8);
+    gameEngine->addObject("background-object9", backgroundObject9);
 }
 
 void factory_ns::loadLasersTextures(gameEngine_ns::GameEngine *gameEngine)
@@ -432,6 +446,7 @@ void factory_ns::addAndCreatePlayer(gameEngine_ns::GameEngine *gameEngine, const
         position
     );
     player->setPos(position);
+    player->getSprite()->getSFMLSprite()->scale(gameEngine_ns::geometry_ns::Vector(2, 2).toSfVector2f());
     if (player == nullptr)
         throw Error("Can't create object");
     if (gameEngine->addObject(std::string("player" + std::to_string(playerNb) + "-" + timestamp), player) != 0)
