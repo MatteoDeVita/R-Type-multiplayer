@@ -106,6 +106,7 @@ void GameContainer::updateGameObjects(const int &playerNb)
     double spawnDiff = std::chrono::duration<double, std::milli>(currentSpawnChrono - this->_spawnChrono).count();
     double shootDiff = std::chrono::duration<double, std::milli>(currentSpawnChrono - this->_monsterShootChrono).count();
     std::vector<gameEngine_ns::object_ns::IObject *> validLasers = factory_ns::getValidLasers((*this->_gameEngine), false);
+    std::vector<gameEngine_ns::object_ns::IObject *> activeLasers = factory_ns::getActiveLasers((*this->_gameEngine), true);
 
     if (spawnDiff >= spawnRand) {
         factory_ns::addAndCreateMonster(this->_gameEngine, (rand() % 8) + 1, gameEngine_ns::geometry_ns::Vector(1700, rand() % 850));
@@ -120,11 +121,15 @@ void GameContainer::updateGameObjects(const int &playerNb)
         this->_laserSpawnginClock->restart();
     }
     for (const std::pair<const std::string, gameEngine_ns::object_ns::IObject *> &pair : this->_gameEngine->getObjects()) {
-        // std::cout << pair.first << std::endl;
-        if (pair.first.substr(0, 7) == "monster") {
+        if (pair.first.substr(0, 7) == "monster") {            
             pair.second->autoUpdatePos();
             if (shootDiff >= 20 && validLasers.size() > 0 && pair.second->getPos().x > 30 && rand() % 20 == 5) {
                 validLasers.at(rand() % validLasers.size())->setPos(pair.second->getPos());
+            }
+            for (const gameEngine_ns::object_ns::IObject *laser : activeLasers) {
+                if (pair.second->getPos().x <= 1550 && laser->getSprite()->getSFMLSprite()->getGlobalBounds().intersects(pair.second->getSprite()->getSFMLSprite()->getGlobalBounds())) {                    
+                    pair.second->setPos(gameEngine_ns::geometry_ns::Vector(0, 0));
+                }
             }
         }
         if (pair.first.substr(0, 5) == "laser") {
@@ -137,10 +142,7 @@ void GameContainer::updateGameObjects(const int &playerNb)
                 }
             }
             else if (pair.first.substr(7, 6) == "monste") {
-                if (pair.second->getPos().x > 0) {
-                    // if (pair.second->isFromMonster() && pair.second->getPos().x <= -50) {
-                    //     pair.second->setPos(gameEngine_ns::geometry_ns::Vector(-100, 0));
-                    // }
+                if (pair.second->getPos().x > 0) {                   
                     if (shootDiff >= 20) {
                         pair.second->autoMoove();
                         this->_monsterShootChrono = std::chrono::high_resolution_clock::now();

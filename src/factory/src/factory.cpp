@@ -74,8 +74,9 @@ void factory_ns::loadEnvironment(gameEngine_ns::GameEngine *gameEngine)
     );
     if (gameEngine->addSprite("background-sprite", backgroundSprite) != 0)
         throw Error("Can't add sprite");
-    gameEngine_ns::object_ns::Object *backgroundObject = new gameEngine_ns::object_ns::Object(
+    gameEngine_ns::object_ns::Object *backgroundObject = new Parallax(
         backgroundSprite,
+        1,
         gameEngine_ns::geometry_ns::Vector()
     );
     if (backgroundObject == nullptr)
@@ -116,6 +117,7 @@ void factory_ns::loadEnvironment(gameEngine_ns::GameEngine *gameEngine)
     gameEngine->addObject("background-object7", backgroundObject7);
     gameEngine->addObject("background-object8", backgroundObject8);
     gameEngine->addObject("background-object9", backgroundObject9);
+    
 }
 
 void factory_ns::loadLasersTextures(gameEngine_ns::GameEngine *gameEngine)
@@ -550,11 +552,28 @@ std::vector<gameEngine_ns::object_ns::IObject *> factory_ns::getValidLasers(cons
     std::vector<gameEngine_ns::object_ns::IObject *> vec;
     const std::string validStr = leftToRight ? "player" : "monste";
 
-    for (const std::pair<const std::string, gameEngine_ns::object_ns::IObject *> &pair : gameEngine.getObjects()) {        
+    for (const std::pair<const std::string, gameEngine_ns::object_ns::IObject *> &pair : gameEngine.getObjects()) {
         if (
             pair.first.substr(0, 5) == "laser" &&
             pair.first.substr(7, 6) == validStr &&
             pair.second->getPos().x < 0 
+        ) {
+            vec.push_back(pair.second);
+        }
+    }
+    return vec;
+}
+
+std::vector<gameEngine_ns::object_ns::IObject *> factory_ns::getActiveLasers(const gameEngine_ns::GameEngine &gameEngine, const bool &leftToRight)
+{
+    std::vector<gameEngine_ns::object_ns::IObject *> vec;
+    const std::string validStr = leftToRight ? "player" : "monste";
+
+    for (const std::pair<const std::string, gameEngine_ns::object_ns::IObject *> &pair : gameEngine.getObjects()) {
+        if (
+            pair.first.substr(0, 5) == "laser" &&
+            pair.first.substr(7, 6) == validStr &&
+            pair.second->getPos().x > 10
         ) {
             vec.push_back(pair.second);
         }

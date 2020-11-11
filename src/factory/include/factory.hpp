@@ -44,4 +44,6 @@ namespace factory_ns {
     std::vector<gameEngine_ns::geometry_ns::Rectangle> getLaserVec(const bool leftToRight, const int &laserType);
     std::vector<gameEngine_ns::object_ns::IObject *> getPlayers(const gameEngine_ns::GameEngine &gameEngine);
     std::vector<gameEngine_ns::object_ns::IObject *> getValidLasers(const gameEngine_ns::GameEngine &gameEngine, const bool &leftToRight);
+    std::vector<gameEngine_ns::object_ns::IObject *> getActiveLasers(const gameEngine_ns::GameEngine &gameEngine, const bool &leftToRight);
+
 }
