@@ -12,6 +12,9 @@ Laser::Laser()
     this->_laserClock = new sf::Clock;
     this->_leftToRight = true;
     this->_laserClock->restart();
+    this->_yValue = (rand() % 12) - 6;
+    this->_xValue = (rand() % 8) - 4;
+    
 }
 
 Laser::Laser(
@@ -23,6 +26,9 @@ Laser::Laser(
     this->_laserClock = new sf::Clock;
     this->_leftToRight = leftToRight;
     this->_laserClock->restart();
+    this->_yValue = (rand() % 12) - 6;
+    this->_xValue = (rand() % 6) - 3;
+    
 }
 
 Laser::~Laser()
@@ -34,8 +40,8 @@ void Laser::autoMoove()
 {
     if (this->_laserClock->getElapsedTime().asMilliseconds() >= 10) {
         this->moove(gameEngine_ns::geometry_ns::Vector(
-            this->_leftToRight ? 20 : -30,
-            0
+            this->_leftToRight ? 20 : -15,
+            this->_leftToRight ? this->_xValue : this->_yValue
         ));
         this->_laserClock->restart();
     }

@@ -115,7 +115,7 @@ void GameContainer::updateGameObjects(const int &playerNb)
     if (this->EnvServData.datas_receive.substr(0, 5) == "moove")  {
         this->_moovePlayer(playerNb);
     }
-    else if (this->_laserSpawnginClock->getElapsedTime().asMilliseconds() >= 1000 && this->EnvServData.datas_receive.substr(0, 5) == "shoot") {        
+    else if (this->_laserSpawnginClock->getElapsedTime().asMilliseconds() >= 250 && this->EnvServData.datas_receive.substr(0, 5) == "shoot") {        
         this->_shootPlayer(playerNb);
         this->_laserSpawnginClock->restart();
     }

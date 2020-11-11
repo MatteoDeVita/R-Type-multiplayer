@@ -48,6 +48,10 @@ int main(int argc, char **argv)
             gameEngine.event->handlePollEvent(&net.EnvClientData->datas_send);
             gameEngine.window->reset();
             gameEngine.window->addObject(gameEngine.getObject("background-object"));
+            gameEngine.window->addObject(gameEngine.getObject("background-object2"));
+            gameEngine.window->addObject(gameEngine.getObject("background-object3"));
+            gameEngine.window->addObject(gameEngine.getObject("background-object4"));
+            gameEngine.window->addObject(gameEngine.getObject("background-object5"));
             for (const std::pair<const std::string, gameEngine_ns::object_ns::IObject *> &pair : gameEngine.getObjects()) {
                 if (pair.second == nullptr)
                     continue;

@@ -21,6 +21,8 @@ class Laser : public gameEngine_ns::object_ns::Object {
         void autoMoove();
         bool isFromMonster() const;
     private:
+        int _yValue;
+        int _xValue;
         sf::Clock *_laserClock;
         bool _leftToRight;
 };

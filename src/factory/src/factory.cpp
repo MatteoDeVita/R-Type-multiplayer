@@ -56,12 +56,12 @@ void factory_ns::loadPlayerTextures(gameEngine_ns::GameEngine *gameEngine)
 
 void factory_ns::loadEnvironment(gameEngine_ns::GameEngine *gameEngine)
 {
-    if (gameEngine->addTexture("background-texture", "../../assets/environment/Nebula_Red.png") != 0)
+    if (gameEngine->addTexture("background-texture1", "../../assets/environment/Nebula_Red.png") != 0)
         throw Error("Can't load texture Nebula_Red.png");
     std::vector<gameEngine_ns::geometry_ns::Rectangle> backgroundVec;
     backgroundVec.push_back(gameEngine_ns::geometry_ns::Rectangle(0, 0, 1920, 1080));
     gameEngine_ns::object_ns::Sprite *backgroundSprite = gameEngine->createSprite(
-        "background-texture",
+        "background-texture1",
         backgroundVec
     );
     if (backgroundSprite == nullptr)
@@ -77,11 +77,31 @@ void factory_ns::loadEnvironment(gameEngine_ns::GameEngine *gameEngine)
         backgroundSprite,
         gameEngine_ns::geometry_ns::Vector()
     );
-    // monster->setPos(gameEngine_ns::);
     if (backgroundObject == nullptr)
         throw Error("Can't create object");
     if (gameEngine->addObject("background-object", backgroundObject) != 0)
         throw Error("Can't add object");
+
+    if (gameEngine->addTexture("background-texture2", "../../assets/environment/Stars Small_1.png") != 0)
+        throw Error("Can't load texture Stars Small_1.png");
+    if (gameEngine->addTexture("background-texture3", "../../assets/environment/Stars Small_2.png") != 0)
+        throw Error("Can't load texture Stars Small_2.png");
+    if (gameEngine->addTexture("background-texture4", "../../assets/environment/Stars-Big_1_1_PC.png") != 0)
+        throw Error("Can't load texture Stars-Big_1_1_PC.png");
+    if (gameEngine->addTexture("background-texture5", "../../assets/environment/Stars-Big_1_2_PC.png") != 0)
+        throw Error("Can't load texture Stars-Big_1_2_PC.png");
+    gameEngine_ns::object_ns::Sprite *backgroundSprite2 = gameEngine->createSprite("background-texture2", backgroundVec);
+    gameEngine_ns::object_ns::Sprite *backgroundSprite3 = gameEngine->createSprite("background-texture3", backgroundVec);
+    gameEngine_ns::object_ns::Sprite *backgroundSprite4 = gameEngine->createSprite("background-texture4", backgroundVec);
+    gameEngine_ns::object_ns::Sprite *backgroundSprite5 = gameEngine->createSprite("background-texture5", backgroundVec);
+    gameEngine_ns::object_ns::Object *backgroundObject2 = new gameEngine_ns::object_ns::Object(backgroundSprite2, gameEngine_ns::geometry_ns::Vector());
+    gameEngine_ns::object_ns::Object *backgroundObject3 = new gameEngine_ns::object_ns::Object(backgroundSprite3, gameEngine_ns::geometry_ns::Vector());
+    gameEngine_ns::object_ns::Object *backgroundObject4 = new gameEngine_ns::object_ns::Object(backgroundSprite4, gameEngine_ns::geometry_ns::Vector());
+    gameEngine_ns::object_ns::Object *backgroundObject5 = new gameEngine_ns::object_ns::Object(backgroundSprite5, gameEngine_ns::geometry_ns::Vector());
+    gameEngine->addObject("background-object2", backgroundObject2);
+    gameEngine->addObject("background-object3", backgroundObject3);
+    gameEngine->addObject("background-object4", backgroundObject4);
+    gameEngine->addObject("background-object5", backgroundObject5);
 }
 
 void factory_ns::loadLasersTextures(gameEngine_ns::GameEngine *gameEngine)

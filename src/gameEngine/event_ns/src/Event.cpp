@@ -42,7 +42,7 @@ void gameEngine_ns::event_ns::Event::handlePollEvent(std::string *networkData)
             (*networkData) = "moove-left\0";
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) 
             (*networkData) = "moove-down\0";
-        if (this->_shootingClock->getElapsedTime().asMilliseconds() >= 1000 && sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+        if (this->_shootingClock->getElapsedTime().asMilliseconds() >= 250 && sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
             (*networkData) = "shoot\0";
             this->_shootingClock->restart();
         }            
