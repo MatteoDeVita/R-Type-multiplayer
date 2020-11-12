@@ -16,18 +16,18 @@
 #include "Error.hpp"
 #include "factory.hpp"
 
-void Threaded_Send(Network *ClassAccess)//envoie les actions du client -> A FAIRE : regler le tickRate 
+void Threaded_Send(Network *ClassAccess)
 {
     while(1) {
-        boost::asio::steady_timer timer1_(*ClassAccess->_io, boost::asio::chrono::milliseconds(ClassAccess->ms_speed));//1000ms
+        boost::asio::steady_timer timer1_(*ClassAccess->_io, boost::asio::chrono::milliseconds(ClassAccess->ms_speed));
         timer1_.wait();
 
-        ClassAccess->_socket->send_to(boost::asio::buffer(ClassAccess->EnvClientData->datas_send/*archive_stream.str()*/),ClassAccess->_server_endpoint);//envoie de la struct au serv
+        ClassAccess->_socket->send_to(boost::asio::buffer(ClassAccess->EnvClientData->datas_send),ClassAccess->_server_endpoint);
         // std::cout << BOLDYELLOW << "[DATA SENT]" << RESET << " -> DEST=" << ClassAccess->_server_endpoint << std::endl;//DEBUG
     }
 }
 
-void Threaded_Receive(Network *ClassAccess) //recoit et met a jour les datas du client
+void Threaded_Receive(Network *ClassAccess)
 {
     boost::array<char, 10000>_test_recv;
     while(1) {
@@ -45,18 +45,18 @@ void Threaded_Receive(Network *ClassAccess) //recoit et met a jour les datas du 
     }
 }
 
-Network::Network(char *host, environment_t *EnvClientData, gameEngine_ns::GameEngine *gameEngine) // //_resolver(_io), _io() _resolver(io) _socker(io)
+Network::Network(char *host, environment_t *EnvClientData, gameEngine_ns::GameEngine *gameEngine)
 {
     this->_io = new boost::asio::io_context;
     this->_resolver = new udp::resolver(*this->_io);
     this->_socket = new udp::socket(*this->_io);
     this->ms_speed = 20;
     this->EnvClientData = EnvClientData;
-    this->EnvClientData->datas_send = "INIT";//test
+    this->EnvClientData->datas_send = "INIT";
     this->_gameEngine = gameEngine;
     
-    this->_server_endpoint = *_resolver->resolve(udp::v4(), host, "3000").begin(); //recuperation du endpoint
-    this->_socket->open(udp::v4()); // ouverture du socket
+    this->_server_endpoint = *_resolver->resolve(udp::v4(), host, "3000").begin();
+    this->_socket->open(udp::v4());
 
     boost::thread t1(Threaded_Send, this);
     boost::thread t2(Threaded_Receive, this);

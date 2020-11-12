@@ -30,15 +30,12 @@ void UDP_Server::do_send()
             if(this->_client_endpoint.address() == this->_gameContainers.at(i)->_clients.at(y)->_endpoint.address()) {
                 this->_gameContainers.at(i)->update_struct();//test
                 test =  this->_gameContainers.at(i)->EnvServData.datas_send;
-            //    std::cout << "DATAS CONTENT FIRST BOUCLE DO SEND() : " << this->_gameContainers.at(i).EnvServData.datas << std::endl;
+            // std::cout << "DATAS CONTENT FIRST BOUCLE DO SEND() : " << this->_gameContainers.at(i).EnvServData.datas << std::endl;
             }
         }
     }
-   // std::cout << "TEST CONTENT POST BOUCLE SEND : " << test << std::endl;
-    this->_socket.async_send_to(
-    boost::asio::buffer(/*archive_stream.str()*/ test), _client_endpoint,
-    [this](boost::system::error_code /*ec*/, std::size_t /*bytes_sent*/)
-    {
+    // std::cout << "TEST CONTENT POST BOUCLE SEND : " << test << std::endl;
+    this->_socket.async_send_to(boost::asio::buffer(test), _client_endpoint, [this](boost::system::error_code, std::size_t) {
         // std::cout << BOLDYELLOW << "[DATA SENT]" << RESET << " -> DEST=" << _client_endpoint << std::endl;//DEBUG
         do_receive();
     });
@@ -47,9 +44,9 @@ void UDP_Server::do_send()
 void UDP_Server::do_receive()
 {
     memset(this->_data, '\0', max_length);
-    this->_socket.async_receive_from(boost::asio::buffer(_data, max_length), _client_endpoint,[this](boost::system::error_code ec, std::size_t bytes_recvd){
+    this->_socket.async_receive_from(boost::asio::buffer(_data, max_length), _client_endpoint,[this](boost::system::error_code ec, std::size_t bytes_recvd) {
         if (!ec && bytes_recvd > 0) {
-            this->set_user_info(_client_endpoint, _data );
+            this->set_user_info(_client_endpoint, _data);
             do_send();
         }
         else {

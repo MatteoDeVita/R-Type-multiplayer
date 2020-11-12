@@ -26,7 +26,6 @@
 typedef struct {
     std::string datas_receive;
     std::string datas_send;
-    //template<typename Ar> void serialize(Ar& ar, unsigned) { ar & datas;}
 } environment_t;
 
 class ClientServerSide {
