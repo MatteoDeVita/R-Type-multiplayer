@@ -22,8 +22,8 @@
 int main(int argc, char **argv)
 {
     try {
-        if (argc != 3) {
-            std::cerr << "Usage: client <host> <UDP packets speed in MS>" << std::endl;
+        if (argc != 2) {
+            std::cerr << "Usage: client <host>" << std::endl;
             throw Error("Bad usage.");
         }
         srand(time(NULL));
@@ -40,7 +40,7 @@ int main(int argc, char **argv)
         factory_ns::loadEnvironment(&gameEngine);
         // factory_ns::loadMusic(&gameEngine);
         sleep(2);
-        Network net(argv, environment, &gameEngine);
+        Network net(argv[1], environment, &gameEngine);
 
         // gameEngine.audio->getMusic("music-main")->play();
 

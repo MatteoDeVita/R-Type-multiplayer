@@ -26,7 +26,14 @@ using boost::asio::ip::udp;
 
 class Network {
     public:
-        Network(char **argv, environment_t *EnvClientData, gameEngine_ns::GameEngine *gameEngine);
+        /**
+         * @brief Call send and receive boost threads and update game engine datas
+         * 
+         * @param host ip address of the server
+         * @param EnvClientData receive and send strings
+         * @param gameEngine
+         */
+        Network(char *host, environment_t *EnvClientData, gameEngine_ns::GameEngine *gameEngine);
         ~Network();
         environment_t *EnvClientData;
         boost::asio::io_context *_io;

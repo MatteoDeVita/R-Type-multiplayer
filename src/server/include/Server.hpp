@@ -38,21 +38,22 @@ class UDP_Server
         ~UDP_Server();
 
         /**
-         * @brief send your informations where stock in game
+         * @brief send your informations (where are stocked in gamecontainer) to a client
          * 
         */
         void do_send();
+
         /**
-         * @brief call this function to receive information 
+         * @brief call this function to receive informations from a client
          * 
          */
         void do_receive();
 
         /**
-         * @brief set the receive information on the gamer where the player is  connected
+         * @brief set the received informations on the gamecontainer where the player is connected or will be connect
          * 
-         * @param client_endpoint  information of incoming communication
-         * @param serielise_string the binary where serializing in a string
+         * @param client_endpoint  informations of incoming client's communication
+         * @param serielise_string the incoming client's data_string
          */
         void set_user_info(udp::endpoint remote_endpoint, std::string serielise_string);
         std::vector<GameContainer *> _gameContainers;

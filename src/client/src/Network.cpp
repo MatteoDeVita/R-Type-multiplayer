@@ -45,17 +45,17 @@ void Threaded_Receive(Network *ClassAccess) //recoit et met a jour les datas du 
     }
 }
 
-Network::Network(char **argv, environment_t *EnvClientData, gameEngine_ns::GameEngine *gameEngine) // //_resolver(_io), _io() _resolver(io) _socker(io)
+Network::Network(char *host, environment_t *EnvClientData, gameEngine_ns::GameEngine *gameEngine) // //_resolver(_io), _io() _resolver(io) _socker(io)
 {
     this->_io = new boost::asio::io_context;
     this->_resolver = new udp::resolver(*this->_io);
     this->_socket = new udp::socket(*this->_io);
-    this->ms_speed = atoi(argv[2]);
+    this->ms_speed = 20;
     this->EnvClientData = EnvClientData;
     this->EnvClientData->datas_send = "INIT";//test
     this->_gameEngine = gameEngine;
     
-    this->_server_endpoint = *_resolver->resolve(udp::v4(), argv[1], "3000").begin(); //recuperation du endpoint
+    this->_server_endpoint = *_resolver->resolve(udp::v4(), host, "3000").begin(); //recuperation du endpoint
     this->_socket->open(udp::v4()); // ouverture du socket
 
     boost::thread t1(Threaded_Send, this);
