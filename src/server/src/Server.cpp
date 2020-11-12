@@ -24,14 +24,12 @@ UDP_Server::~UDP_Server()
 
 void UDP_Server::do_send()
 {
-    // std::ostringstream archive_stream;
-    // boost::archive::text_oarchive archive(archive_stream);  
     std::string test;
     for (unsigned int i = 0; i < this->_gameContainers.size(); i++) {
         for (unsigned int y = 0; y <  this->_gameContainers.at(i)->_clients.size(); y++) {
             if(this->_client_endpoint.address() == this->_gameContainers.at(i)->_clients.at(y)->_endpoint.address()) {
                 this->_gameContainers.at(i)->update_struct();//test
-                /*archive <<*/ test =  this->_gameContainers.at(i)->EnvServData.datas_send;
+                test =  this->_gameContainers.at(i)->EnvServData.datas_send;
             //    std::cout << "DATAS CONTENT FIRST BOUCLE DO SEND() : " << this->_gameContainers.at(i).EnvServData.datas << std::endl;
             }
         }
@@ -62,8 +60,6 @@ void UDP_Server::do_receive()
 
 void UDP_Server::set_user_info(udp::endpoint client_endpoint, std::string serielise_string)
 {
-    /*std::istringstream archive_stream(serielise_string);
-    boost::archive::text_iarchive archive(archive_stream);*/
     for (unsigned int i = 0; i < this->_gameContainers.size(); i++) {
         for (unsigned int y = 0; y < this->_gameContainers.at(i)->_clients.size(); y++) {
             if(client_endpoint.address() == this->_gameContainers.at(i)->_clients.at(y)->_endpoint.address()) {
@@ -105,7 +101,4 @@ void UDP_Server::set_user_info(udp::endpoint client_endpoint, std::string seriel
             );
        }
        this->NbofClientassign++;
-      // std::cout << this->_gameContainers.at(_gameContainers.size() - 1).data_struct.a << std::endl;//test
-      // std::cout << this->_gameContainers.at(_gameContainers.size() - 1).data_struct.b << std::endl;//test
-      // std::cout << this->_gameContainers.at(_gameContainers.size() - 1).data_struct.c << std::endl;//test
 }
