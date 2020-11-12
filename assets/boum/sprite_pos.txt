@@ -1,0 +1,2 @@
+taille: 198 x 32
+taille rectangle: 33 x 32
