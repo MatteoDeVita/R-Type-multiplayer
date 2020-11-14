@@ -9,8 +9,10 @@
 
 gameEngine_ns::object_ns::IObject::IObject()
 {
+    this->activeClock = new sf::Clock;
 }
 
 gameEngine_ns::object_ns::IObject::~IObject()
 {
+    delete this->activeClock;
 }

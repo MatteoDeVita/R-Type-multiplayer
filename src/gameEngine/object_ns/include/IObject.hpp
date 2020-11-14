@@ -27,6 +27,11 @@ namespace gameEngine_ns {
                 virtual void autoMoove(const gameEngine_ns::geometry_ns::Vector &vector) = 0;
                 virtual void setSpeed(const unsigned int &speed) = 0;
                 virtual bool isFromMonster() const = 0;
+                virtual bool isActive() = 0;
+                virtual void setActive(const bool &active = true) = 0;
+                sf::Clock *activeClock;
+                virtual void damage() = 0;
+                virtual int getHp() const = 0;
             protected:
                 gameEngine_ns::object_ns::Sprite *_sprite;
                 gameEngine_ns::geometry_ns::Vector _position;

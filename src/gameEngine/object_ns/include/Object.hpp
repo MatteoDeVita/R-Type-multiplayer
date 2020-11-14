@@ -34,6 +34,11 @@ namespace gameEngine_ns {
                 void autoMoove(const gameEngine_ns::geometry_ns::Vector &vector);
                 void setSpeed(const unsigned int &speed);
                 bool isFromMonster() const;
+                bool isActive();
+                void setActive(const bool &active = true);
+                void damage();
+                int getHp() const;
+                sf::Clock *activeClock;
         };
     }
 }

@@ -29,7 +29,7 @@ void Threaded_Send(Network *ClassAccess)
 
 void Threaded_Receive(Network *ClassAccess)
 {
-    boost::array<char, 10000>_test_recv;
+    boost::array<char, 100000>_test_recv;
     while(1) {
         udp::endpoint client_endpoint;
 

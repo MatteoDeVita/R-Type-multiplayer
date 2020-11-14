@@ -37,8 +37,10 @@ GameContainer::GameContainer()
     factory_ns::loadMonsterTextures(this->_gameEngine);
     factory_ns::loadPlayerTextures(this->_gameEngine);
     factory_ns::loadLasersTextures(this->_gameEngine);
+    factory_ns::loadExplosionTexture(this->_gameEngine);
     factory_ns::loadLaserObjects(this->_gameEngine, true);
     factory_ns::loadLaserObjects(this->_gameEngine, false);
+    factory_ns::laodExplosionObjects(this->_gameEngine);
     this->_laserSpawnginClock = new sf::Clock;
     this->_laserSpawnginClock->restart();
 }
@@ -60,6 +62,9 @@ void GameContainer::update_struct(const int &playerNb)
     this->updateGameObjects(playerNb);
     for (const std::pair<const std::string, gameEngine_ns::object_ns::IObject *> &pair : this->_gameEngine->getObjects()) {
         if (pair.second != nullptr) {
+            if (pair.first.substr(0, 9) == "explosion")
+                continue;
+                // std::cout << pair.first << " x = " << pair.second->getPos().x << ", y = " << pair.second->getPos().y << std::endl;
             sstream << pair.second->getPos().x;
             this->EnvServData.datas_send += std::string(sstream.str()) + ' ';
             sstream.str("");
@@ -121,14 +126,20 @@ void GameContainer::updateGameObjects(const int &playerNb)
         this->_laserSpawnginClock->restart();
     }
     for (const std::pair<const std::string, gameEngine_ns::object_ns::IObject *> &pair : this->_gameEngine->getObjects()) {
-        if (pair.first.substr(0, 7) == "monster") {            
+        if (pair.first.substr(0, 7) == "monster") {
             pair.second->autoUpdatePos();
             if (shootDiff >= 20 && validLasers.size() > 0 && pair.second->getPos().x > 30 && rand() % 20 == 5) {
                 validLasers.at(rand() % validLasers.size())->setPos(pair.second->getPos());
             }
-            for (const gameEngine_ns::object_ns::IObject *laser : activeLasers) {
-                if (pair.second->getPos().x <= 1550 && laser->getSprite()->getSFMLSprite()->getGlobalBounds().intersects(pair.second->getSprite()->getSFMLSprite()->getGlobalBounds())) {                    
-                    pair.second->setPos(gameEngine_ns::geometry_ns::Vector(0, 0));
+            for (gameEngine_ns::object_ns::IObject *laser : activeLasers) {
+                if (pair.first.substr(0, 7) == "monster") {
+                    if (pair.second->getPos().x <= 1550 && laser->getSprite()->getSFMLSprite()->getGlobalBounds().intersects(pair.second->getSprite()->getSFMLSprite()->getGlobalBounds())) {                            
+                        pair.second->damage();
+                        if (pair.second->getHp() <= 0)
+                            pair.second->setPos(gameEngine_ns::geometry_ns::Vector(0, 0));
+                    }
+                    
+                    // laser->setPos(gameEngine_ns::geometry_ns::Vector(0, 0));
                 }
             }
         }
@@ -151,6 +162,7 @@ void GameContainer::updateGameObjects(const int &playerNb)
             }
         }
     }
+   
 }
 
 // précharger 100 lasers et les mettres de côtés, puis simplement changer leur posisitions quand ils doivent être utiliés

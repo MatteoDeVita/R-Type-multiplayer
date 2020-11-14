@@ -16,9 +16,17 @@
 class Monster : public gameEngine_ns::object_ns::Object {
     public:
         Monster();
-        Monster(gameEngine_ns::object_ns::Sprite *sprite, const gameEngine_ns::geometry_ns::Vector &position = gameEngine_ns::geometry_ns::Vector());
+        Monster(
+            gameEngine_ns::object_ns::Sprite *sprite,
+            const int &hp,
+            const gameEngine_ns::geometry_ns::Vector &position = gameEngine_ns::geometry_ns::Vector()
+            );
         ~Monster();
         void autoUpdatePos();
+        void damage();
+        int getHp() const;
     private:
+        sf::Clock *_damageClock;
+        int _hp;
         sf::Clock *_posClock;
 };

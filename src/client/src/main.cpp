@@ -35,8 +35,10 @@ int main(int argc, char **argv)
         factory_ns::loadMonsterTextures(&gameEngine);
         factory_ns::loadPlayerTextures(&gameEngine);
         factory_ns::loadLasersTextures(&gameEngine);
+        factory_ns::loadExplosionTexture(&gameEngine);
         factory_ns::loadLaserObjects(&gameEngine, true);
         factory_ns::loadLaserObjects(&gameEngine, false);
+        factory_ns::laodExplosionObjects(&gameEngine);
         factory_ns::loadEnvironment(&gameEngine);
         // factory_ns::loadMusic(&gameEngine);
         sleep(2);
@@ -64,9 +66,11 @@ int main(int argc, char **argv)
             gameEngine.window->addObject(gameEngine.getObject("background-object7"));
             gameEngine.window->addObject(gameEngine.getObject("background-object8"));
             gameEngine.window->addObject(gameEngine.getObject("background-object9"));
-            for (const std::pair<const std::string, gameEngine_ns::object_ns::IObject *> &pair : gameEngine.getObjects()) {
+            for (const std::pair<const std::string, gameEngine_ns::object_ns::IObject *> &pair : gameEngine.getObjects()) {                
                 if (pair.second == nullptr)
                     continue;
+                // if (pair.first.substr(0, 9) == "explosion")
+                //     std::cout << "x = " << pair.second->getPos().x << " y = " << pair.second->getPos().y << std::endl;
                 if (pair.first.substr(0, 5) == "laser" && (pair.second->getPos().x <= 30 || pair.second->getPos().y <= 10 ))
                     continue;
                 if (pair.first != "background-object1" && pair.second->getPos().y <= 15)
@@ -82,6 +86,8 @@ int main(int argc, char **argv)
                     
                     continue;
                 }
+                // if (pair.first.substr(0, 9) == "explosion" && pair.second->getPos().x <= 0)
+                //     continue;
                 if (pair.second->getSprite() == nullptr)
                     continue;
                 if (pair.second->getPos().x > -50) {

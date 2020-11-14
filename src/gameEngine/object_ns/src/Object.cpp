@@ -63,15 +63,34 @@ void gameEngine_ns::object_ns::Object::autoMoove()
 
 bool gameEngine_ns::object_ns::Object::isFromMonster() const
 {
-
+    return false;
 }
 
-void gameEngine_ns::object_ns::Object::autoMoove(const gameEngine_ns::geometry_ns::Vector &vector)
+void gameEngine_ns::object_ns::Object::autoMoove(const gameEngine_ns::geometry_ns::Vector &)
 {
 
 }
 
-void gameEngine_ns::object_ns::Object::setSpeed(const unsigned int &speed)
+void gameEngine_ns::object_ns::Object::setSpeed(const unsigned int &)
 {
 
+}
+
+bool gameEngine_ns::object_ns::Object::isActive()
+{
+    return false;   
+}
+
+void gameEngine_ns::object_ns::Object::setActive(const bool &)
+{
+    
+}
+void gameEngine_ns::object_ns::Object::damage()
+{
+
+}
+
+int gameEngine_ns::object_ns::Object::getHp() const
+{
+    return 0;
 }

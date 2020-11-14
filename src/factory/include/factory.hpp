@@ -21,6 +21,8 @@ namespace factory_ns {
     void loadLasersTextures(gameEngine_ns::GameEngine *gameEngine);
     void loadMusic(gameEngine_ns::GameEngine *gameEngine);
     void loadLaserObjects(gameEngine_ns::GameEngine *gameEngine, const bool &leftToRight = true);
+    void laodExplosionObjects(gameEngine_ns::GameEngine *gameEngine);
+    void loadExplosionTexture(gameEngine_ns::GameEngine *gameEngine);
     std::vector<gameEngine_ns::geometry_ns::Rectangle> getMonster1Vec();
     std::vector<gameEngine_ns::geometry_ns::Rectangle> getMonster2Vec();
     std::vector<gameEngine_ns::geometry_ns::Rectangle> getMonster3Vec();
@@ -39,11 +41,15 @@ namespace factory_ns {
     void updateObjectsFromNetworkData(gameEngine_ns::GameEngine *gameEngine, const std::string &data);
     void addAndCreateMonster(gameEngine_ns::GameEngine *gameEngine, const int &monsterNb, const gameEngine_ns::geometry_ns::Vector &position);
     void addAndCreatePlayer(gameEngine_ns::GameEngine *gameEngine, const int &playerNb, const gameEngine_ns::geometry_ns::Vector &position);
+    void loadExplosionTexture(gameEngine_ns::GameEngine *gameEngine);
+    void addAndCreateExplosion(gameEngine_ns::GameEngine *gameEngine, const gameEngine_ns::geometry_ns::Vector &position, const unsigned int &nb);
     void addAndCreateLaser(gameEngine_ns::GameEngine *gameEngine, const gameEngine_ns::geometry_ns::Vector &position, const int &laserNb, const bool &leftToRight = true, const int &laserType = 1);    
+    int getMonsterHp(const int &monsterNb);
     std::vector<gameEngine_ns::geometry_ns::Rectangle> getMonsterVec(const int &monsterNb);
     std::vector<gameEngine_ns::geometry_ns::Rectangle> getLaserVec(const bool leftToRight, const int &laserType);
     std::vector<gameEngine_ns::object_ns::IObject *> getPlayers(const gameEngine_ns::GameEngine &gameEngine);
     std::vector<gameEngine_ns::object_ns::IObject *> getValidLasers(const gameEngine_ns::GameEngine &gameEngine, const bool &leftToRight);
     std::vector<gameEngine_ns::object_ns::IObject *> getActiveLasers(const gameEngine_ns::GameEngine &gameEngine, const bool &leftToRight);
-
+    std::vector<gameEngine_ns::object_ns::IObject *> getValidExplosions(const gameEngine_ns::GameEngine &gameEngine);
+    std::vector<gameEngine_ns::object_ns::IObject *> getActiveExplosions(const gameEngine_ns::GameEngine &gameEngine);
 }

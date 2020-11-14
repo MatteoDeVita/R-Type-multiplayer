@@ -22,6 +22,7 @@
 #include "parsing.hpp"
 #include "Laser.hpp"
 #include "Parallax.hpp"
+#include "Explosion.hpp"
 
 void factory_ns::loadMonsterTextures(gameEngine_ns::GameEngine *gameEngine)
 {
@@ -58,7 +59,7 @@ void factory_ns::loadPlayerTextures(gameEngine_ns::GameEngine *gameEngine)
 void factory_ns::loadEnvironment(gameEngine_ns::GameEngine *gameEngine)
 {
     if (gameEngine->addTexture("background-texture1", "../../assets/environment/Nebula_Red.png") != 0)
-        throw Error("Can't load texture Nebula_Red.png");
+        std::cerr << "Can't load texture Nebula_Red.png" << std::endl;
     std::vector<gameEngine_ns::geometry_ns::Rectangle> backgroundVec;
     backgroundVec.push_back(gameEngine_ns::geometry_ns::Rectangle(0, 0, 1920, 1080));
     gameEngine_ns::object_ns::Sprite *backgroundSprite = gameEngine->createSprite(
@@ -66,32 +67,32 @@ void factory_ns::loadEnvironment(gameEngine_ns::GameEngine *gameEngine)
         backgroundVec
     );
     if (backgroundSprite == nullptr)
-        throw Error("Can't load sprite");
+        std::cerr << "Can't load sprite" << std::endl;
     backgroundSprite->getSFMLSprite()->scale(
         gameEngine_ns::geometry_ns::Vector(
             0.833, 0.833
         ).toSfVector2f()
     );
     if (gameEngine->addSprite("background-sprite", backgroundSprite) != 0)
-        throw Error("Can't add sprite");
+        std::cerr << "Can't add sprite" << std::endl;
     gameEngine_ns::object_ns::Object *backgroundObject = new Parallax(
         backgroundSprite,
         1,
         gameEngine_ns::geometry_ns::Vector()
     );
     if (backgroundObject == nullptr)
-        throw Error("Can't create object");
+        std::cerr << "Can't create object" << std::endl;
     if (gameEngine->addObject("background-object1", backgroundObject) != 0)
-        throw Error("Can't add object");
+        std::cerr << "Can't add object" << std::endl;
 
     if (gameEngine->addTexture("background-texture2", "../../assets/environment/Stars Small_1.png") != 0)
-        throw Error("Can't load texture Stars Small_1.png");
+        std::cerr << "Can't load texture Stars Small_1.png" << std::endl;
     if (gameEngine->addTexture("background-texture3", "../../assets/environment/Stars Small_2.png") != 0)
-        throw Error("Can't load texture Stars Small_2.png");
+        std::cerr << "Can't load texture Stars Small_2.png" << std::endl;
     if (gameEngine->addTexture("background-texture4", "../../assets/environment/Stars-Big_1_1_PC.png") != 0)
-        throw Error("Can't load texture Stars-Big_1_1_PC.png");
+        std::cerr << "Can't load texture Stars-Big_1_1_PC.png" << std::endl;
     if (gameEngine->addTexture("background-texture5", "../../assets/environment/Stars-Big_1_2_PC.png") != 0)
-        throw Error("Can't load texture Stars-Big_1_2_PC.png");
+        std::cerr << "Can't load texture Stars-Big_1_2_PC.png" << std::endl;
     gameEngine_ns::object_ns::Sprite *backgroundSprite2 = gameEngine->createSprite("background-texture2", backgroundVec);
     gameEngine_ns::object_ns::Sprite *backgroundSprite3 = gameEngine->createSprite("background-texture3", backgroundVec);
     gameEngine_ns::object_ns::Sprite *backgroundSprite4 = gameEngine->createSprite("background-texture4", backgroundVec);
@@ -123,18 +124,18 @@ void factory_ns::loadEnvironment(gameEngine_ns::GameEngine *gameEngine)
 void factory_ns::loadLasersTextures(gameEngine_ns::GameEngine *gameEngine)
 {
     if (gameEngine->addTexture("lasers-texture", "../../assets/bullets/lasers.png") != 0)
-        throw Error("Can't load texture lasers.png");
+        std::cerr << "Can't load texture lasers.png" << std::endl;
 }
 
 void factory_ns::loadMusic(gameEngine_ns::GameEngine *gameEngine)
 {
     gameEngine_ns::audio_ns::Music *music = new gameEngine_ns::audio_ns::Music("../../assets/sound/music.wav");
     if (music == nullptr)
-        throw Error("Can't load music");
+        std::cerr << "Can't load music" << std::endl;
     music->setLoop();
     music->setVolume();    
     if (gameEngine->audio->addMusic("music-main", music) != 0)
-        throw Error("Can't add music");
+        std::cerr << "Can't add music" << std::endl;
 }
 
 void factory_ns::loadLaserObjects(gameEngine_ns::GameEngine *gameEngine, const bool &leftToRight)
@@ -166,6 +167,12 @@ void factory_ns::loadLaserObjects(gameEngine_ns::GameEngine *gameEngine, const b
             3
         );
     }
+}
+
+void factory_ns::loadExplosionTexture(gameEngine_ns::GameEngine *gameEngine)
+{
+    if (gameEngine->addTexture("boumboum-texture", "../../assets/boum/boumboum.gif") != 0)
+        std::cerr << "Can't load texture boumboum.gif" << std::endl;
 }
 
 std::vector<gameEngine_ns::geometry_ns::Rectangle> factory_ns::getMonster1Vec()
@@ -366,6 +373,7 @@ void factory_ns::updateObjectsFromNetworkData(gameEngine_ns::GameEngine *gameEng
     while (std::getline(ss, tmp, '|')) {
         if (tmp == "" || tmp.length() <= 5)
             continue;
+        
         // std::cout << "TMP = " << tmp << '|' << std::endl;
         firstSpaceIndex = tmp.find(" ");
         x_str = tmp.substr(0, firstSpaceIndex);
@@ -374,12 +382,15 @@ void factory_ns::updateObjectsFromNetworkData(gameEngine_ns::GameEngine *gameEng
         y_str = tmp.substr(firstSpaceIndex + 1, secondSpaceIndex - firstSpaceIndex - 1);
 
         id_str = tmp.substr(secondSpaceIndex + 1, tmp.length() - firstSpaceIndex - 1);
+       
         ids.push_back(id_str);
 
         if (!parsing::strIsNumber(x_str) || !parsing::strIsNumber(y_str))
             continue;
         x = std::stoi(x_str);
         y = std::stoi(y_str);
+
+        std::cout << id_str << std::endl;        
 
         if (gameEngine->getObject(id_str) == nullptr) {
             if (id_str.substr(0, 6) == "player") {
@@ -408,6 +419,30 @@ void factory_ns::updateObjectsFromNetworkData(gameEngine_ns::GameEngine *gameEng
     }
 }
 
+int factory_ns::getMonsterHp(const int &monsterNb)
+{
+    switch (monsterNb) {
+        case 1:
+            return 5;
+        case 2:
+            return 4;
+        case 3:
+            return 2;
+        case 4:
+            return 1;
+        case 5:
+            return 1;
+        case 6:
+            return 1;
+        case 7:
+            return 3;
+        case 8:
+            return 2;
+        default:
+            throw Error("Wrong monster number.");
+    }
+}
+
 void factory_ns::addAndCreateMonster(gameEngine_ns::GameEngine *gameEngine, const int &monsterNb, const gameEngine_ns::geometry_ns::Vector &position)
 {
     std::string timestamp(std::to_string(time(nullptr)));
@@ -417,18 +452,19 @@ void factory_ns::addAndCreateMonster(gameEngine_ns::GameEngine *gameEngine, cons
         (float ((rand() % 100) + 100))
     );
     if (sprite == nullptr)
-        throw Error("Can't load sprite");
+        std::cerr << "Can't load sprite" << std::endl;
     if (gameEngine->addSprite(std::string("sprite-" + timestamp + std::to_string(rand() % 100000)),sprite) != 0)
-        throw Error("Can't add monster sprite");
+        std::cerr << "Can't add monster sprite" << std::endl;
     Monster *monster = new Monster(
         sprite,
+        getMonsterHp(monsterNb),
         position
     );
     monster->setPos(position);
     if (monster == nullptr)
-        throw Error("Can't create object");
+        std::cerr << "Can't create object" << std::endl;
     if (gameEngine->addObject(std::string("monster" + std::to_string(monsterNb) + "-" + timestamp), monster) != 0)
-        throw Error("Can't add monster object");
+        std::cerr << "Can't add monster object" << std::endl;
 }
 
 void factory_ns::addAndCreatePlayer(gameEngine_ns::GameEngine *gameEngine, const int &playerNb, const gameEngine_ns::geometry_ns::Vector &position)
@@ -440,9 +476,9 @@ void factory_ns::addAndCreatePlayer(gameEngine_ns::GameEngine *gameEngine, const
         75
     );
     if (sprite == nullptr)
-        throw Error("Can't load sprite");
+        std::cerr << "Can't load sprite" << std::endl;
     if (gameEngine->addSprite(std::string("sprite" + std::to_string(playerNb) + "-" + timestamp + std::to_string(rand() % 100000)), sprite) != 0)
-        throw Error("Can't add player sprite");
+        std::cerr << "Can't add player sprite" << std::endl;
     Player *player = new Player(
         sprite,
         position
@@ -450,9 +486,9 @@ void factory_ns::addAndCreatePlayer(gameEngine_ns::GameEngine *gameEngine, const
     player->setPos(position);
     player->getSprite()->getSFMLSprite()->scale(gameEngine_ns::geometry_ns::Vector(2, 2).toSfVector2f());
     if (player == nullptr)
-        throw Error("Can't create object");
+        std::cerr << "Can't create object" << std::endl;
     if (gameEngine->addObject(std::string("player" + std::to_string(playerNb) + "-" + timestamp), player) != 0)
-        throw Error("Can't add player object");
+        std::cerr << "Can't add player object" << std::endl;
 }
 
 std::vector<gameEngine_ns::geometry_ns::Rectangle> factory_ns::getMonsterVec(const int &monsterNb)
@@ -503,9 +539,9 @@ void factory_ns::addAndCreateLaser(gameEngine_ns::GameEngine *gameEngine, const 
     id += leftToRight ? "-player-" : "-monster-";
     id += std::to_string(laserNb);
     if (sprite == nullptr)
-        throw Error("Can't load sprite");
+        std::cerr << "Can't load sprite" << std::endl;
     if (gameEngine->addSprite(std::string("sprite-" + id), sprite) != 0)
-        throw Error("Can't add laser sprite");
+        std::cerr << "Can't add laser sprite" << std::endl;
 
     Laser *laser = new Laser(
         sprite,
@@ -514,9 +550,9 @@ void factory_ns::addAndCreateLaser(gameEngine_ns::GameEngine *gameEngine, const 
     );
     laser->setPos(position);
     if (laser == nullptr)
-        throw Error("Can't create object");    
+        std::cerr << "Can't create object" << std::endl;
     if (gameEngine->addObject(id, laser) != 0)
-        throw Error("Can't add laser object");
+        std::cerr << "Can't add laser object" << std::endl;
 }
 
 std::vector<gameEngine_ns::geometry_ns::Rectangle> factory_ns::getLaserVec(const bool leftToRight, const int &laserType)
@@ -577,6 +613,60 @@ std::vector<gameEngine_ns::object_ns::IObject *> factory_ns::getActiveLasers(con
         ) {
             vec.push_back(pair.second);
         }
+    }
+    return vec;
+}
+
+void factory_ns::laodExplosionObjects(gameEngine_ns::GameEngine *gameEngine)
+{
+    for (int i = 0; i < 20; i++)
+        addAndCreateExplosion(gameEngine, gameEngine_ns::geometry_ns::Vector(-100, 0), i);
+}
+
+void factory_ns::addAndCreateExplosion(gameEngine_ns::GameEngine *gameEngine, const gameEngine_ns::geometry_ns::Vector &position, const unsigned int &nb)
+{    
+    std::vector<gameEngine_ns::geometry_ns::Rectangle> vec;
+    vec.push_back(gameEngine_ns::geometry_ns::Rectangle(0, 0, 33, 32));
+    vec.push_back(gameEngine_ns::geometry_ns::Rectangle(33, 0, 33, 32));
+    vec.push_back(gameEngine_ns::geometry_ns::Rectangle(66, 0, 33, 32));
+    vec.push_back(gameEngine_ns::geometry_ns::Rectangle(99, 0, 33, 32));
+    vec.push_back(gameEngine_ns::geometry_ns::Rectangle(132, 0, 33, 32));
+    vec.push_back(gameEngine_ns::geometry_ns::Rectangle(165, 0, 33, 32));
+    gameEngine_ns::object_ns::Sprite *sprite = gameEngine->createSprite(
+        "boumboum-texture",
+        vec,
+        50
+    );
+    if (sprite == nullptr)
+        std::cerr << "Can't load sprite" << std::endl;
+    sprite->getSFMLSprite()->scale(gameEngine_ns::geometry_ns::Vector(2, 2).toSfVector2f());
+    if (gameEngine->addSprite("boumboum-sprite-" + std::to_string(nb), sprite) != 0)
+        std::cerr << "Can't add boumboum sprite" << std::endl;
+    Explosion *object = new Explosion(sprite, position);
+    if (object == nullptr)
+        std::cerr << "Can't create object" << std::endl;
+    if (gameEngine->addObject("explosion-" + std::to_string(nb), object) != 0)
+        std::cerr << "Can't add object" << std::endl;
+}
+
+std::vector<gameEngine_ns::object_ns::IObject *> factory_ns::getValidExplosions(const gameEngine_ns::GameEngine &gameEngine)
+{
+    std::vector<gameEngine_ns::object_ns::IObject *> vec;
+
+    for (const std::pair<const std::string, gameEngine_ns::object_ns::IObject *> &pair : gameEngine.getObjects()) {
+        if (pair.first.substr(0, 9) == "explosion" && pair.second->getPos().x <= -100)
+            vec.push_back(pair.second);
+    }
+    return vec;
+}
+
+std::vector<gameEngine_ns::object_ns::IObject *> factory_ns::getActiveExplosions(const gameEngine_ns::GameEngine &gameEngine)
+{
+    std::vector<gameEngine_ns::object_ns::IObject *> vec;
+
+    for (const std::pair<const std::string, gameEngine_ns::object_ns::IObject *> &pair : gameEngine.getObjects()) {
+        if (pair.first.substr(0, 9) == "explosion" && pair.second->getPos().x > -100)
+            vec.push_back(pair.second);
     }
     return vec;
 }

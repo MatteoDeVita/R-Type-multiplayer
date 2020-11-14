@@ -27,8 +27,10 @@ gameEngine_ns::object_ns::Sprite::Sprite(sf::Texture *texture, const std::vector
 
 gameEngine_ns::object_ns::Sprite::~Sprite()
 {
-    delete this->_sprite;
-    delete this->_clock;
+    if (this->_sprite != nullptr) 
+        delete this->_sprite;
+    if (this->_sprite != nullptr)
+        delete this->_clock;
 }
 
 sf::Sprite *gameEngine_ns::object_ns::Sprite::getSFMLSprite() const
