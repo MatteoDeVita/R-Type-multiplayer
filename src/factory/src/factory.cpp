@@ -390,7 +390,6 @@ void factory_ns::updateObjectsFromNetworkData(gameEngine_ns::GameEngine *gameEng
         x = std::stoi(x_str);
         y = std::stoi(y_str);
 
-        std::cout << id_str << std::endl;        
 
         if (gameEngine->getObject(id_str) == nullptr) {
             if (id_str.substr(0, 6) == "player") {

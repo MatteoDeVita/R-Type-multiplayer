@@ -69,8 +69,6 @@ int main(int argc, char **argv)
             for (const std::pair<const std::string, gameEngine_ns::object_ns::IObject *> &pair : gameEngine.getObjects()) {                
                 if (pair.second == nullptr)
                     continue;
-                // if (pair.first.substr(0, 9) == "explosion")
-                //     std::cout << "x = " << pair.second->getPos().x << " y = " << pair.second->getPos().y << std::endl;
                 if (pair.first.substr(0, 5) == "laser" && (pair.second->getPos().x <= 30 || pair.second->getPos().y <= 10 ))
                     continue;
                 if (pair.first != "background-object1" && pair.second->getPos().y <= 15)
