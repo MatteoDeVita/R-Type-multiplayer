@@ -33,7 +33,7 @@ class ClientServerSide {
         ClientServerSide(){};
         ~ClientServerSide(){};
         boost::asio::ip::udp::endpoint _endpoint;
-        int ton_num; //debug
+        int num; //debug
 
     protected:
     private:
@@ -97,7 +97,6 @@ Test(server, take_value_to_send)
         for (unsigned int y = 0; y < _gameVector.at(i)._clients.size(); y++) {
             if(target_endpoint.address() == _gameVector.at(i)._clients.at(y)->_endpoint.address()) {
                test = _gameVector.at(i).EnvServData.datas_send;
-                //std::cout << _gameVector.at(i)._clients.at(y)->_endpoint.address() <<std::endl;
                 cr_assert(test == "data sended game 3");
             }
         }
@@ -115,7 +114,7 @@ Test(server, new_client_store_info_new_container)
 
     ClientServerSide *new_client = new ClientServerSide;
     new_client->_endpoint = client_endpoint;
-    new_client->ton_num = NbofClientassign;
+    new_client->num = NbofClientassign;
 
     if (NbofClientassign % 4 == 0) {
             GameContainer *newest = new GameContainer;
@@ -138,7 +137,7 @@ Test(server, new_client_store_info_in_last_container_slot)
 
     ClientServerSide *new_client = new ClientServerSide;
     new_client->_endpoint = client_endpoint;
-    new_client->ton_num = NbofClientassign;
+    new_client->num = NbofClientassign;
 
     if (NbofClientassign % 4 != 0) {
            _gameVector.at(_gameVector.size() - 1).EnvServData.datas_receive = test;

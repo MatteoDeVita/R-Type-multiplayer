@@ -3,24 +3,40 @@
 package Server {
 
     class ClientServerSide {
-       - boost::asio::ip::udp _endpoint
+       + boost::asio::ip::udp _endpoint
     }
 
     GameContainer --o ClientServerSide
     class GameContainer  {
-        - std::vector<ClientServerSide> _clients
-    }
+        - void _moovePlayer(const int &playerNb)
+        - void _shootPlayer(const int &playerNb)
+        - std::chrono::time_point<std::chrono::high_resolution_clock> _spawnChrono
+        - std::chrono::time_point<std::chrono::high_resolution_clock> _mooveChrono
+        - std::chrono::time_point<std::chrono::high_resolution_clock> _monsterShootChrono
+
+        + void update(const int &playerNb = 0)
+        + void push_newclient(boost::asio::ip::udp::endpoint)
+        + std::vector<ClientServerSide *> clients
+        + gameEngine_ns::GameEngine *gameEngine
+        + void updateGameObjects(const int &playerNb)
+    }    
 
     Server --o GameContainer
     class Server {
-        - std::vector<GameContainer> _gameContainers
+        - udp::socket _socket
+        - udp::endpoint _client_endpoint
+
+        + std::vector<GameContainer *> gameContainers
     }
 }
 
 namespace Client {
 
-    class Client {
-
+    class Network {
+        + udp::socket *socket
+        + udp::resolver *resolver
+        + udp::endpoint server_endpoint
+        + gameEngine_ns::GameEngine *gameEngine
     }
 
 }
@@ -29,27 +45,28 @@ namespace Client {
 
 namespace gameEngine_ns {
 
-    class GameEngine() {
+
+    class GameEngine {
         - std::map<std::string, gameEngine_ns::Object_ns::IObject *> _objects
-        - const std::map<const std::string, gameEngine_ns::object_ns::Sprite *> _sprites;
+        - const std::map<const std::string, gameEngine_ns::object_ns::Sprite *> _sprites
         - gameEngine_ns::window_ns::Window *_window
-        - gameEngine_ns::event_ns::Event *event;
-        - gameEngine_ns::audio_ns::Audio *audio;
+        - gameEngine_ns::event_ns::Event *event
+        - gameEngine_ns::audio_ns::Audio *audio
 
     
         + int addObject(const std::string &id, gameEngine_ns::object_ns::Object *object)
         + int addObject(const std::string &filePath, const std::string &id)
         + int addTexture(const std::string &id, const std::string &filePath)
         + int addSprite(const std::string &id, gameEngine_ns::object_ns::Sprite *sprite)
-        + gameEngine_ns::object_ns::Sprite createSprite(const std::string &filePath, const std::vector<geometry_ns::Rectangle> &rectanglePositionsOnImage);        
+        + gameEngine_ns::object_ns::Sprite createSprite(const std::string &filePath, const std::vector<geometry_ns::Rectangle> &rectanglePositionsOnImage)        
     }    
     
     namespace event_ns {
         class Event {
-            - gameEngine_ns::window_ns::Window *_window;
+            - gameEngine_ns::window_ns::Window *_window
 
-            + void handlePollEvent(std::string *networkData);
-            + void setWindow(gameEngine_ns::window_ns::Window *window);
+            + void handlePollEvent(std::string *networkData)
+            + void setWindow(gameEngine_ns::window_ns::Window *window)
         }
     }
 
@@ -58,15 +75,15 @@ namespace gameEngine_ns {
         Audio <|-down- gameEngine_ns.audio_ns.Music
         Audio <|-down- gameEngine_ns.audio_ns.FX
         class Audio {
-            - std::map<const std::string, gameEngine_ns::audio_ns::Music *> _musics;
-            - std::map<const std::string,  gameEngine_ns::audio_ns::FX *> _fxs;
+            - std::map<const std::string, gameEngine_ns::audio_ns::Music *> _musics
+            - std::map<const std::string,  gameEngine_ns::audio_ns::FX *> _fxs
             
-            + int addMusic(const std::string &id, gameEngine_ns::audio_ns::Music *music);
-            + int addFX(const std::string &id, gameEngine_ns::audio_ns::FX *fx);
-            + gameEngine_ns::audio_ns::Music *getMusic(const std::string &id) const;
-            + gameEngine_ns::audio_ns::FX *getFX(const std::string &id) const;
-            + void removeMusic(const std::string &id);
-            + void removeFX(const std::string &id);
+            + int addMusic(const std::string &id, gameEngine_ns::audio_ns::Music *music)
+            + int addFX(const std::string &id, gameEngine_ns::audio_ns::FX *fx)
+            + gameEngine_ns::audio_ns::Music *getMusic(const std::string &id) const
+            + gameEngine_ns::audio_ns::FX *getFX(const std::string &id) const
+            + void removeMusic(const std::string &id)
+            + void removeFX(const std::string &id)
             + void play() const = 0
         }
 
@@ -74,68 +91,68 @@ namespace gameEngine_ns {
         class FX {
             - sf::Sound *_sound
             
-            + void play();
-            + void setVolume(const float &volume = 50);
-            + void stop();
+            + void play()
+            + void setVolume(const float &volume = 50)
+            + void stop()
         }
 
         class Music {
             - sf::Music *_music
             
-            + void play();
-            + void setVolume(const float &volume = 50);
-            + void stop();
-            + void setLoop(const bool &loop = true);
+            + void play()
+            + void setVolume(const float &volume = 50)
+            + void stop()
+            + void setLoop(const bool &loop = true)
         }
     }
 
     namespace object_ns {
 
         class Sprite {
-            - void update();
-            - void moove(const gameEngine_ns::geometry_ns::Vector &vector);
+            + void update()
+            + void moove(const gameEngine_ns::geometry_ns::Vector &vector)
         }
 
         gameEngine_ns.object_ns.Object o-down- gameEngine_ns.object_ns.Sprite
         gameEngine_ns.object_ns.Object --o gameEngine_ns.object_ns.Sprite
         class Object {
-            - gameEngine_ns::object_ns::Sprite *_sprite;
-            - gameEngine_ns::geometry_ns::Vector _position;
+            - gameEngine_ns::object_ns::Sprite *_sprite
+            - gameEngine_ns::geometry_ns::Vector _position
             
-            + void autoUpdatePos();
-            + gameEngine_ns::geometry_ns::Vector getPos() const;
-            + void setPos(const gameEngine_ns::geometry_ns::Vector &vector);
-            + void moove(const gameEngine_ns::geometry_ns::Vector &vector);
-            + gameEngine_ns::object_ns::Sprite *getSprite() const;
-            + void autoMoove();
-            + void autoMoove(const gameEngine_ns::geometry_ns::Vector &vector);
-            + void setSpeed(const unsigned int &speed);
-            + bool isFromMonster() const;
-            + bool isActive();
-            + void setActive(const bool &active = true);
-            + void damage();
-            + int getHp() const;
+            + void autoUpdatePos()
+            + gameEngine_ns::geometry_ns::Vector getPos() const
+            + void setPos(const gameEngine_ns::geometry_ns::Vector &vector)
+            + void moove(const gameEngine_ns::geometry_ns::Vector &vector)
+            + gameEngine_ns::object_ns::Sprite *getSprite() const
+            + void autoMoove()
+            + void autoMoove(const gameEngine_ns::geometry_ns::Vector &vector)
+            + void setSpeed(const unsigned int &speed)
+            + bool isFromMonster() const
+            + bool isActive()
+            + void setActive(const bool &active = true)
+            + void damage()
+            + int getHp() const
         }
 
         gameEngine_ns.object_ns.IObject <|-- gameEngine_ns.object_ns.Object
         gameEngine_ns.object_ns.IObject --o gameEngine_ns.object_ns.Sprite
         interface IObject {
-            + virtual void autoUpdatePos() = 0;
-            + virtual gameEngine_ns::geometry_ns::Vector getPos() const = 0;
-            + virtual void setPos(const gameEngine_ns::geometry_ns::Vector &vector) = 0;
-            + virtual void moove(const gameEngine_ns::geometry_ns::Vector &vector) = 0;
-            + virtual gameEngine_ns::object_ns::Sprite *getSprite() const = 0;
-            + virtual void autoMoove() = 0;
-            + virtual void autoMoove(const gameEngine_ns::geometry_ns::Vector &vector) = 0;
-            + virtual void setSpeed(const unsigned int &speed) = 0;
-            + virtual bool isFromMonster() const = 0;
-            + virtual bool isActive() = 0;
-            + virtual void setActive(const bool &active = true) = 0;
-            + virtual void damage() = 0;
-            + virtual int getHp() const = 0;
+            + virtual void autoUpdatePos() = 0
+            + virtual gameEngine_ns::geometry_ns::Vector getPos() const = 0
+            + virtual void setPos(const gameEngine_ns::geometry_ns::Vector &vector) = 0
+            + virtual void moove(const gameEngine_ns::geometry_ns::Vector &vector) = 0
+            + virtual gameEngine_ns::object_ns::Sprite *getSprite() const = 0
+            + virtual void autoMoove() = 0
+            + virtual void autoMoove(const gameEngine_ns::geometry_ns::Vector &vector) = 0
+            + virtual void setSpeed(const unsigned int &speed) = 0
+            + virtual bool isFromMonster() const = 0
+            + virtual bool isActive() = 0
+            + virtual void setActive(const bool &active = true) = 0
+            + virtual void damage() = 0
+            + virtual int getHp() const = 0
 
-            # gameEngine_ns::object_ns::Sprite *_sprite;
-            # gameEngine_ns::geometry_ns::Vector _position;
+            # gameEngine_ns::object_ns::Sprite *_sprite
+            # gameEngine_ns::geometry_ns::Vector _position
         }
     }
           
@@ -152,7 +169,7 @@ namespace gameEngine_ns {
             + Vector &operator*(const Vector &vector) const
             + Vector &operator/(const Vector &vector) const
             + bool operator==(const Vector &vector) const
-            + sf::Vector2f toSfVector2f() const;            
+            + sf::Vector2f toSfVector2f() const            
         }
 
         gameEngine_ns.geometry_ns.Rectangle --o gameEngine_ns.object_ns.Sprite
@@ -160,14 +177,14 @@ namespace gameEngine_ns {
             + Vector origin
             + Vector size
 
-            + Rectangle operator+(const Rectangle &rectangle) const;
-            + Rectangle operator-(const Rectangle &rectangle) const;
-            + Rectangle operator*(const Rectangle &rectangle) const;
-            + Rectangle operator/(const Rectangle &rectangle) const;
-            + bool operator==(const Rectangle &rectangle) const;
-            + float area() const;
-            + float perimeter() const;
-            + sf::IntRect toSfIntRect() const;
+            + Rectangle operator+(const Rectangle &rectangle) const
+            + Rectangle operator-(const Rectangle &rectangle) const
+            + Rectangle operator*(const Rectangle &rectangle) const
+            + Rectangle operator/(const Rectangle &rectangle) const
+            + bool operator==(const Rectangle &rectangle) const
+            + float area() const
+            + float perimeter() const
+            + sf::IntRect toSfIntRect() const
         }
     }
 
@@ -175,11 +192,36 @@ namespace gameEngine_ns {
         gameEngine_ns.window_ns.Window --o gameEngine_ns.object_ns.Object
         Window --o gameEngine_ns.event_ns.Event
         class Window {
-            + bool isOpen() const;
-            + void addObject(gameEngine_ns::object_ns::IObject *object);
-            + void display();
-            + void reset();
+            + bool isOpen() const
+            + void addObject(gameEngine_ns::object_ns::IObject *object)
+            + void display()
+            + void reset()
         }
+    }
+}
+
+namespace gameObjects {
+    gameObjects.Laser --|> gameEngine_ns.object_ns.Object
+    class Laser {
+        + void autoMoove();
+        + bool isFromMonster() const;
+    }
+    gameObjects.Monster --|> gameEngine_ns.object_ns.Object
+    class Monster {
+        + void autoUpdatePos();
+        + void damage();
+        + int getHp() const;
+    }
+    gameObjects.Parallax --|> gameEngine_ns.object_ns.Object
+    gameObjects.Parallax --o gameEngine_ns.geometry_ns.Vector
+    class Parallax {
+        void autoMoove();
+        void autoMoove(const gameEngine_ns::geometry_ns::Vector &vector);
+        void setSpeed(const unsigned int &speed);
+    }
+    gameObjects.Player --|> gameEngine_ns.object_ns.Object
+    class Player {
+
     }
 }
 

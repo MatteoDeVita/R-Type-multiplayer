@@ -64,7 +64,7 @@ void UDP_Server::set_user_info(udp::endpoint client_endpoint, std::string seriel
                 this->_gameContainers.at(i)->EnvServData.datas_receive.clear();                
                 this->_gameContainers.at(i)->EnvServData.datas_receive = serielise_string;
 
-                // std::cout << BOLDGREEN << "[DATA RECEIVED AND UPDATED]" << RESET << " -> USER=" << this->_gameContainers.at(i)->_clients.at(y)->ton_num << " CONTAINER=" << this->_gameContainers.at(i)->_clients.at(y)->ton_num / 4  << " FROM=" << client_endpoint << std::endl;//DEBUG
+                // std::cout << BOLDGREEN << "[DATA RECEIVED AND UPDATED]" << RESET << " -> USER=" << this->_gameContainers.at(i)->_clients.at(y)->num << " CONTAINER=" << this->_gameContainers.at(i)->_clients.at(y)->num / 4  << " FROM=" << client_endpoint << std::endl;//DEBUG
                 // std::cout << BOLDBLUE << "CONTENT : " << this->_gameContainers.at(i)->EnvServData.datas_receive << RESET << std::endl; //TEST
                 this->_gameContainers.at(i)->update_struct(y);
                 return;
@@ -73,7 +73,7 @@ void UDP_Server::set_user_info(udp::endpoint client_endpoint, std::string seriel
     }
     ClientServerSide *new_client = new ClientServerSide;
     new_client->_endpoint = client_endpoint;
-    new_client->ton_num = this->NbofClientassign;
+    new_client->num = this->NbofClientassign;
     if (this->NbofClientassign % 4 == 0) {
             std::cout << BOLDRED << "[NEW CONTAINER]" << RESET << " -> "<< "ID="<<NbofClientassign / 4 << std::endl;//DEBUG
             std::cout << BOLDBLUE << "[USER ADDED]" << RESET << " -> USER=" << this->NbofClientassign << " CONTAINER=" << NbofClientassign / 4 << " FROM=" << client_endpoint << std::endl;//DEBUG

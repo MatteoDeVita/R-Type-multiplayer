@@ -18,9 +18,7 @@ class Explosion : public gameEngine_ns::object_ns::Object {
         Explosion(
             gameEngine_ns::object_ns::Sprite *sprite,
             const gameEngine_ns::geometry_ns::Vector &position = gameEngine_ns::geometry_ns::Vector()
-        );
-        // bool isActive();
-        // void setActive(const bool &active = true);
+        );        
         sf::Clock *activeClock;
     private:
         bool _isActive;

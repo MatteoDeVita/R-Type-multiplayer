@@ -17,7 +17,7 @@ class ClientServerSide {
         ClientServerSide();
         ~ClientServerSide();
         boost::asio::ip::udp::endpoint _endpoint;
-        int ton_num; //debug
+        int num; //debug
 
     protected:
     private:

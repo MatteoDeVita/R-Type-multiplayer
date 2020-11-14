@@ -57,7 +57,7 @@ class UDP_Server
          */
         void set_user_info(udp::endpoint remote_endpoint, std::string serielise_string);
         std::vector<GameContainer *> _gameContainers;
-        int NbofClientassign;
+        int NbofClientassign;        
         boost::asio::io_context _io;
     private:
         udp::socket _socket;
