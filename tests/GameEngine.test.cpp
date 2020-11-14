@@ -7,6 +7,7 @@
 
 #include "GameEngine.hpp"
 #include "Rectangle.hpp"
+#include "Object.hpp"
 
 #include <criterion/criterion.h>
 #include <vector>
@@ -18,15 +19,15 @@ Test(GameEngineTests, addTexture)
     gameEngine_ns::GameEngine gameEngine;
 
     cr_expect(
-        gameEngine.addTexture("id-monster-test-1", "../assets/monsters/monster1/assets/texture.gif") == 0,
+        gameEngine.addTexture("id-monster-test-1", "../assets/monsters/monster1.gif") == 0,
         "Add Texture with an existing texture"
     );
     cr_expect(
-        gameEngine.addTexture("id-monster-test-2", "../assets/monsters/monster1/assets/azazazzazad.gif") != 0,
+        gameEngine.addTexture("id-monster-test-2", "../assets/monsters/azazazzazad.gif") != 0,
         "Texture that doesn't exist"
     );
     cr_expect(
-        gameEngine.addTexture("id-monster-test-1", "../assets/monsters/monster2/assets/texture.gif") != 0,
+        gameEngine.addTexture("id-monster-test-1", "../assets/monsters/monster1.gif") != 0,
         "ID that already exists"
     );
 }
@@ -36,7 +37,7 @@ Test(GameEngineTests, createSprite)
     gameEngine_ns::GameEngine gameEngine;
 
     cr_expect(
-        gameEngine.addTexture("id-monster-test-1", "../assets/monsters/monster1/assets/texture.gif") == 0,
+        gameEngine.addTexture("id-monster-test-1", "../assets/monsters/monster1.gif") == 0,
         "Sprite test create Texturetexture with an existing texture"
     );
     std::vector<gameEngine_ns::geometry_ns::Rectangle> rectanglePositionsOnImage;
@@ -58,7 +59,7 @@ Test(GameEngineTests, addSprite)
     gameEngine_ns::GameEngine gameEngine;
 
     cr_expect(
-        gameEngine.addTexture("id-monster-test-1", "../assets/monsters/monster1/assets/texture.gif") == 0,
+        gameEngine.addTexture("id-monster-test-1", "../assets/monsters/monster1.gif") == 0,
         "Sprite test create Texturetexture with an existing texture for addSprite test"
     );
     std::vector<gameEngine_ns::geometry_ns::Rectangle> rectanglePositionsOnImage;
@@ -82,7 +83,7 @@ Test(GameEngineTests, getSprite)
     gameEngine_ns::GameEngine gameEngine;
 
     cr_expect(
-        gameEngine.addTexture("id-monster-test-1", "../assets/monsters/monster1/assets/texture.gif") == 0,
+        gameEngine.addTexture("id-monster-test-1", "../assets/monsters/monster1.gif") == 0,
         "Sprite test create Texturetexture with an existing texture for getSprite test"
     );
     std::vector<gameEngine_ns::geometry_ns::Rectangle> rectanglePositionsOnImage;
@@ -129,7 +130,7 @@ Test(GameEngineTests, addObject)
     gameEngine_ns::GameEngine gameEngine;
 
     cr_expect(
-        gameEngine.addTexture("id-monster-test-1", "../assets/monsters/monster1/assets/texture.gif") == 0,
+        gameEngine.addTexture("id-monster-test-1", "../assets/monsters/monster1.gif") == 0,
         "Sprite test create Texturetexture with an existing texture for addSprite test"
     );
     std::vector<gameEngine_ns::geometry_ns::Rectangle> rectanglePositionsOnImage;
@@ -142,14 +143,4 @@ Test(GameEngineTests, addObject)
         gameEngine.addSprite("sprite-test-1", sprite) == 0,
         "Add basic existing sprite for addObject test"
     );   
-    gameEngine_ns::object_ns::Object *object = new gameEngine_ns::object_ns::Object(sprite, gameEngine_ns::geometry_ns::Vector());
-    
-    cr_expect(
-        gameEngine.addObject("object-test-id-1", object) == 0,
-        "Add basic object"
-    );
-    cr_expect(
-        gameEngine.addObject("object-test-id-1", object) == -1,
-        "Add an already existing object"
-    );
 }
