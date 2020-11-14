@@ -30,132 +30,129 @@ namespace Client {
 namespace gameEngine_ns {
 
     class GameEngine() {
-        - std::map<std::string, gameEngine_ns::Object_ns::Object *> _objects
-        - std::map<const std::string, sf::Texture *> _textures;
+        - std::map<std::string, gameEngine_ns::Object_ns::IObject *> _objects
         - const std::map<const std::string, gameEngine_ns::object_ns::Sprite *> _sprites;
         - gameEngine_ns::window_ns::Window *_window
+        - gameEngine_ns::event_ns::Event *event;
+        - gameEngine_ns::audio_ns::Audio *audio;
+
     
         + int addObject(const std::string &id, gameEngine_ns::object_ns::Object *object)
         + int addObject(const std::string &filePath, const std::string &id)
         + int addTexture(const std::string &id, const std::string &filePath)
         + int addSprite(const std::string &id, gameEngine_ns::object_ns::Sprite *sprite)
-        + gameEngine_ns::object_ns::Sprite createSprite(const std::string &filePath, const std::vector<geometry_ns::Rectangle> &rectanglePositionsOnImage);
-        + int loadFromConfigurationFile(const std::string &filePath)
-        + void createWindow(const gameEngine_ns::geometry_ns::Vector *vector)
-    }
-
-    namespace action_ns {
-
-        interface IAction {
-            - object_ns::Object *_object
-
-            # IAction()
-            # const void enable() = 0
-            # const void disable() = 0
-        }
-
-        gameEngine_ns.action_ns.Action -up-|> gameEngine_ns.action_ns.IAction
-        class Action {
-            # Action()
-            # void setSprite(const Sprite *sprite)
-        }
-
-        Explode -up-|> gameEngine_ns.action_ns.Action
-        class Explode {
-            
-            + void enable()
-            + void disable()
-
-        }
-
-        Shoot -up-|> gameEngine_ns.action_ns.Action
-        class Shoot {
-            + void enable()
-            + void disable()
-        }
-
-        Moove -up-|> gameEngine_ns.action_ns.Action
-        class Moove {
-            + void enable(const geometry_ns::Vector &vector)
-            + void disable()
-        }
-    }
+        + gameEngine_ns::object_ns::Sprite createSprite(const std::string &filePath, const std::vector<geometry_ns::Rectangle> &rectanglePositionsOnImage);        
+    }    
     
     namespace event_ns {
         class Event {
-            - sf::Event _event
+            - gameEngine_ns::window_ns::Window *_window;
 
-            + Event(window_ns *window)
-            + void pollEvent()
+            + void handlePollEvent(std::string *networkData);
+            + void setWindow(gameEngine_ns::window_ns::Window *window);
         }
     }
 
     namespace audio_ns {
 
-        Audio -down-|> gameEngine_ns.audio_ns.Music
-        Audio -down-|> gameEngine_ns.audio_ns.FX
+        Audio <|-down- gameEngine_ns.audio_ns.Music
+        Audio <|-down- gameEngine_ns.audio_ns.FX
         class Audio {
-            # sf::SoundBuffer _buffer
-
-            - Audio()
-            # void play() const = 0
+            - std::map<const std::string, gameEngine_ns::audio_ns::Music *> _musics;
+            - std::map<const std::string,  gameEngine_ns::audio_ns::FX *> _fxs;
+            
+            + int addMusic(const std::string &id, gameEngine_ns::audio_ns::Music *music);
+            + int addFX(const std::string &id, gameEngine_ns::audio_ns::FX *fx);
+            + gameEngine_ns::audio_ns::Music *getMusic(const std::string &id) const;
+            + gameEngine_ns::audio_ns::FX *getFX(const std::string &id) const;
+            + void removeMusic(const std::string &id);
+            + void removeFX(const std::string &id);
+            + void play() const = 0
         }
 
 
         class FX {
-            - sf::Sound _sound
+            - sf::Sound *_sound
             
-            + FX()
-            + void play() const
+            + void play();
+            + void setVolume(const float &volume = 50);
+            + void stop();
         }
 
         class Music {
-            - sf::Music _music
+            - sf::Music *_music
             
-            + Music()
-            + void play() const
+            + void play();
+            + void setVolume(const float &volume = 50);
+            + void stop();
+            + void setLoop(const bool &loop = true);
         }
     }
 
     namespace object_ns {
 
         class Sprite {
-            - sf::Texture *_texture
-            - sf::Sprite *_sprite            
-
-            + Sprite(const std::string &textureId, const std::vector<geometry_ns::Rectangle> &rectanglePositionsOnImage);
-            + sf::Sprite *getSFMLSprite() const;
+            - void update();
+            - void moove(const gameEngine_ns::geometry_ns::Vector &vector);
         }
 
-        gameEngine_ns.object_ns.Object o-- gameEngine_ns.action_ns.IAction
-        gameEngine_ns.object_ns.Object o-- gameEngine_ns.action_ns.Moove
-        gameEngine_ns.object_ns.Object o-- gameEngine_ns.action_ns.Explode
-        gameEngine_ns.object_ns.Object o-- gameEngine_ns.action_ns.Shoot
         gameEngine_ns.object_ns.Object o-down- gameEngine_ns.object_ns.Sprite
+        gameEngine_ns.object_ns.Object --o gameEngine_ns.object_ns.Sprite
         class Object {
-            # Sprite *_sprite
-            # geometry::Vector *_pos
-            # std::map<const std::string, actions_ns::Action> actions
+            - gameEngine_ns::object_ns::Sprite *_sprite;
+            - gameEngine_ns::geometry_ns::Vector _position;
+            
+            + void autoUpdatePos();
+            + gameEngine_ns::geometry_ns::Vector getPos() const;
+            + void setPos(const gameEngine_ns::geometry_ns::Vector &vector);
+            + void moove(const gameEngine_ns::geometry_ns::Vector &vector);
+            + gameEngine_ns::object_ns::Sprite *getSprite() const;
+            + void autoMoove();
+            + void autoMoove(const gameEngine_ns::geometry_ns::Vector &vector);
+            + void setSpeed(const unsigned int &speed);
+            + bool isFromMonster() const;
+            + bool isActive();
+            + void setActive(const bool &active = true);
+            + void damage();
+            + int getHp() const;
+        }
 
-            + Object(const std::string unique_name, const Sprite &sprite, const std::string textureId, const gometry_ns::Vector &position)
-            + void addAction(const std::string &name, action_ns::Action *_action)
+        gameEngine_ns.object_ns.IObject <|-- gameEngine_ns.object_ns.Object
+        gameEngine_ns.object_ns.IObject --o gameEngine_ns.object_ns.Sprite
+        interface IObject {
+            + virtual void autoUpdatePos() = 0;
+            + virtual gameEngine_ns::geometry_ns::Vector getPos() const = 0;
+            + virtual void setPos(const gameEngine_ns::geometry_ns::Vector &vector) = 0;
+            + virtual void moove(const gameEngine_ns::geometry_ns::Vector &vector) = 0;
+            + virtual gameEngine_ns::object_ns::Sprite *getSprite() const = 0;
+            + virtual void autoMoove() = 0;
+            + virtual void autoMoove(const gameEngine_ns::geometry_ns::Vector &vector) = 0;
+            + virtual void setSpeed(const unsigned int &speed) = 0;
+            + virtual bool isFromMonster() const = 0;
+            + virtual bool isActive() = 0;
+            + virtual void setActive(const bool &active = true) = 0;
+            + virtual void damage() = 0;
+            + virtual int getHp() const = 0;
+
+            # gameEngine_ns::object_ns::Sprite *_sprite;
+            # gameEngine_ns::geometry_ns::Vector _position;
         }
     }
           
     namespace geometry_ns {
         gameEngine_ns.geometry_ns.Vector -left-o Rectangle
-        gameEngine_ns.geometry_ns.Vector --o gameEngine_ns.action_ns.Moove
+        gameEngine_ns.object_ns.IObject --o Vector
+        gameEngine_ns.object_ns.Sprite --o Vector
         class Vector {
             + float x
             + float y
 
-            + Vector()
-            + Vector(const float &x = 0, const float &y = 0)
             + Vector &operator+(const Vector &vector) const
             + Vector &operator-(const Vector &vector) const
             + Vector &operator*(const Vector &vector) const
             + Vector &operator/(const Vector &vector) const
-            + bool operator==(const Vector &vector) const          
+            + bool operator==(const Vector &vector) const
+            + sf::Vector2f toSfVector2f() const;            
         }
 
         gameEngine_ns.geometry_ns.Rectangle --o gameEngine_ns.object_ns.Sprite
@@ -163,9 +160,6 @@ namespace gameEngine_ns {
             + Vector origin
             + Vector size
 
-            + Rectangle()
-            + Rectangle(const Vector &origin = Vector(), const Vector &size = Vector());
-            + Rectangle(const float &left = 0, const float &top = 0, const float &width = 0, const float &height = 0);
             + Rectangle operator+(const Rectangle &rectangle) const;
             + Rectangle operator-(const Rectangle &rectangle) const;
             + Rectangle operator*(const Rectangle &rectangle) const;
@@ -173,19 +167,18 @@ namespace gameEngine_ns {
             + bool operator==(const Rectangle &rectangle) const;
             + float area() const;
             + float perimeter() const;
+            + sf::IntRect toSfIntRect() const;
         }
     }
 
     namespace window_ns {
-        gameEngine_ns.window_ns.Window --o gameEngine_ns.geometry_ns.Vector
         gameEngine_ns.window_ns.Window --o gameEngine_ns.object_ns.Object
-        gameEngine_ns.event_ns.Event --o gameEngine_ns.window_ns.Window
+        Window --o gameEngine_ns.event_ns.Event
         class Window {
-            - sf::Window *_window
-
-            + Window(const geometry.ns::Vector &size)
-            + void addObject(const &object_ns::Object &object)
-            + void display()
+            + bool isOpen() const;
+            + void addObject(gameEngine_ns::object_ns::IObject *object);
+            + void display();
+            + void reset();
         }
     }
 }
