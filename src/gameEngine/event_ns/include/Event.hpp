@@ -20,9 +20,28 @@ namespace gameEngine_ns {
                 sf::Clock *_eventClock;
                 sf::Clock *_shootingClock;
             public:
+                /**
+                 * @brief Construct a new Event object
+                 * 
+                 * @param window 
+                 */
                 Event(gameEngine_ns::window_ns::Window *window);
+                /**
+                 * @brief Handle poll event
+                 * 
+                 * @param networkData network data string
+                 */
                 void handlePollEvent(std::string *networkData);
+                /**
+                 * @brief Set the related window
+                 * 
+                 * @param window 
+                 */
                 void setWindow(gameEngine_ns::window_ns::Window *window);
+                /**
+                 * @brief Destroy the Event object
+                 * 
+                 */
                 ~Event();
         };
     }

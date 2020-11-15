@@ -20,8 +20,22 @@ class Parallax : public gameEngine_ns::object_ns::Object {
             const unsigned int &speed,
             const gameEngine_ns::geometry_ns::Vector &position = gameEngine_ns::geometry_ns::Vector()
         );
+        /**
+         * @brief Automaticly moove parallax object
+         * 
+         */
         void autoMoove();
+        /**
+         * @brief Automaticly moove parallax object from a given vector
+         * 
+         * @param vector 
+         */
         void autoMoove(const gameEngine_ns::geometry_ns::Vector &vector);
+        /**
+         * @brief Set the parallax object speed
+         * 
+         * @param speed 
+         */
         void setSpeed(const unsigned int &speed);
     protected:
     private:

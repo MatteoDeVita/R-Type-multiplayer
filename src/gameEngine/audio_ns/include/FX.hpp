@@ -15,10 +15,32 @@ namespace gameEngine_ns {
     namespace audio_ns {
         class FX {
             public:
+                /**
+                 * @brief Construct a new FX object
+                 * 
+                 * @param filePath 
+                 */
                 FX(const std::string &filePath);
+                /**
+                 * @brief Destroy the FX object
+                 * 
+                 */
                 ~FX();
+                /**
+                 * @brief Play fx sound
+                 * 
+                 */
                 void play();
+                /**
+                 * @brief Set the fx volume object
+                 * 
+                 * @param volume 
+                 */
                 void setVolume(const float &volume = 50);
+                /**
+                 * @brief Stop FX
+                 * 
+                 */
                 void stop();
             private:
                 sf::Sound *_sound;

@@ -17,12 +17,41 @@ namespace gameEngine_ns {
         class Window {
             private:
                 sf::RenderWindow *_window;
-            public:        
+            public:
+                /**
+                 * @brief Construct a new Window object
+                 * 
+                 * @param size 
+                 */
                 Window(const gameEngine_ns::geometry_ns::Vector &size);
+                /**
+                 * @brief Tell if the window is opened or not
+                 * 
+                 * @return true if the window is currentlty opened
+                 * @return false otherwise
+                 */
                 bool isOpen() const;
+                /**
+                 * @brief Get the corresponding SFML window
+                 * 
+                 * @return sf::Window* 
+                 */
                 sf::Window *getSFMLWindow() const;
+                /**
+                 * @brief Add an object to draw
+                 * 
+                 * @param object 
+                 */
                 void addObject(gameEngine_ns::object_ns::IObject *object);
+                /**
+                 * @brief Display
+                 * 
+                 */
                 void display();
+                /**
+                 * @brief Reset window with a black screen
+                 * 
+                 */
                 void reset();
                 ~Window();
         };

@@ -15,7 +15,7 @@
 namespace gameEngine_ns {
     namespace object_ns {
         class IObject {
-            public:
+            public:                
                 IObject();
                 virtual ~IObject();
                 virtual void autoUpdatePos() = 0;

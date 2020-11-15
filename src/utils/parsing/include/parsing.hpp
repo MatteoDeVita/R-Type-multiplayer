@@ -8,5 +8,12 @@
 #pragma once
 
 namespace parsing {
+    /**
+     * @brief Tell if a given string is number
+     * 
+     * @param str 
+     * @return true if the string only composed of numberh
+     * @return false otherwise
+     */
     bool strIsNumber(const std::string &str);
 }

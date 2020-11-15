@@ -22,8 +22,21 @@ class Monster : public gameEngine_ns::object_ns::Object {
             const gameEngine_ns::geometry_ns::Vector &position = gameEngine_ns::geometry_ns::Vector()
             );
         ~Monster();
+        /**
+         * @brief auto update monster position
+         * 
+         */
         void autoUpdatePos();
+        /**
+         * @brief take damage
+         * 
+         */
         void damage();
+        /**
+         * @brief Get current monster hp
+         * 
+         * @return HP
+         */
         int getHp() const;
     private:
         sf::Clock *_damageClock;

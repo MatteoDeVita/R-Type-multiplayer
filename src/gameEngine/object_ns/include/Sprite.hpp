@@ -26,10 +26,35 @@ namespace gameEngine_ns {
                 std::vector<geometry_ns::Rectangle>::iterator _textureRectIt;
                 sf::Clock *_clock;
             public:
+                /**
+                 * @brief Update sprite
+                 * 
+                 */
                 void update();
+                /**
+                 * @brief Get the corresponding SFML Sprite
+                 * 
+                 * @return sf::Sprite* 
+                 */
                 sf::Sprite *getSFMLSprite() const;
+                /**
+                 * @brief Construct a new Sprite object
+                 * 
+                 * @param texture 
+                 * @param rectanglePositionsOnImage 
+                 * @param delayMs 
+                 */
                 Sprite(sf::Texture *texture, const std::vector<geometry_ns::Rectangle> &rectanglePositionsOnImage, float delayMs = 10);
+                /**
+                 * @brief Moove the sprite
+                 * 
+                 * @param vector 
+                 */
                 void moove(const gameEngine_ns::geometry_ns::Vector &vector);
+                /**
+                 * @brief Destroy the Sprite object
+                 * 
+                 */
                 ~Sprite();
         };
     }

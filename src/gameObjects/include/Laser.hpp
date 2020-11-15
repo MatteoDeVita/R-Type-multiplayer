@@ -18,7 +18,17 @@ class Laser : public gameEngine_ns::object_ns::Object {
             const gameEngine_ns::geometry_ns::Vector &position = gameEngine_ns::geometry_ns::Vector()
         );
         ~Laser();
+        /**
+         * @brief auto moove laser
+         * 
+         */
         void autoMoove();
+        /**
+         * @brief 
+         * 
+         * @return true if the laser is from a monster
+         * @return false if the laser is from a player
+         */
         bool isFromMonster() const;
     private:
         int _yValue;
